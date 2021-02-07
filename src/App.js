@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import Schedule from "./Schedule";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div>
+      <header className="m-b-1">
+        <nav className="container d-flex align-items-baseline justify-content-between">
+          <h1>
+            <a href="/">Hockey Info</a>
+          </h1>
+        </nav>
       </header>
+      <main>
+        <Schedule />
+      </main>
+      <footer className="text-center m-t-auto p-1">
+        <small> &copy; 2021 Bradley Donahue</small>
+      </footer>
     </div>
   );
 }
