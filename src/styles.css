@@ -1,0 +1,156 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+    'Helvetica Neue', sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+header {
+  background-color: #111;
+}
+
+nav a {
+  color: #eee;
+  text-decoration: none;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+table {
+  white-space: nowrap;
+  text-align: left;
+}
+
+.table-holder {
+  overflow-x: scroll;
+  position: relative;
+}
+
+.table-holder .fixed {
+  position: relative;
+  left: 0;
+}
+
+.game {
+  display: flex;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.game:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.game-teams {
+  color: white;
+  width: 70%;
+}
+
+.game-teams p {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.game-info {
+  align-items: center;
+  background-color: #111;
+  color: #eee;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.game-info p {
+  background-color: #eee;
+  border-radius: 10px;
+  color: #111;
+  margin: 0;
+  padding: 0.5rem;
+}
+
+.game-info p:first-child:not(:only-child) {
+  margin-bottom: 1rem;
+}
+
+.team-score {
+  margin-left: 1rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-flow: column nowrap;
+}
+
+.m-t-auto {
+  margin-top: auto;
+}
+
+.m-b-1 {
+  margin-bottom: 1rem;
+}
+
+.p-1 {
+  padding: 1rem;
+}
+
+.container {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #333;
+  border-radius: 5px;
+}
+
+.btn:active {
+  box-shadow: 0 0 10px 0 #333;
+}
+
+.btn-primary {
+  background-color: #333;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #444;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.align-items-baseline {
+  align-items: baseline;
+}
