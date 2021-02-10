@@ -39,9 +39,29 @@ export default function Game(props) {
   const { currentPeriodOrdinal, currentPeriodTimeRemaining } = props.linescore;
 
   if (showDetail) {
+    const { linescore } = props;
     return (
-      <div onClick={() => setShowDetail(!showDetail)}>
-        <h1>Detail View</h1>
+      <div className="game" onClick={() => setShowDetail(!showDetail)}>
+        <div className="game-teams">
+          <p style={{ backgroundColor: teamMap[props.teams.away.team.id].primaryColor }}>
+            <span>{props.teams.away.team.abbreviation}</span>
+            <span>SOG {props.linescore.teams.away.shotsOnGoal}</span>
+          </p>
+          <p style={{ backgroundColor: teamMap[props.teams.home.team.id].primaryColor }}>
+            <span>{props.teams.home.team.abbreviation}</span>
+            <span>SOG {props.linescore.teams.home.shotsOnGoal}</span>
+          </p>
+        </div>
+        <div className="game-info">
+          {linescore.periods.map((period) => {
+            return (
+              <div>
+                <p>{period.away.goals}</p>
+                <p>{period.home.goals}</p>
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }
