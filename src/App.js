@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Schedule from "./Schedule";
+import Schedule from "./components/Schedule";
 
 function App() {
   return (
