@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Schedule from "./components/Schedule";
+import Standings from "./components/Standings";
 
 function App() {
   return (
@@ -11,9 +12,17 @@ function App() {
               <Link to="/">Hockey Info</Link>
             </h1>
           </nav>
+          <ul>
+            <li>
+              <Link to="/standings">Standings</Link>
+            </li>
+          </ul>
         </header>
         <main>
           <Switch>
+            <Route path="/standings">
+              <Standings />
+            </Route>
             <Route path="/">
               <Schedule />
             </Route>
