@@ -11,12 +11,12 @@ function App() {
             <h1>
               <Link to="/">Hockey Info</Link>
             </h1>
+            <ul>
+              <li>
+                <Link to="/standings">Standings</Link>
+              </li>
+            </ul>
           </nav>
-          <ul>
-            <li>
-              <Link to="/standings">Standings</Link>
-            </li>
-          </ul>
         </header>
         <main>
           <Switch>
