@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import SkaterTable from "../components/SkaterTable";
+import HeadToHead from "../components/HeadToHead";
 
 export default function SingleGame() {
   const { gameId } = useParams();
@@ -91,6 +92,10 @@ export default function SingleGame() {
   return (
     <div className="container">
       <div>
+        <HeadToHead
+          away={gameData.liveData.boxscore.teams.away.team.id}
+          home={gameData.liveData.boxscore.teams.home.team.id}
+        />
         <table>
           <thead>
             <tr>
