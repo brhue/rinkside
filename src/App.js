@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Schedule from "./components/Schedule";
 import Standings from "./components/Standings";
+import SingleGame from "./views/SingleGame";
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
         </header>
         <main>
           <Switch>
+            <Route path="/game/:gameId">
+              <SingleGame />
+            </Route>
             <Route path="/standings">
               <Standings />
             </Route>

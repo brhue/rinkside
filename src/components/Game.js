@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const teamMap = {
   1: { name: "New Jersey Devils", primaryColor: "#ce1126", secondaryColor: "#111" },
@@ -35,58 +35,32 @@ const teamMap = {
 };
 
 export default function Game(props) {
-  const [showDetail, setShowDetail] = useState(false);
   const { currentPeriodOrdinal, currentPeriodTimeRemaining } = props.linescore;
 
-  if (showDetail) {
-    const { linescore } = props;
-    return (
-      <div className="game" onClick={() => setShowDetail(!showDetail)}>
+  return (
+    <Link to={`/game/${props.gamePk}`}>
+      <div className="game">
         <div className="game-teams">
           <p style={{ backgroundColor: teamMap[props.teams.away.team.id].primaryColor }}>
-            <span>{props.teams.away.team.abbreviation}</span>
-            <span>SOG {props.linescore.teams.away.shotsOnGoal}</span>
+            <span>{props.teams.away.team.name}</span>
+            <span className="team-score">{props.teams.away.score}</span>
           </p>
           <p style={{ backgroundColor: teamMap[props.teams.home.team.id].primaryColor }}>
-            <span>{props.teams.home.team.abbreviation}</span>
-            <span>SOG {props.linescore.teams.home.shotsOnGoal}</span>
+            <span>{props.teams.home.team.name}</span>
+            <span className="team-score">{props.teams.home.score}</span>
           </p>
         </div>
         <div className="game-info">
-          {linescore.periods.map((period) => {
-            return (
-              <div>
-                <p>{period.away.goals}</p>
-                <p>{period.home.goals}</p>
-              </div>
-            );
-          })}
+          {props.linescore.currentPeriod === 0 ? (
+            <p>{formatDate(new Date(props.gameDate))}</p>
+          ) : (
+            <p>
+              {currentPeriodTimeRemaining} {currentPeriodOrdinal}
+            </p>
+          )}
         </div>
       </div>
-    );
-  }
-  return (
-    <div className="game" onClick={() => setShowDetail(!showDetail)}>
-      <div className="game-teams">
-        <p style={{ backgroundColor: teamMap[props.teams.away.team.id].primaryColor }}>
-          <span>{props.teams.away.team.name}</span>
-          <span className="team-score">{props.teams.away.score}</span>
-        </p>
-        <p style={{ backgroundColor: teamMap[props.teams.home.team.id].primaryColor }}>
-          <span>{props.teams.home.team.name}</span>
-          <span className="team-score">{props.teams.home.score}</span>
-        </p>
-      </div>
-      <div className="game-info">
-        {props.linescore.currentPeriod === 0 ? (
-          <p>{formatDate(new Date(props.gameDate))}</p>
-        ) : (
-          <p>
-            {currentPeriodTimeRemaining} {currentPeriodOrdinal}
-          </p>
-        )}
-      </div>
-    </div>
+    </Link>
   );
 }
 
