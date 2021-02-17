@@ -103,6 +103,14 @@ table {
   text-align: center;
 }
 
+.text-right {
+  text-align: right;
+}
+
+.w-100 {
+  width: 100%;
+}
+
 .d-flex {
   display: flex;
 }
@@ -157,4 +165,13 @@ table {
 
 .align-items-baseline {
   align-items: baseline;
+}
+
+.headToHeadStats td:first-child, .headToHeadStats td:last-child {
+  display: flex;
+  justify-content: space-between;
+}
+
+.headToHeadStats td:nth-child(2) {
+  text-align: center;
 }
