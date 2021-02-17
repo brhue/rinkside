@@ -28,15 +28,90 @@ export default function SingleGame() {
   const awayTeamSkaters = gameData.liveData.boxscore.teams.away.skaters.filter(
     (skater) => !gameData.liveData.boxscore.teams.away.scratches.includes(skater)
   );
+  const awayTeamStats = gameData.liveData.boxscore.teams.away.teamStats.teamSkaterStats;
   const homeTeamPlayers = gameData.liveData.boxscore.teams.home.players;
   const homeTeamSkaters = gameData.liveData.boxscore.teams.home.skaters.filter(
     (skater) => !gameData.liveData.boxscore.teams.home.scratches.includes(skater)
   );
+  const homeTeamStats = gameData.liveData.boxscore.teams.home.teamStats.teamSkaterStats;
+
+  const gameTeamStats = {
+    goals: {
+      display: "Goals",
+      away: awayTeamStats.goals,
+      home: homeTeamStats.goals,
+    },
+    shots: {
+      display: "Shots",
+      away: awayTeamStats.shots,
+      home: homeTeamStats.shots,
+    },
+    pim: {
+      display: "PIM",
+      away: awayTeamStats.pim,
+      home: homeTeamStats.pim,
+    },
+    powerPlays: {
+      display: "Power Plays",
+      away: `${awayTeamStats.powerPlayGoals}/${awayTeamStats.powerPlayOpportunities}`,
+      home: `${homeTeamStats.powerPlayGoals}/${homeTeamStats.powerPlayOpportunities}`,
+    },
+    ppPercentage: {
+      display: "Power Play %",
+      away: awayTeamStats.powerPlayPercentage,
+      home: homeTeamStats.powerPlayPercentage,
+    },
+    foPercentage: {
+      display: "Face-Off Win %",
+      away: awayTeamStats.faceOffWinPercentage,
+      home: homeTeamStats.faceOffWinPercentage,
+    },
+    blocked: {
+      display: "Blocked",
+      away: awayTeamStats.blocked,
+      home: homeTeamStats.blocked,
+    },
+    takeaways: {
+      display: "Takeaways",
+      away: awayTeamStats.takeaways,
+      home: homeTeamStats.takeaways,
+    },
+    giveaways: {
+      display: "Giveaways",
+      away: awayTeamStats.giveaways,
+      home: homeTeamStats.giveaways,
+    },
+    hits: {
+      display: "Hits",
+      away: awayTeamStats.hits,
+      home: homeTeamStats.hits,
+    },
+  };
 
   return (
     <div className="container">
-      <h1>Single Game View</h1>
-      <h2>Game: {gameId}</h2>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>{gameData.liveData.boxscore.teams.away.team.triCode}</th>
+              <th>{gameData.liveData.boxscore.teams.home.team.triCode}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.keys(gameTeamStats).map((category, i) => {
+              return (
+                <tr key={i}>
+                  <td>{gameTeamStats[category].display}</td>
+                  <td>{gameTeamStats[category].away}</td>
+                  <td>{gameTeamStats[category].home}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
       <div>
         <h2>{gameData.liveData.linescore.teams.away.team.name}</h2>
         <SkaterTable skaters={awayTeamSkaters} allPlayers={awayTeamPlayers} />
