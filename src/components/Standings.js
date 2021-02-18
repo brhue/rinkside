@@ -19,6 +19,16 @@ export default function Standings(props) {
       sortedArray.sort((a, b) => {
         return (b.goalsScored - a.goalsScored) * direction;
       });
+    } else if (sortKey === "points") {
+      sortedArray.sort((a, b) => {
+        return (b.points - a.points) * direction;
+      });
+    } else if (sortKey === "diff") {
+      sortedArray.sort((a, b) => {
+        const aDiff = a.goalsScored - a.goalsAgainst;
+        const bDiff = b.goalsScored - b.goalsAgainst;
+        return (bDiff - aDiff) * direction;
+      });
     }
     setStandingsData({ teamRecords: sortedArray });
   }
@@ -43,7 +53,14 @@ export default function Standings(props) {
             <th>
               <abbr title="Overtime Losses">OT</abbr>
             </th>
-            <th>
+            <th
+              data-dir={1}
+              onClick={(e) => {
+                const direction = e.currentTarget.getAttribute("data-dir");
+                e.currentTarget.setAttribute("data-dir", -direction);
+                handleSort("points", direction);
+              }}
+            >
               <abbr title="Points">PTS</abbr>
             </th>
             <th
@@ -59,7 +76,14 @@ export default function Standings(props) {
             <th>
               <abbr title="Goals Against">GA</abbr>
             </th>
-            <th>
+            <th
+              data-dir={1}
+              onClick={(e) => {
+                const direction = e.currentTarget.getAttribute("data-dir");
+                e.currentTarget.setAttribute("data-dir", -direction);
+                handleSort("diff", direction);
+              }}
+            >
               <abbr title="Goal Differential">DIFF</abbr>
             </th>
           </tr>
