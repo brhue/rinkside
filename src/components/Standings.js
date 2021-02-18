@@ -13,11 +13,21 @@ export default function Standings(props) {
     fetchStandingsData();
   }, []);
 
+  function handleSort(sortKey, direction) {
+    const sortedArray = [...standingsData.teamRecords];
+    if (sortKey === "goals") {
+      sortedArray.sort((a, b) => {
+        return (b.goalsScored - a.goalsScored) * direction;
+      });
+    }
+    setStandingsData({ teamRecords: sortedArray });
+  }
+
   const { teamRecords } = standingsData;
 
   return (
     <div className="container">
-      <table>
+      <table className="w-100">
         <thead>
           <tr>
             <th>Team</th>
@@ -36,7 +46,14 @@ export default function Standings(props) {
             <th>
               <abbr title="Points">PTS</abbr>
             </th>
-            <th>
+            <th
+              data-dir={1}
+              onClick={(e) => {
+                const direction = e.currentTarget.getAttribute("data-dir");
+                e.currentTarget.setAttribute("data-dir", -direction);
+                handleSort("goals", direction);
+              }}
+            >
               <abbr title="Goals Scored">G</abbr>
             </th>
             <th>
@@ -48,7 +65,7 @@ export default function Standings(props) {
           </tr>
         </thead>
         <tbody>
-          {teamRecords.map(team => (
+          {teamRecords.map((team) => (
             <tr key={team.team.id}>
               <th>{team.team.name}</th>
               <td>{team.gamesPlayed}</td>
