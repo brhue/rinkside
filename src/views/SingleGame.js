@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import SkaterTable from "../components/SkaterTable";
+import PlayerTable from "../components/PlayerTable";
 import HeadToHead from "../components/HeadToHead";
 
 export default function SingleGame() {
@@ -46,11 +46,13 @@ export default function SingleGame() {
   const awayTeamSkaters = gameData.liveData.boxscore.teams.away.skaters.filter(
     (skater) => !gameData.liveData.boxscore.teams.away.scratches.includes(skater)
   );
+  const awayTeamGoalies = gameData.liveData.boxscore.teams.away.goalies;
   const awayTeamStats = gameData.liveData.boxscore.teams.away.teamStats.teamSkaterStats;
   const homeTeamPlayers = gameData.liveData.boxscore.teams.home.players;
   const homeTeamSkaters = gameData.liveData.boxscore.teams.home.skaters.filter(
     (skater) => !gameData.liveData.boxscore.teams.home.scratches.includes(skater)
   );
+  const homeTeamGoalies = gameData.liveData.boxscore.teams.home.goalies;
   const homeTeamStats = gameData.liveData.boxscore.teams.home.teamStats.teamSkaterStats;
 
   const gameTeamStats = {
@@ -136,9 +138,11 @@ export default function SingleGame() {
       </div>
       <div>
         <h2>{gameData.liveData.linescore.teams.away.team.name}</h2>
-        <SkaterTable skaters={awayTeamSkaters} allPlayers={awayTeamPlayers} />
+        <PlayerTable skaters={awayTeamSkaters} allPlayers={awayTeamPlayers} />
+        <PlayerTable goalies={awayTeamGoalies} allPlayers={awayTeamPlayers} />
         <h2>{gameData.liveData.linescore.teams.home.team.name}</h2>
-        <SkaterTable skaters={homeTeamSkaters} allPlayers={homeTeamPlayers} />
+        <PlayerTable skaters={homeTeamSkaters} allPlayers={homeTeamPlayers} />
+        <PlayerTable goalies={homeTeamGoalies} allPlayers={homeTeamPlayers} />
       </div>
     </div>
   );
