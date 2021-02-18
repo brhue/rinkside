@@ -167,6 +167,10 @@ table {
   align-items: baseline;
 }
 
+.headToHeadStats {
+  white-space: normal;
+}
+
 .headToHeadStats td:first-child, .headToHeadStats td:last-child {
   display: flex;
   justify-content: space-between;
