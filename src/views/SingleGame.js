@@ -7,21 +7,38 @@ import HeadToHead from "../components/HeadToHead";
 export default function SingleGame() {
   const { gameId } = useParams();
   const [gameData, setGameData] = useState(null);
+  const [awayTeamData, setAwayTeamData] = useState(null);
+  const [homeTeamData, setHomeTeamData] = useState(null);
 
   useEffect(() => {
+    async function getTeamData(teamId) {
+      const baseUrl = "https://statsapi.web.nhl.com/api/v1/";
+      const url = `${baseUrl}teams/${teamId}?expand=team.stats,team.schedule.next,team.schedule.previous`;
+      const response = await fetch(url);
+      const data = await response.json();
+      return data;
+    }
+
     async function fetchGameData(gameId) {
       const baseUrl = "https://statsapi.web.nhl.com/api/v1/";
       const gameUrl = `${baseUrl}game/${gameId}/feed/live`;
       const response = await fetch(gameUrl);
       const data = await response.json();
-      setGameData(data);
+      const away = data.liveData.boxscore.teams.away.team.id;
+      const home = data.liveData.boxscore.teams.home.team.id;
+      const awayData = await getTeamData(away);
+      const homeData = await getTeamData(home);
+
       console.log(data);
+      setGameData(data);
+      setAwayTeamData(awayData);
+      setHomeTeamData(homeData);
     }
 
     fetchGameData(gameId);
   }, [gameId]);
 
-  if (gameData === null) {
+  if (gameData === null || awayTeamData === null || homeTeamData === null) {
     return <h1>Loading...</h1>;
   }
 
@@ -93,8 +110,8 @@ export default function SingleGame() {
     <div className="container">
       <div>
         <HeadToHead
-          away={gameData.liveData.boxscore.teams.away.team.id}
-          home={gameData.liveData.boxscore.teams.home.team.id}
+          awayTeamStats={{ stats: awayTeamData.teams[0].teamStats}}
+          homeTeamStats={{ stats: homeTeamData.teams[0].teamStats}}
         />
         <table>
           <thead>

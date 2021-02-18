@@ -1,37 +1,8 @@
-import { useState, useEffect } from "react";
-
-export default function HeadToHead({ away, home }) {
-  const [awayTeamData, setAwayTeamData] = useState(null);
-  const [homeTeamData, setHomeTeamData] = useState(null);
-
-  useEffect(() => {
-    async function getTeamData(teamId) {
-      const url = `https://statsapi.web.nhl.com/api/v1/teams/${teamId}/stats`;
-      const response = await fetch(url);
-      const data = await response.json();
-      return data;
-    }
-
-    getTeamData(away)
-      .then(setAwayTeamData)
-      .catch((err) => {
-        console.error(err);
-      });
-    getTeamData(home)
-      .then(setHomeTeamData)
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [away, home]);
-
-  if (awayTeamData === null || homeTeamData === null) {
-    return <h1>Loading...</h1>;
-  }
-
-  const awayStats = awayTeamData.stats[0].splits[0].stat;
-  const awayStatsRankings = awayTeamData.stats[1].splits[0].stat;
-  const homeStats = homeTeamData.stats[0].splits[0].stat;
-  const homeStatsRankings = homeTeamData.stats[1].splits[0].stat;
+export default function HeadToHead({ awayTeamStats, homeTeamStats }) {
+  const awayStats = awayTeamStats.stats[0].splits[0].stat;
+  const awayStatsRankings = awayTeamStats.stats[0].splits[1].stat;
+  const homeStats = homeTeamStats.stats[0].splits[0].stat;
+  const homeStatsRankings = homeTeamStats.stats[0].splits[1].stat;
 
   return (
     <>
@@ -39,9 +10,9 @@ export default function HeadToHead({ away, home }) {
       <table className="headToHeadStats w-100">
         <thead>
           <tr>
-            <th className="text-right">{awayTeamData.stats[0].splits[0].team.name}</th>
+            <th className="text-right">{awayTeamStats.stats[0].splits[0].team.name}</th>
             <th></th>
-            <th>{homeTeamData.stats[0].splits[0].team.name}</th>
+            <th>{homeTeamStats.stats[0].splits[0].team.name}</th>
           </tr>
         </thead>
         <tbody>
