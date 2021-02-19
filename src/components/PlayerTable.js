@@ -46,15 +46,14 @@ export default function PlayerTable({ skaters, allPlayers, goalies }) {
           </thead>
           <tbody>
             {goalies.map((goalie) => {
-              const savePercentage = allPlayers[`ID${goalie}`].stats.goalieStats.saves / allPlayers[`ID${goalie}`].stats.goalieStats.shots;
+              const savePercentage =
+                allPlayers[`ID${goalie}`].stats.goalieStats.saves / allPlayers[`ID${goalie}`].stats.goalieStats.shots;
               return (
                 <tr key={goalie}>
                   <td>{allPlayers[`ID${goalie}`].person.fullName}</td>
                   <td>{allPlayers[`ID${goalie}`].stats.goalieStats.saves}</td>
                   <td>{allPlayers[`ID${goalie}`].stats.goalieStats.shots}</td>
-                  <td>
-                    {savePercentage ? savePercentage.toFixed(3) : "-"}
-                  </td>
+                  <td>{savePercentage ? savePercentage.toFixed(3) : "-"}</td>
                   <td>{allPlayers[`ID${goalie}`].stats.goalieStats.timeOnIce}</td>
                 </tr>
               );

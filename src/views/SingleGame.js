@@ -119,8 +119,9 @@ export default function SingleGame() {
         <button onClick={() => setInfoToShow("game")}>Game Stats</button>
         <button onClick={() => setInfoToShow("head")}>Head to Head</button>
       </div>
-      {infoToShow === "game" && <div>
-        <LiveStats liveData={gameData.liveData} />
+      {infoToShow === "game" && (
+        <div>
+          <LiveStats liveData={gameData.liveData} />
           <table>
             <thead>
               <tr>
@@ -141,13 +142,16 @@ export default function SingleGame() {
               })}
             </tbody>
           </table>
-      </div>}
-      {infoToShow === "head" && <div>
-        <HeadToHead
-          awayTeamStats={{ stats: awayTeamData.teams[0].teamStats }}
-          homeTeamStats={{ stats: homeTeamData.teams[0].teamStats }}
-        />
-      </div>}
+        </div>
+      )}
+      {infoToShow === "head" && (
+        <div>
+          <HeadToHead
+            awayTeamStats={{ stats: awayTeamData.teams[0].teamStats }}
+            homeTeamStats={{ stats: homeTeamData.teams[0].teamStats }}
+          />
+        </div>
+      )}
       <div>
         <div className="toggle-controls">
           <button onClick={() => setShowTeamStats("away")}>
@@ -157,21 +161,21 @@ export default function SingleGame() {
             {gameData.liveData.linescore.teams.home.team.abbreviation}
           </button>
         </div>
-        <div style={{overflowX: "scroll" }}>
-        {showTeamStats === "away" && (
-          <>
-            <h2>{gameData.liveData.linescore.teams.away.team.name}</h2>
-            <PlayerTable skaters={awayTeamSkaters} allPlayers={awayTeamPlayers} />
-            <PlayerTable goalies={awayTeamGoalies} allPlayers={awayTeamPlayers} />
-          </>
-        )}
-        {showTeamStats === "home" && (
-          <>
-            <h2>{gameData.liveData.linescore.teams.home.team.name}</h2>
-            <PlayerTable skaters={homeTeamSkaters} allPlayers={homeTeamPlayers} />
-            <PlayerTable goalies={homeTeamGoalies} allPlayers={homeTeamPlayers} />
-          </>
-        )}
+        <div style={{ overflowX: "scroll" }}>
+          {showTeamStats === "away" && (
+            <>
+              <h2>{gameData.liveData.linescore.teams.away.team.name}</h2>
+              <PlayerTable skaters={awayTeamSkaters} allPlayers={awayTeamPlayers} />
+              <PlayerTable goalies={awayTeamGoalies} allPlayers={awayTeamPlayers} />
+            </>
+          )}
+          {showTeamStats === "home" && (
+            <>
+              <h2>{gameData.liveData.linescore.teams.home.team.name}</h2>
+              <PlayerTable skaters={homeTeamSkaters} allPlayers={homeTeamPlayers} />
+              <PlayerTable goalies={homeTeamGoalies} allPlayers={homeTeamPlayers} />
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -189,7 +193,7 @@ function LiveStats({ liveData }) {
 
   return (
     <div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", textAlign: "center"}}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", textAlign: "center" }}>
         <p>{away.team.name}</p>
         <p>
           {away.goals} - {home.goals}
@@ -216,7 +220,8 @@ function PenaltyPlays({ penalties, allPlays }) {
       <h2>Penalties</h2>
       {penalties.map((play) => (
         <div key={play}>
-          {allPlays[play].team.triCode} {allPlays[play].result.description} {allPlays[play].about.periodTime} {allPlays[play].about.ordinalNum}
+          {allPlays[play].team.triCode} {allPlays[play].result.description} {allPlays[play].about.periodTime}{" "}
+          {allPlays[play].about.ordinalNum}
         </div>
       ))}
     </div>
@@ -225,9 +230,18 @@ function PenaltyPlays({ penalties, allPlays }) {
 
 function ScoringPlays({ goals, allPlays }) {
   return (
-    <div className="p-1" style={{fontSize: "0.8rem"}}>
+    <div className="p-1" style={{ fontSize: "0.8rem" }}>
       {goals.map((play) => (
-        <div key={play} className="" style={{ padding: ".375rem", backgroundColor: "#e4e4e4", borderRadius: 8, boxShadow: "0 4px 4px rgba(0, 0, 0, 0.1)"}}>
+        <div
+          key={play}
+          className=""
+          style={{
+            padding: ".375rem",
+            backgroundColor: "#e4e4e4",
+            borderRadius: 8,
+            boxShadow: "0 4px 4px rgba(0, 0, 0, 0.1)",
+          }}
+        >
           <p>
             {allPlays[play].players[0].player.fullName} ({allPlays[play].players[0].seasonTotal})
           </p>
