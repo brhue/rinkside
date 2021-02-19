@@ -115,7 +115,7 @@ export default function SingleGame() {
 
   return (
     <div className="container">
-      <div>
+      <div className="toggle-controls">
         <button onClick={() => setInfoToShow("game")}>Game Stats</button>
         <button onClick={() => setInfoToShow("head")}>Head to Head</button>
       </div>
@@ -149,7 +149,7 @@ export default function SingleGame() {
         />
       </div>}
       <div>
-        <div>
+        <div className="toggle-controls">
           <button onClick={() => setShowTeamStats("away")}>
             {gameData.liveData.linescore.teams.away.team.abbreviation}
           </button>
@@ -157,6 +157,7 @@ export default function SingleGame() {
             {gameData.liveData.linescore.teams.home.team.abbreviation}
           </button>
         </div>
+        <div style={{overflowX: "scroll" }}>
         {showTeamStats === "away" && (
           <>
             <h2>{gameData.liveData.linescore.teams.away.team.name}</h2>
@@ -171,6 +172,7 @@ export default function SingleGame() {
             <PlayerTable goalies={homeTeamGoalies} allPlayers={homeTeamPlayers} />
           </>
         )}
+        </div>
       </div>
     </div>
   );
