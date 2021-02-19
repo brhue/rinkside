@@ -9,6 +9,7 @@ export default function SingleGame() {
   const [gameData, setGameData] = useState(null);
   const [awayTeamData, setAwayTeamData] = useState(null);
   const [homeTeamData, setHomeTeamData] = useState(null);
+  const [showTeamStats, setShowTeamStats] = useState("away");
 
   useEffect(() => {
     async function getTeamData(teamId) {
@@ -138,12 +139,28 @@ export default function SingleGame() {
         </table>
       </div>
       <div>
-        <h2>{gameData.liveData.linescore.teams.away.team.name}</h2>
-        <PlayerTable skaters={awayTeamSkaters} allPlayers={awayTeamPlayers} />
-        <PlayerTable goalies={awayTeamGoalies} allPlayers={awayTeamPlayers} />
-        <h2>{gameData.liveData.linescore.teams.home.team.name}</h2>
-        <PlayerTable skaters={homeTeamSkaters} allPlayers={homeTeamPlayers} />
-        <PlayerTable goalies={homeTeamGoalies} allPlayers={homeTeamPlayers} />
+        <div>
+          <button onClick={() => setShowTeamStats("away")}>
+            {gameData.liveData.linescore.teams.away.team.abbreviation}
+          </button>
+          <button onClick={() => setShowTeamStats("home")}>
+            {gameData.liveData.linescore.teams.home.team.abbreviation}
+          </button>
+        </div>
+        {showTeamStats === "away" && (
+          <>
+            <h2>{gameData.liveData.linescore.teams.away.team.name}</h2>
+            <PlayerTable skaters={awayTeamSkaters} allPlayers={awayTeamPlayers} />
+            <PlayerTable goalies={awayTeamGoalies} allPlayers={awayTeamPlayers} />
+          </>
+        )}
+        {showTeamStats === "home" && (
+          <>
+            <h2>{gameData.liveData.linescore.teams.home.team.name}</h2>
+            <PlayerTable skaters={homeTeamSkaters} allPlayers={homeTeamPlayers} />
+            <PlayerTable goalies={homeTeamGoalies} allPlayers={homeTeamPlayers} />
+          </>
+        )}
       </div>
     </div>
   );
@@ -195,9 +212,7 @@ function ScoringPlays({ goals, allPlays }) {
             <small>
               {allPlays[play].about.periodTime} - {allPlays[play].about.ordinalNum}
             </small>
-            <small>
-              {}
-            </small>
+            <small>{}</small>
           </p>
         </div>
       ))}
