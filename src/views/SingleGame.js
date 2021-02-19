@@ -110,10 +110,11 @@ export default function SingleGame() {
 
   return (
     <div className="container">
+      <LiveStats liveData={gameData.liveData} />
       <div>
         <HeadToHead
-          awayTeamStats={{ stats: awayTeamData.teams[0].teamStats}}
-          homeTeamStats={{ stats: homeTeamData.teams[0].teamStats}}
+          awayTeamStats={{ stats: awayTeamData.teams[0].teamStats }}
+          homeTeamStats={{ stats: homeTeamData.teams[0].teamStats }}
         />
         <table>
           <thead>
@@ -144,6 +145,62 @@ export default function SingleGame() {
         <PlayerTable skaters={homeTeamSkaters} allPlayers={homeTeamPlayers} />
         <PlayerTable goalies={homeTeamGoalies} allPlayers={homeTeamPlayers} />
       </div>
+    </div>
+  );
+}
+
+function LiveStats({ liveData }) {
+  const { away } = liveData.linescore.teams;
+  const { home } = liveData.linescore.teams;
+
+  const { allPlays } = liveData.plays;
+  const awayGoals = liveData.plays.scoringPlays.filter((play) => allPlays[play].team.id === away.team.id);
+  const homeGoals = liveData.plays.scoringPlays.filter((play) => allPlays[play].team.id === home.team.id);
+
+  return (
+    <div>
+      <div className="d-flex" style={{ justifyContent: "space-evenly" }}>
+        <p>{away.team.name}</p>
+        <p>
+          {away.goals} - {home.goals}
+        </p>
+        <p>{home.team.name}</p>
+      </div>
+      <div className="d-flex" style={{ justifyContent: "space-evenly" }}>
+        <ScoringPlays goals={awayGoals} allPlays={allPlays} />
+        <ScoringPlays goals={homeGoals} allPlays={allPlays} />
+      </div>
+    </div>
+  );
+}
+
+function ScoringPlays({ goals, allPlays }) {
+  return (
+    <div>
+      {goals.map((play) => (
+        <div key={play}>
+          <p>
+            {allPlays[play].players[0].player.fullName} ({allPlays[play].players[0].seasonTotal})
+          </p>
+          <p>
+            {allPlays[play].players
+              .filter((player) => player.playerType === "Assist")
+              .map((player) => (
+                <small key={player.player.id}>
+                  {player.player.fullName} ({player.seasonTotal})
+                </small>
+              ))}
+          </p>
+          <p>
+            <small>
+              {allPlays[play].about.periodTime} - {allPlays[play].about.ordinalNum}
+            </small>
+            <small>
+              {}
+            </small>
+          </p>
+        </div>
+      ))}
     </div>
   );
 }
