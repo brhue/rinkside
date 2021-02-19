@@ -176,12 +176,15 @@ function LiveStats({ liveData }) {
 
   return (
     <div>
-      <div className="d-flex" style={{ justifyContent: "space-evenly" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", textAlign: "center"}}>
         <p>{away.team.name}</p>
         <p>
           {away.goals} - {home.goals}
         </p>
         <p>{home.team.name}</p>
+        <p>{away.shotsOnGoal}</p>
+        <p>SHOTS</p>
+        <p>{home.shotsOnGoal}</p>
       </div>
       <div className="d-flex" style={{ justifyContent: "space-evenly" }}>
         <ScoringPlays goals={awayGoals} allPlays={allPlays} />
