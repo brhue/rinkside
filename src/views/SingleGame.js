@@ -10,6 +10,7 @@ export default function SingleGame() {
   const [awayTeamData, setAwayTeamData] = useState(null);
   const [homeTeamData, setHomeTeamData] = useState(null);
   const [showTeamStats, setShowTeamStats] = useState("away");
+  const [infoToShow, setInfoToShow] = useState("head");
 
   useEffect(() => {
     async function getTeamData(teamId) {
@@ -34,6 +35,9 @@ export default function SingleGame() {
       setGameData(data);
       setAwayTeamData(awayData);
       setHomeTeamData(homeData);
+      if (data.gameData.status.abstractGameState === "Final" || data.gameData.status.abstractGameState === "Live") {
+        setInfoToShow("game");
+      }
     }
 
     fetchGameData(gameId);
@@ -111,33 +115,39 @@ export default function SingleGame() {
 
   return (
     <div className="container">
-      <LiveStats liveData={gameData.liveData} />
       <div>
+        <button onClick={() => setInfoToShow("game")}>Game Stats</button>
+        <button onClick={() => setInfoToShow("head")}>Head to Head</button>
+      </div>
+      {infoToShow === "game" && <div>
+        <LiveStats liveData={gameData.liveData} />
+          <table>
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>{gameData.liveData.boxscore.teams.away.team.triCode}</th>
+                <th>{gameData.liveData.boxscore.teams.home.team.triCode}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.keys(gameTeamStats).map((category, i) => {
+                return (
+                  <tr key={i}>
+                    <td>{gameTeamStats[category].display}</td>
+                    <td>{gameTeamStats[category].away}</td>
+                    <td>{gameTeamStats[category].home}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+      </div>}
+      {infoToShow === "head" && <div>
         <HeadToHead
           awayTeamStats={{ stats: awayTeamData.teams[0].teamStats }}
           homeTeamStats={{ stats: homeTeamData.teams[0].teamStats }}
         />
-        <table>
-          <thead>
-            <tr>
-              <th>Category</th>
-              <th>{gameData.liveData.boxscore.teams.away.team.triCode}</th>
-              <th>{gameData.liveData.boxscore.teams.home.team.triCode}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.keys(gameTeamStats).map((category, i) => {
-              return (
-                <tr key={i}>
-                  <td>{gameTeamStats[category].display}</td>
-                  <td>{gameTeamStats[category].away}</td>
-                  <td>{gameTeamStats[category].home}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      </div>}
       <div>
         <div>
           <button onClick={() => setShowTeamStats("away")}>
