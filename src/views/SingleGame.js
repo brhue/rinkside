@@ -173,6 +173,7 @@ function LiveStats({ liveData }) {
   const { allPlays } = liveData.plays;
   const awayGoals = liveData.plays.scoringPlays.filter((play) => allPlays[play].team.id === away.team.id);
   const homeGoals = liveData.plays.scoringPlays.filter((play) => allPlays[play].team.id === home.team.id);
+  const { penaltyPlays } = liveData.plays;
 
   return (
     <div>
@@ -190,6 +191,22 @@ function LiveStats({ liveData }) {
         <ScoringPlays goals={awayGoals} allPlays={allPlays} />
         <ScoringPlays goals={homeGoals} allPlays={allPlays} />
       </div>
+      <div>
+        <PenaltyPlays penalties={penaltyPlays} allPlays={allPlays} />
+      </div>
+    </div>
+  );
+}
+
+function PenaltyPlays({ penalties, allPlays }) {
+  return (
+    <div>
+      <h2>Penalties</h2>
+      {penalties.map((play) => (
+        <div key={play}>
+          {allPlays[play].team.triCode} {allPlays[play].result.description} {allPlays[play].about.periodTime} {allPlays[play].about.ordinalNum}
+        </div>
+      ))}
     </div>
   );
 }
