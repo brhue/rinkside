@@ -8,7 +8,7 @@ function App() {
     <Router>
       <div>
         <header className="m-b-1">
-          <nav className="container d-flex align-items-baseline justify-content-between">
+          <nav className="container d-flex align-items-baseline justify-content-between p-1">
             <h1>
               <Link to="/">Hockey Info</Link>
             </h1>

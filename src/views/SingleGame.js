@@ -196,9 +196,9 @@ function LiveStats({ liveData }) {
 
 function ScoringPlays({ goals, allPlays }) {
   return (
-    <div>
+    <div className="p-1" style={{fontSize: "0.8rem"}}>
       {goals.map((play) => (
-        <div key={play}>
+        <div key={play} className="" style={{ padding: ".375rem", backgroundColor: "#e4e4e4", borderRadius: 8, boxShadow: "0 4px 4px rgba(0, 0, 0, 0.1)"}}>
           <p>
             {allPlays[play].players[0].player.fullName} ({allPlays[play].players[0].seasonTotal})
           </p>
