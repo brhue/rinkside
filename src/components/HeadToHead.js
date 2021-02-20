@@ -1,4 +1,6 @@
-export default function HeadToHead({ awayTeamStats, homeTeamStats }) {
+import { Link } from "react-router-dom";
+
+export default function HeadToHead({ awayTeamStats, homeTeamStats, pastGames }) {
   const awayStats = awayTeamStats.stats[0].splits[0].stat;
   const awayStatsRankings = awayTeamStats.stats[0].splits[1].stat;
   const homeStats = homeTeamStats.stats[0].splits[0].stat;
@@ -117,6 +119,33 @@ export default function HeadToHead({ awayTeamStats, homeTeamStats }) {
           </tr>
         </tbody>
       </table>
+      <PastGames pastGames={pastGames} />
     </>
+  );
+}
+
+function PastGames({ pastGames }) {
+  return (
+    <div className="pastGames">
+      <h2>Previous Games</h2>
+      {pastGames.dates
+        .slice(-5)
+        .sort((a, b) => (a.date < b.date ? 1 : -1))
+        .map((date) =>
+          date.games.map((game) => (
+            <Link key={game.gamePk} to={`/game/${game.gamePk}`} style={{ color: "#333" }}>
+              <div className="d-flex justify-content-between">
+                <p>{date.date}</p>
+                <p>
+                  {game.teams.away.team.abbreviation} {game.teams.away.score}
+                </p>
+                <p>
+                  {game.teams.home.score} {game.teams.home.team.abbreviation}
+                </p>
+              </div>
+            </Link>
+          ))
+        )}
+    </div>
   );
 }

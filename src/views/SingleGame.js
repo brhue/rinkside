@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { formatISODate } from "../utils";
 
 import PlayerTable from "../components/PlayerTable";
 import HeadToHead from "../components/HeadToHead";
@@ -11,6 +12,7 @@ export default function SingleGame() {
   const [homeTeamData, setHomeTeamData] = useState(null);
   const [showTeamStats, setShowTeamStats] = useState("away");
   const [infoToShow, setInfoToShow] = useState("head");
+  const [pastGames, setPastGames] = useState(null);
 
   useEffect(() => {
     async function getTeamData(teamId) {
@@ -30,20 +32,32 @@ export default function SingleGame() {
       const home = data.liveData.boxscore.teams.home.team.id;
       const awayData = await getTeamData(away);
       const homeData = await getTeamData(home);
+      const pastGamesData = await getPastGames(away, home);
 
       console.log(data);
       setGameData(data);
       setAwayTeamData(awayData);
       setHomeTeamData(homeData);
+      setPastGames(pastGamesData);
       if (data.gameData.status.abstractGameState === "Final" || data.gameData.status.abstractGameState === "Live") {
         setInfoToShow("game");
       }
     }
 
+    async function getPastGames(teamId, opponentId) {
+      const now = new Date();
+      const url =
+        `https://statsapi.web.nhl.com/api/v1/schedule?expand=schedule.teams&teamId=${teamId}&opponentId=${opponentId}&startDate=2018-10-03&endDate=` +
+        formatISODate(new Date(now.setDate(now.getDate() - 1)));
+      const response = await fetch(url);
+      const data = await response.json();
+      return data;
+    }
+
     fetchGameData(gameId);
   }, [gameId]);
 
-  if (gameData === null || awayTeamData === null || homeTeamData === null) {
+  if (gameData === null || awayTeamData === null || homeTeamData === null || pastGames === null) {
     return <h1>Loading...</h1>;
   }
 
@@ -149,6 +163,7 @@ export default function SingleGame() {
           <HeadToHead
             awayTeamStats={{ stats: awayTeamData.teams[0].teamStats }}
             homeTeamStats={{ stats: homeTeamData.teams[0].teamStats }}
+            pastGames={pastGames}
           />
         </div>
       )}
