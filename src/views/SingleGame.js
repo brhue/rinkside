@@ -221,7 +221,10 @@ function LiveStats({ liveData, gameData }) {
               {liveData.linescore.currentPeriodTimeRemaining} {liveData.linescore.currentPeriodOrdinal}
             </span>
           </p>
-          <div className="text-center" style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center" }}>
+          <div
+            className="text-center"
+            style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center" }}
+          >
             <p>
               <img
                 width="75"
@@ -256,13 +259,56 @@ function LiveStats({ liveData, gameData }) {
 function PenaltyPlays({ penalties, allPlays }) {
   return (
     <div>
-      <h2>Penalties</h2>
-      {penalties.map((play) => (
-        <div key={play}>
-          {allPlays[play].team.triCode} {allPlays[play].result.description} {allPlays[play].about.periodTime}{" "}
-          {allPlays[play].about.ordinalNum}
-        </div>
+      <h2 className="m-b-1">Penalties</h2>
+      {penalties.map((playId) => (
+        <PlayCard
+          key={playId}
+          play={allPlays[playId]}
+          imgUrl={`url(https://cms.nhl.bamgrid.com/images/headshots/current/60x60/${allPlays[playId].players[0].player.id}@2x.jpg)`}
+        >
+          <p>{allPlays[playId].team.triCode}</p>
+          <p>{allPlays[playId].result.description}</p>
+          <p>
+            {allPlays[playId].about.periodTime} {allPlays[playId].about.ordinalNum}
+          </p>
+        </PlayCard>
       ))}
+    </div>
+  );
+}
+
+function PlayCard({ play, imgUrl, children }) {
+  return (
+    <div
+      key={play}
+      className="d-flex m-b-1"
+      style={{
+        padding: ".625rem",
+        backgroundColor: "#e4e4e4",
+        borderRadius: 16,
+        boxShadow: "0 4px 4px rgba(0, 0, 0, 0.1)",
+        alignItems: "center",
+      }}
+    >
+      <div
+        style={{
+          width: 75,
+          height: 75,
+          flex: "none",
+          borderRadius: "50%",
+          backgroundColor: "white",
+          // backgroundImage: `url(https://cms.nhl.bamgrid.com/images/headshots/current/60x60/${play.players[0].player.id}.jpg)`,
+          backgroundImage: imgUrl,
+          backgroundSize: "cover",
+        }}
+      ></div>
+      <div
+        style={{
+          marginLeft: "1rem",
+        }}
+      >
+        {children}
+      </div>
     </div>
   );
 }
@@ -271,54 +317,31 @@ function ScoringPlays({ goals, allPlays }) {
   return (
     <div className="">
       <h2 className="m-b-1">Goals</h2>
-      {goals.map((play) => (
-        <div
-          key={play}
-          className="d-flex m-b-1"
-          style={{
-            padding: ".625rem",
-            backgroundColor: "#e4e4e4",
-            borderRadius: 16,
-            boxShadow: "0 4px 4px rgba(0, 0, 0, 0.1)",
-            alignItems: "center",
-          }}
+      {goals.map((playId) => (
+        <PlayCard
+          key={playId}
+          play={allPlays[playId]}
+          imgUrl={`url(https://cms.nhl.bamgrid.com/images/headshots/current/60x60/${allPlays[playId].players[0].player.id}@2x.jpg)`}
         >
-          <div
-            style={{
-              width: 75,
-              height: 75,
-              borderRadius: "50%",
-              backgroundColor: "white",
-              // backgroundImage: `url(https://cms.nhl.bamgrid.com/images/headshots/current/60x60/${allPlays[play].players[0].player.id}.jpg)`,
-              backgroundImage: `url(https://cms.nhl.bamgrid.com/images/headshots/current/60x60/${allPlays[play].players[0].player.id}@2x.jpg)`,
-              backgroundSize: "cover",
-            }}
-          ></div>
-          <div
-            style={{
-              marginLeft: "1rem",
-            }}
-          >
-            <p>
-              {allPlays[play].players[0].player.fullName} ({allPlays[play].players[0].seasonTotal})
-            </p>
-            <p>
-              {allPlays[play].players
-                .filter((player) => player.playerType === "Assist")
-                .map((player) => (
-                  <small key={player.player.id}>
-                    {player.player.fullName} ({player.seasonTotal})
-                  </small>
-                ))}
-            </p>
-            <p>
-              <small>
-                {allPlays[play].about.periodTime} - {allPlays[play].about.ordinalNum}
-              </small>
-              <small>{}</small>
-            </p>
-          </div>
-        </div>
+          <p>
+            {allPlays[playId].players[0].player.fullName} ({allPlays[playId].players[0].seasonTotal})
+          </p>
+          <p>
+            {allPlays[playId].players
+              .filter((player) => player.playerType === "Assist")
+              .map((player) => (
+                <small key={player.player.id}>
+                  {player.player.fullName} ({player.seasonTotal})
+                </small>
+              ))}
+          </p>
+          <p>
+            <small>
+              {allPlays[playId].about.periodTime} - {allPlays[playId].about.ordinalNum}
+            </small>
+            <small>{}</small>
+          </p>
+        </PlayCard>
       ))}
     </div>
   );
