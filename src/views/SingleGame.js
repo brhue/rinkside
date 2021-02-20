@@ -130,8 +130,8 @@ export default function SingleGame() {
   return (
     <div className="container">
       <div className="toggle-controls">
-        <button onClick={() => setInfoToShow("game")}>Game Stats</button>
-        <button onClick={() => setInfoToShow("head")}>Head to Head</button>
+        <button className={infoToShow === "game" ? "active" : ""} onClick={() => setInfoToShow("game")}>Game Stats</button>
+        <button className={infoToShow === "head" ? "active" : ""} onClick={() => setInfoToShow("head")}>Head to Head</button>
       </div>
       {infoToShow === "game" && (
         <div>
@@ -169,10 +169,10 @@ export default function SingleGame() {
       )}
       <div>
         <div className="toggle-controls">
-          <button onClick={() => setShowTeamStats("away")}>
+          <button className={showTeamStats === "away" ? "active" : ""} onClick={() => setShowTeamStats("away")}>
             {gameData.liveData.linescore.teams.away.team.abbreviation}
           </button>
-          <button onClick={() => setShowTeamStats("home")}>
+          <button className={showTeamStats === "home" ? "active" : ""} onClick={() => setShowTeamStats("home")}>
             {gameData.liveData.linescore.teams.home.team.abbreviation}
           </button>
         </div>

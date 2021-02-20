@@ -186,3 +186,39 @@ table {
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
 }
+
+/* Inline #1 | http://localhost:3000/game/2020020276 */
+
+.container {
+  /* padding-left: 5%; */
+  /* padding-right: 5%; */
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.toggle-controls {
+  /* gap: 1rem; */
+  gap: 0.5rem;
+  height: 72px;
+  background-color: #2e2e2e;
+  padding: 0.5rem;
+  border-radius: 8px;
+  color: #fff;
+}
+
+/* Inline #2 | http://localhost:3000/game/2020020276 */
+
+.toggle-controls button {
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #2e2e2e;
+  border: none;
+}
+
+.toggle-controls .active {
+  background-color: #1e1e1e;
+}
+
+.toggle-controls button {
+  color: #fff;
+}
