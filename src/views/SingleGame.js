@@ -130,8 +130,12 @@ export default function SingleGame() {
   return (
     <div className="container">
       <div className="toggle-controls">
-        <button className={infoToShow === "game" ? "active" : ""} onClick={() => setInfoToShow("game")}>Game Stats</button>
-        <button className={infoToShow === "head" ? "active" : ""} onClick={() => setInfoToShow("head")}>Head to Head</button>
+        <button className={infoToShow === "game" ? "active" : ""} onClick={() => setInfoToShow("game")}>
+          Game Stats
+        </button>
+        <button className={infoToShow === "head" ? "active" : ""} onClick={() => setInfoToShow("head")}>
+          Head to Head
+        </button>
       </div>
       {infoToShow === "game" && (
         <div>
@@ -208,12 +212,12 @@ function LiveStats({ liveData, gameData }) {
   return (
     <div>
       <p>
-        <span>{new Date(gameData.datetime.dateTime).toLocaleDateString()}</span>
-        {" "}
-        <span>{gameData.venue.name}</span>
+        <span>{new Date(gameData.datetime.dateTime).toLocaleDateString()}</span> <span>{gameData.venue.name}</span>
       </p>
       <p className="text-center">
-        <span>{liveData.linescore.currentPeriodTimeRemaining} {liveData.linescore.currentPeriodOrdinal}</span>
+        <span>
+          {liveData.linescore.currentPeriodTimeRemaining} {liveData.linescore.currentPeriodOrdinal}
+        </span>
       </p>
       <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", textAlign: "center" }}>
         <p>{away.team.name}</p>
@@ -269,12 +273,14 @@ function ScoringPlays({ goals, allPlays }) {
               backgroundColor: "white",
               // backgroundImage: `url(https://cms.nhl.bamgrid.com/images/headshots/current/60x60/${allPlays[play].players[0].player.id}.jpg)`,
               backgroundImage: `url(https://cms.nhl.bamgrid.com/images/headshots/current/60x60/${allPlays[play].players[0].player.id}@2x.jpg)`,
-              backgroundSize: 'cover', 
+              backgroundSize: "cover",
             }}
           ></div>
-          <div style={{
-            marginLeft: '1rem'
-          }}>
+          <div
+            style={{
+              marginLeft: "1rem",
+            }}
+          >
             <p>
               {allPlays[play].players[0].player.fullName} ({allPlays[play].players[0].seasonTotal})
             </p>
