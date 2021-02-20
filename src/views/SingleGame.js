@@ -75,11 +75,11 @@ export default function SingleGame() {
   const homeTeamStats = gameData.liveData.boxscore.teams.home.teamStats.teamSkaterStats;
 
   const gameTeamStats = {
-    goals: {
-      display: "Goals",
-      away: awayTeamStats.goals,
-      home: homeTeamStats.goals,
-    },
+    // goals: {
+    //   display: "Goals",
+    //   away: awayTeamStats.goals,
+    //   home: homeTeamStats.goals,
+    // },
     shots: {
       display: "Shots",
       away: awayTeamStats.shots,
@@ -139,27 +139,7 @@ export default function SingleGame() {
       </div>
       {infoToShow === "game" && (
         <div>
-          <LiveStats {...gameData} />
-          <table>
-            <thead>
-              <tr>
-                <th>Category</th>
-                <th>{gameData.liveData.boxscore.teams.away.team.triCode}</th>
-                <th>{gameData.liveData.boxscore.teams.home.team.triCode}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Object.keys(gameTeamStats).map((category, i) => {
-                return (
-                  <tr key={i}>
-                    <td>{gameTeamStats[category].display}</td>
-                    <td>{gameTeamStats[category].away}</td>
-                    <td>{gameTeamStats[category].home}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <LiveStats {...gameData} gameTeamStats={gameTeamStats} />
         </div>
       )}
       {infoToShow === "head" && (
@@ -201,7 +181,7 @@ export default function SingleGame() {
   );
 }
 
-function LiveStats({ liveData, gameData }) {
+function LiveStats({ liveData, gameData, gameTeamStats }) {
   const { away } = liveData.linescore.teams;
   const { home } = liveData.linescore.teams;
 
@@ -244,10 +224,30 @@ function LiveStats({ liveData, gameData }) {
                 alt={home.team.name}
               />
             </p>
-            <p>{away.shotsOnGoal}</p>
+            {/* <p>{away.shotsOnGoal}</p>
             <p>Shots</p>
-            <p>{home.shotsOnGoal}</p>
+            <p>{home.shotsOnGoal}</p> */}
           </div>
+          <table className="w-100 text-center">
+            <thead>
+              <tr>
+                <th>{liveData.boxscore.teams.away.team.triCode}</th>
+                <th></th>
+                <th>{liveData.boxscore.teams.home.team.triCode}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.keys(gameTeamStats).map((category, i) => {
+                return (
+                  <tr key={i}>
+                    <td>{gameTeamStats[category].away}</td>
+                    <td>{gameTeamStats[category].display}</td>
+                    <td>{gameTeamStats[category].home}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
       <ScoringPlays goals={scoringPlays} allPlays={allPlays} />
