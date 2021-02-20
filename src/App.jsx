@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Schedule from "./views/Schedule";
 import Standings from "./views/Standings";
 import SingleGame from "./views/SingleGame";
+import Home from "./views/Home";
 
 function App() {
   return (
@@ -14,23 +15,31 @@ function App() {
             </h1>
             <ul>
               <li>
+                <Link to="/games">Games</Link>
+              </li>
+              <li>
                 <Link to="/standings">Standings</Link>
               </li>
             </ul>
           </nav>
         </header>
         <main>
-          <Switch>
-            <Route path="/game/:gameId">
-              <SingleGame />
-            </Route>
-            <Route path="/standings">
-              <Standings />
-            </Route>
-            <Route path="/">
-              <Schedule />
-            </Route>
-          </Switch>
+          <div className="container">
+            <Switch>
+              <Route path="/game/:gameId">
+                <SingleGame />
+              </Route>
+              <Route path="/standings">
+                <Standings />
+              </Route>
+              <Route path="/games">
+                <Schedule />
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Switch>
+          </div>
         </main>
         <footer className="text-center m-t-auto p-1">
           <small> &copy; 2021 Bradley Donahue</small>

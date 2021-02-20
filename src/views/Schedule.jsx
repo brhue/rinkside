@@ -19,7 +19,7 @@ function Schedule(props) {
     fetchGameData(formatISODate(searchDay));
   }, [searchDay]);
   return (
-    <div className="container">
+    <>
       <div className="d-flex m-b-1 justify-content-between align-items-center">
         <button
           className="btn btn-primary"
@@ -44,7 +44,7 @@ function Schedule(props) {
           return <Game {...game} key={game.gamePk} />;
         })}
       </div>
-    </div>
+    </>
   );
 }
 

@@ -36,7 +36,7 @@ export default function Standings(props) {
   const { teamRecords } = standingsData;
 
   return (
-    <div className="container">
+    <>
       <table className="w-100">
         <thead>
           <tr>
@@ -104,6 +104,6 @@ export default function Standings(props) {
           ))}
         </tbody>
       </table>
-    </div>
+    </>
   );
 }

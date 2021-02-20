@@ -128,7 +128,7 @@ export default function SingleGame() {
   };
 
   return (
-    <div className="container">
+    <>
       <div className="toggle-controls grid-col-3 m-b-1">
         <button className={infoToShow === "game" ? "active" : ""} onClick={() => setInfoToShow("game")}>
           Game Stats
@@ -182,7 +182,7 @@ export default function SingleGame() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
