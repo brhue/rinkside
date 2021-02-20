@@ -218,6 +218,7 @@ function LiveStats({ liveData }) {
         <p>SHOTS</p>
         <p>{home.shotsOnGoal}</p>
       </div>
+      <h2>Goals</h2>
       <div className="d-flex" style={{ justifyContent: "space-evenly" }}>
         <ScoringPlays goals={awayGoals} allPlays={allPlays} />
         <ScoringPlays goals={homeGoals} allPlays={allPlays} />
