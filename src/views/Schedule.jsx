@@ -2,7 +2,7 @@ import React from "react";
 import { formatISODate } from "../utils";
 import "../styles.css";
 
-import Game from "./Game";
+import Game from "../components/Game";
 
 function Schedule(props) {
   const [scheduleData, setScheduleData] = React.useState({ games: [] });

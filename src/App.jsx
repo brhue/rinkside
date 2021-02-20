@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Schedule from "./components/Schedule";
-import Standings from "./components/Standings";
+import Schedule from "./views/Schedule";
+import Standings from "./views/Standings";
 import SingleGame from "./views/SingleGame";
 
 function App() {
