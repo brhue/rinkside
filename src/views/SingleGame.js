@@ -129,12 +129,15 @@ export default function SingleGame() {
 
   return (
     <div className="container">
-      <div className="toggle-controls m-b-1">
+      <div className="toggle-controls grid-col-3 m-b-1">
         <button className={infoToShow === "game" ? "active" : ""} onClick={() => setInfoToShow("game")}>
           Game Stats
         </button>
         <button className={infoToShow === "head" ? "active" : ""} onClick={() => setInfoToShow("head")}>
           Head to Head
+        </button>
+        <button className={infoToShow === "roster" ? "active" : ""} onClick={() => setInfoToShow("roster")}>
+          Rosters
         </button>
       </div>
       {infoToShow === "game" && (
@@ -151,32 +154,34 @@ export default function SingleGame() {
           />
         </div>
       )}
-      <div>
-        <div className="toggle-controls">
-          <button className={showTeamStats === "away" ? "active" : ""} onClick={() => setShowTeamStats("away")}>
-            {gameData.liveData.linescore.teams.away.team.abbreviation}
-          </button>
-          <button className={showTeamStats === "home" ? "active" : ""} onClick={() => setShowTeamStats("home")}>
-            {gameData.liveData.linescore.teams.home.team.abbreviation}
-          </button>
+      {infoToShow === "roster" && (
+        <div>
+          <div className="toggle-controls grid-col-2">
+            <button className={showTeamStats === "away" ? "active" : ""} onClick={() => setShowTeamStats("away")}>
+              {gameData.liveData.linescore.teams.away.team.abbreviation}
+            </button>
+            <button className={showTeamStats === "home" ? "active" : ""} onClick={() => setShowTeamStats("home")}>
+              {gameData.liveData.linescore.teams.home.team.abbreviation}
+            </button>
+          </div>
+          <div style={{ overflowX: "scroll" }}>
+            {showTeamStats === "away" && (
+              <>
+                <h2>{gameData.liveData.linescore.teams.away.team.name}</h2>
+                <PlayerTable skaters={awayTeamSkaters} allPlayers={awayTeamPlayers} />
+                <PlayerTable goalies={awayTeamGoalies} allPlayers={awayTeamPlayers} />
+              </>
+            )}
+            {showTeamStats === "home" && (
+              <>
+                <h2>{gameData.liveData.linescore.teams.home.team.name}</h2>
+                <PlayerTable skaters={homeTeamSkaters} allPlayers={homeTeamPlayers} />
+                <PlayerTable goalies={homeTeamGoalies} allPlayers={homeTeamPlayers} />
+              </>
+            )}
+          </div>
         </div>
-        <div style={{ overflowX: "scroll" }}>
-          {showTeamStats === "away" && (
-            <>
-              <h2>{gameData.liveData.linescore.teams.away.team.name}</h2>
-              <PlayerTable skaters={awayTeamSkaters} allPlayers={awayTeamPlayers} />
-              <PlayerTable goalies={awayTeamGoalies} allPlayers={awayTeamPlayers} />
-            </>
-          )}
-          {showTeamStats === "home" && (
-            <>
-              <h2>{gameData.liveData.linescore.teams.home.team.name}</h2>
-              <PlayerTable skaters={homeTeamSkaters} allPlayers={homeTeamPlayers} />
-              <PlayerTable goalies={homeTeamGoalies} allPlayers={homeTeamPlayers} />
-            </>
-          )}
-        </div>
-      </div>
+      )}
     </div>
   );
 }

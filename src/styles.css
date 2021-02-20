@@ -183,8 +183,15 @@ table {
 
 .toggle-controls {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
+}
+
+.grid-col-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-col-2 {
+  grid-template-columns: repeat(2, 1fr);
 }
 
 /* Inline #1 | http://localhost:3000/game/2020020276 */
