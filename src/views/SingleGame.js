@@ -201,10 +201,9 @@ function LiveStats({ liveData, gameData }) {
   const { away } = liveData.linescore.teams;
   const { home } = liveData.linescore.teams;
 
-  const { allPlays } = liveData.plays;
-  const awayGoals = liveData.plays.scoringPlays.filter((play) => allPlays[play].team.id === away.team.id);
-  const homeGoals = liveData.plays.scoringPlays.filter((play) => allPlays[play].team.id === home.team.id);
-  const { penaltyPlays } = liveData.plays;
+  const { allPlays, scoringPlays, penaltyPlays } = liveData.plays;
+  // const awayGoals = liveData.plays.scoringPlays.filter((play) => allPlays[play].team.id === away.team.id);
+  // const homeGoals = liveData.plays.scoringPlays.filter((play) => allPlays[play].team.id === home.team.id);
 
   return (
     <div>
@@ -226,14 +225,8 @@ function LiveStats({ liveData, gameData }) {
         <p>SHOTS</p>
         <p>{home.shotsOnGoal}</p>
       </div>
-      <h2>Goals</h2>
-      <div className="d-flex" style={{ justifyContent: "space-evenly" }}>
-        <ScoringPlays goals={awayGoals} allPlays={allPlays} />
-        <ScoringPlays goals={homeGoals} allPlays={allPlays} />
-      </div>
-      <div>
-        <PenaltyPlays penalties={penaltyPlays} allPlays={allPlays} />
-      </div>
+      <ScoringPlays goals={scoringPlays} allPlays={allPlays} />
+      <PenaltyPlays penalties={penaltyPlays} allPlays={allPlays} />
     </div>
   );
 }
@@ -254,36 +247,53 @@ function PenaltyPlays({ penalties, allPlays }) {
 
 function ScoringPlays({ goals, allPlays }) {
   return (
-    <div className="p-1" style={{ fontSize: "0.8rem" }}>
+    <div className="">
+      <h2 className="m-b-1">Goals</h2>
       {goals.map((play) => (
         <div
           key={play}
-          className=""
+          className="d-flex m-b-1"
           style={{
-            padding: ".375rem",
+            padding: ".625rem",
             backgroundColor: "#e4e4e4",
-            borderRadius: 8,
+            borderRadius: 16,
             boxShadow: "0 4px 4px rgba(0, 0, 0, 0.1)",
+            alignItems: "center",
           }}
         >
-          <p>
-            {allPlays[play].players[0].player.fullName} ({allPlays[play].players[0].seasonTotal})
-          </p>
-          <p>
-            {allPlays[play].players
-              .filter((player) => player.playerType === "Assist")
-              .map((player) => (
-                <small key={player.player.id}>
-                  {player.player.fullName} ({player.seasonTotal})
-                </small>
-              ))}
-          </p>
-          <p>
-            <small>
-              {allPlays[play].about.periodTime} - {allPlays[play].about.ordinalNum}
-            </small>
-            <small>{}</small>
-          </p>
+          <div
+            style={{
+              width: 75,
+              height: 75,
+              borderRadius: "50%",
+              backgroundColor: "white",
+              // backgroundImage: `url(https://cms.nhl.bamgrid.com/images/headshots/current/60x60/${allPlays[play].players[0].player.id}.jpg)`,
+              backgroundImage: `url(https://cms.nhl.bamgrid.com/images/headshots/current/60x60/${allPlays[play].players[0].player.id}@2x.jpg)`,
+              backgroundSize: 'cover', 
+            }}
+          ></div>
+          <div style={{
+            marginLeft: '1rem'
+          }}>
+            <p>
+              {allPlays[play].players[0].player.fullName} ({allPlays[play].players[0].seasonTotal})
+            </p>
+            <p>
+              {allPlays[play].players
+                .filter((player) => player.playerType === "Assist")
+                .map((player) => (
+                  <small key={player.player.id}>
+                    {player.player.fullName} ({player.seasonTotal})
+                  </small>
+                ))}
+            </p>
+            <p>
+              <small>
+                {allPlays[play].about.periodTime} - {allPlays[play].about.ordinalNum}
+              </small>
+              <small>{}</small>
+            </p>
+          </div>
         </div>
       ))}
     </div>
