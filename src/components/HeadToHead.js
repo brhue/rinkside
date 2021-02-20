@@ -8,7 +8,7 @@ export default function HeadToHead({ awayTeamStats, homeTeamStats, pastGames }) 
 
   return (
     <>
-      <h1>Head to Head</h1>
+      <h2>Head to Head</h2>
       <table className="headToHeadStats w-100">
         <thead>
           <tr>
