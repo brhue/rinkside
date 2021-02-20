@@ -135,7 +135,7 @@ export default function SingleGame() {
       </div>
       {infoToShow === "game" && (
         <div>
-          <LiveStats liveData={gameData.liveData} />
+          <LiveStats {...gameData} />
           <table>
             <thead>
               <tr>
@@ -197,7 +197,7 @@ export default function SingleGame() {
   );
 }
 
-function LiveStats({ liveData }) {
+function LiveStats({ liveData, gameData }) {
   const { away } = liveData.linescore.teams;
   const { home } = liveData.linescore.teams;
 
@@ -208,6 +208,14 @@ function LiveStats({ liveData }) {
 
   return (
     <div>
+      <p>
+        <span>{new Date(gameData.datetime.dateTime).toLocaleDateString()}</span>
+        {" "}
+        <span>{gameData.venue.name}</span>
+      </p>
+      <p className="text-center">
+        <span>{liveData.linescore.currentPeriodTimeRemaining} {liveData.linescore.currentPeriodOrdinal}</span>
+      </p>
       <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", textAlign: "center" }}>
         <p>{away.team.name}</p>
         <p>
