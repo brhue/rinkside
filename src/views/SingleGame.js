@@ -129,7 +129,7 @@ export default function SingleGame() {
 
   return (
     <div className="container">
-      <div className="toggle-controls">
+      <div className="toggle-controls m-b-1">
         <button className={infoToShow === "game" ? "active" : ""} onClick={() => setInfoToShow("game")}>
           Game Stats
         </button>
@@ -211,23 +211,41 @@ function LiveStats({ liveData, gameData }) {
 
   return (
     <div>
-      <p>
-        <span>{new Date(gameData.datetime.dateTime).toLocaleDateString()}</span> <span>{gameData.venue.name}</span>
-      </p>
-      <p className="text-center">
-        <span>
-          {liveData.linescore.currentPeriodTimeRemaining} {liveData.linescore.currentPeriodOrdinal}
-        </span>
-      </p>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", textAlign: "center" }}>
-        <p>{away.team.name}</p>
-        <p>
-          {away.goals} - {home.goals}
+      <div className="m-b-1" style={{ backgroundColor: "#e4e4e4" }}>
+        <p className="game-info-header">
+          <span>{new Date(gameData.datetime.dateTime).toLocaleDateString()}</span> <span>{gameData.venue.name}</span>
         </p>
-        <p>{home.team.name}</p>
-        <p>{away.shotsOnGoal}</p>
-        <p>SHOTS</p>
-        <p>{home.shotsOnGoal}</p>
+        <div style={{ padding: ".375rem" }}>
+          <p className="text-center">
+            <span>
+              {liveData.linescore.currentPeriodTimeRemaining} {liveData.linescore.currentPeriodOrdinal}
+            </span>
+          </p>
+          <div className="text-center" style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center" }}>
+            <p>
+              <img
+                width="75"
+                height="75"
+                src={`https://www-league.nhlstatic.com/images/logos/teams-20202021-light/${away.team.id}.svg`}
+                alt={away.team.name}
+              />
+            </p>
+            <p>
+              {away.goals} - {home.goals}
+            </p>
+            <p>
+              <img
+                width="75"
+                height="75"
+                src={`https://www-league.nhlstatic.com/images/logos/teams-20202021-light/${home.team.id}.svg`}
+                alt={home.team.name}
+              />
+            </p>
+            <p>{away.shotsOnGoal}</p>
+            <p>Shots</p>
+            <p>{home.shotsOnGoal}</p>
+          </div>
+        </div>
       </div>
       <ScoringPlays goals={scoringPlays} allPlays={allPlays} />
       <PenaltyPlays penalties={penaltyPlays} allPlays={allPlays} />
