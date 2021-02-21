@@ -1,3 +1,9 @@
+:root {
+  --text-color: #eee;
+  --background-color: #121212;
+  --link-color: #0033cc;
+}
+
 *,
 *::after,
 *::before {
@@ -17,10 +23,13 @@ html {
 
 body {
   margin: 0;
+  color: var(--text-color);
+  background-color: var(--background-color);
 }
 
 a {
   text-decoration: none;
+  color: var(--link-color);
 }
 
 header {
