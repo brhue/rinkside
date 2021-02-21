@@ -14,9 +14,9 @@ function App() {
               <Link to="/">Hockey Info</Link>
             </h1>
             <ul>
-              <li>
+              {/* <li>
                 <Link to="/games">Games</Link>
-              </li>
+              </li> */}
               <li>
                 <Link to="/standings">Standings</Link>
               </li>
@@ -32,11 +32,11 @@ function App() {
               <Route path="/standings">
                 <Standings />
               </Route>
-              <Route path="/games">
+              {/* <Route path="/games">
                 <Schedule />
-              </Route>
+              </Route> */}
               <Route path="/">
-                <Home />
+                <Schedule />
               </Route>
             </Switch>
           </div>
