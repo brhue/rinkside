@@ -251,3 +251,21 @@ table {
   display: block;
   margin-bottom: 1rem;
 }
+
+.schedule-game {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
+  border: 1px solid black;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.schedule-game .info {
+  grid-column: 1 / span 3;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  width: 100%;
+}
