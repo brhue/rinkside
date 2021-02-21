@@ -39,7 +39,7 @@ function Schedule(props) {
           Next Day
         </button>
       </div>
-      <div>
+      <div className="game-list">
         {scheduleData.games.map((game) => {
           return <Game {...game} key={game.gamePk} />;
         })}
