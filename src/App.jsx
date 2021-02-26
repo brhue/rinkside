@@ -23,7 +23,7 @@ function App() {
         </nav>
       </header>
       <main className="px-4">
-        <div className="container">
+        <div className="container mx-auto">
           <Switch>
             <Route path="/game/:gameId">
               <SingleGame />

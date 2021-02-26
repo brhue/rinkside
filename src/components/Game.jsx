@@ -5,8 +5,8 @@ export default function Game(props) {
   const { away, home } = props.teams;
 
   return (
-    <Link to={`/game/${props.gamePk}`}>
-      <div className="schedule-game">
+    <Link className="block mb-4" to={`/game/${props.gamePk}`}>
+      <div className="grid grid-cols-3 items-center justify-items-center border">
         <img
           width="50"
           height="50"
@@ -25,7 +25,7 @@ export default function Game(props) {
         <span>{`${away.leagueRecord.wins}-${away.leagueRecord.losses}-${away.leagueRecord.ot}`}</span>
         <span></span>
         <span>{`${home.leagueRecord.wins}-${home.leagueRecord.losses}-${home.leagueRecord.ot}`}</span>
-        <div className="info">
+        <div className="grid col-span-3 grid-cols-3 w-full justify-items-center">
           <p className="status-items">
             {props.linescore.teams.away.powerPlay && <span className="power-play">PP</span>}
             {props.linescore.teams.away.goaliePulled && <span className="empty-net">EN</span>}

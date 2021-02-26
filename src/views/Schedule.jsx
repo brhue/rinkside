@@ -1,6 +1,5 @@
 import React from "react";
 import { formatISODate } from "../utils";
-import "../styles.css";
 
 import Game from "../components/Game";
 
@@ -20,9 +19,9 @@ function Schedule(props) {
   }, [searchDay]);
   return (
     <>
-      <div className="d-flex m-b-1 justify-content-between align-items-center">
+      <div className="mb-4 flex justify-between items-center">
         <button
-          className="btn btn-primary"
+          className="rounded-md border px-4 py-2 bg-gray-800"
           onClick={() => {
             setSearchDay(new Date(searchDay.setDate(searchDay.getDate() - 1)));
           }}
@@ -31,7 +30,7 @@ function Schedule(props) {
         </button>
         <span>{searchDay.toDateString()}</span>
         <button
-          className="btn btn-primary"
+          className="rounded-md border px-4 py-2 bg-gray-800"
           onClick={() => {
             setSearchDay(new Date(searchDay.setDate(searchDay.getDate() + 1)));
           }}
@@ -39,7 +38,7 @@ function Schedule(props) {
           Next Day
         </button>
       </div>
-      <div className="game-list">
+      <div className="">
         {scheduleData.games.map((game) => {
           return <Game {...game} key={game.gamePk} />;
         })}

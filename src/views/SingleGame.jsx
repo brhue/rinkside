@@ -129,14 +129,29 @@ export default function SingleGame() {
 
   return (
     <>
-      <div className="toggle-controls grid-col-3 m-b-1">
-        <button className={infoToShow === "game" ? "active" : ""} onClick={() => setInfoToShow("game")}>
+      <div className="grid grid-cols-3 text-sm mb-4 sm:flex">
+        <button
+          className={`py-2 px-4 rounded-full sm:mr-2 ${
+            infoToShow === "game" ? "bg-gray-900 text-white" : "hover:bg-gray-400 hover:text-white"
+          }`}
+          onClick={() => setInfoToShow("game")}
+        >
           Game Stats
         </button>
-        <button className={infoToShow === "head" ? "active" : ""} onClick={() => setInfoToShow("head")}>
+        <button
+          className={`py-2 px-4 rounded-full sm:mr-2 ${
+            infoToShow === "head" ? "bg-gray-900 text-white" : "hover:bg-gray-400 hover:text-white"
+          }`}
+          onClick={() => setInfoToShow("head")}
+        >
           Head to Head
         </button>
-        <button className={infoToShow === "roster" ? "active" : ""} onClick={() => setInfoToShow("roster")}>
+        <button
+          className={`py-2 px-4 rounded-full sm:mr-2 ${
+            infoToShow === "roster" ? "bg-gray-900 text-white" : "hover:bg-gray-400 hover:text-white"
+          }`}
+          onClick={() => setInfoToShow("roster")}
+        >
           Rosters
         </button>
       </div>
@@ -156,11 +171,21 @@ export default function SingleGame() {
       )}
       {infoToShow === "roster" && (
         <div>
-          <div className="toggle-controls grid-col-2">
-            <button className={showTeamStats === "away" ? "active" : ""} onClick={() => setShowTeamStats("away")}>
+          <div className="grid grid-cols-2 text-sm mb-4 sm:flex">
+            <button
+              className={`py-2 px-4 rounded-full sm:mr-2 ${
+                showTeamStats === "away" ? "bg-gray-900 text-white" : "hover:bg-gray-400 hover:text-white"
+              }`}
+              onClick={() => setShowTeamStats("away")}
+            >
               {gameData.liveData.linescore.teams.away.team.abbreviation}
             </button>
-            <button className={showTeamStats === "home" ? "active" : ""} onClick={() => setShowTeamStats("home")}>
+            <button
+              className={`py-2 px-4 rounded-full sm:mr-2 ${
+                showTeamStats === "home" ? "bg-gray-900 text-white" : "hover:bg-gray-400 hover:text-white"
+              }`}
+              onClick={() => setShowTeamStats("home")}
+            >
               {gameData.liveData.linescore.teams.home.team.abbreviation}
             </button>
           </div>
@@ -195,21 +220,18 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
   // const homeGoals = liveData.plays.scoringPlays.filter((play) => allPlays[play].team.id === home.team.id);
 
   return (
-    <div>
-      <div className="m-b-1" style={{ backgroundColor: "#e4e4e4" }}>
-        <p className="game-info-header">
+    <div className="sm:grid sm:grid-cols-2 sm:gap-4">
+      <div className="mb-4">
+        <p className="bg-gray-900 text-white py-2 px-4 text-sm rounded-tr rounded-tl flex justify-between">
           <span>{new Date(gameData.datetime.dateTime).toLocaleDateString()}</span> <span>{gameData.venue.name}</span>
         </p>
-        <div style={{ padding: ".375rem" }}>
+        <div className="px-4">
           <p className="text-center">
-            <span>
+            <span className="rounded-full bg-red-600 text-white px-4 py-2">
               {liveData.linescore.currentPeriodTimeRemaining} {liveData.linescore.currentPeriodOrdinal}
             </span>
           </p>
-          <div
-            className="text-center"
-            style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center" }}
-          >
+          <div className="text-center grid grid-cols-3 items-center justify-center">
             <p>
               <img
                 width="75"
@@ -233,7 +255,7 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
             <p>Shots</p>
             <p>{home.shotsOnGoal}</p> */}
           </div>
-          <table className="w-100 text-center">
+          <table className="w-full text-center">
             <thead>
               <tr>
                 <th>{liveData.boxscore.teams.away.team.triCode}</th>
@@ -255,8 +277,10 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
           </table>
         </div>
       </div>
-      <ScoringPlays goals={scoringPlays} allPlays={allPlays} />
-      <PenaltyPlays penalties={penaltyPlays} allPlays={allPlays} />
+      <div className="">
+        <ScoringPlays goals={scoringPlays} allPlays={allPlays} />
+        <PenaltyPlays penalties={penaltyPlays} allPlays={allPlays} />
+      </div>
     </div>
   );
 }
@@ -264,12 +288,12 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
 function PenaltyPlays({ penalties, allPlays }) {
   return (
     <div>
-      <h2 className="m-b-1">Penalties</h2>
+      <h2 className="text-xl mb-4 font-bold">Penalties</h2>
       {penalties.map((playId) => (
         <PlayCard
           key={playId}
           play={allPlays[playId]}
-          imgUrl={`url(https://cms.nhl.bamgrid.com/images/headshots/current/60x60/${allPlays[playId].players[0].player.id}@2x.jpg)`}
+          imgUrl={`https://cms.nhl.bamgrid.com/images/headshots/current/60x60/${allPlays[playId].players[0].player.id}@2x.jpg`}
         >
           <p>{allPlays[playId].team.triCode}</p>
           <p>{allPlays[playId].result.description}</p>
@@ -284,36 +308,11 @@ function PenaltyPlays({ penalties, allPlays }) {
 
 function PlayCard({ play, imgUrl, children }) {
   return (
-    <div
-      key={play}
-      className="d-flex m-b-1"
-      style={{
-        padding: ".625rem",
-        backgroundColor: "#e4e4e4",
-        borderRadius: 16,
-        boxShadow: "0 4px 4px rgba(0, 0, 0, 0.1)",
-        alignItems: "center",
-      }}
-    >
-      <div
-        style={{
-          width: 75,
-          height: 75,
-          flex: "none",
-          borderRadius: "50%",
-          backgroundColor: "white",
-          // backgroundImage: `url(https://cms.nhl.bamgrid.com/images/headshots/current/60x60/${play.players[0].player.id}.jpg)`,
-          backgroundImage: imgUrl,
-          backgroundSize: "cover",
-        }}
-      ></div>
-      <div
-        style={{
-          marginLeft: "1rem",
-        }}
-      >
-        {children}
+    <div key={play} className="flex mb-4 p-2 rounded-2xl bg-white border shadow-md items-center">
+      <div className="w-20 rounded-full overflow-hidden border bg-white flex-none">
+        <img src={imgUrl} alt={play} width="75" height="75" />
       </div>
+      <div className="ml-4">{children}</div>
     </div>
   );
 }
@@ -321,12 +320,12 @@ function PlayCard({ play, imgUrl, children }) {
 function ScoringPlays({ goals, allPlays }) {
   return (
     <div className="">
-      <h2 className="m-b-1">Goals</h2>
+      <h2 className="text-xl mb-4 font-bold">Goals</h2>
       {goals.map((playId) => (
         <PlayCard
           key={playId}
           play={allPlays[playId]}
-          imgUrl={`url(https://cms.nhl.bamgrid.com/images/headshots/current/60x60/${allPlays[playId].players[0].player.id}@2x.jpg)`}
+          imgUrl={`https://cms.nhl.bamgrid.com/images/headshots/current/60x60/${allPlays[playId].players[0].player.id}@2x.jpg`}
         >
           <p>
             {allPlays[playId].players[0].player.fullName} ({allPlays[playId].players[0].seasonTotal})

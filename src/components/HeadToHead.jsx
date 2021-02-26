@@ -1,140 +1,68 @@
 import { Link } from "react-router-dom";
 
 export default function HeadToHead({ awayTeamStats, homeTeamStats, pastGames }) {
+  const statsToShow = [
+    { stat: "wins", display: "Wins" },
+    { stat: "losses", display: "Losses" },
+    { stat: "ot", display: "OT" },
+    { stat: "pts", display: "Points" },
+    { stat: "goalsPerGame", display: "Goals" },
+    { stat: "goalsAgainstPerGame", display: "Goals Against" },
+    { stat: "shotsPerGame", display: "Shots" },
+    { stat: "shotsAllowed", display: "Shots" },
+    { stat: "powerPlayPercentage", display: "Power Play %" },
+    { stat: "penaltyKillPercentage", display: "Penalty Kill %" },
+    { stat: "faceOffWinPercentage", display: "Face Off %" },
+  ];
   const awayStats = awayTeamStats.stats[0].splits[0].stat;
   const awayStatsRankings = awayTeamStats.stats[0].splits[1].stat;
   const homeStats = homeTeamStats.stats[0].splits[0].stat;
   const homeStatsRankings = homeTeamStats.stats[0].splits[1].stat;
-
   return (
     <>
-      <h2>Head to Head</h2>
-      <table className="headToHeadStats w-100">
-        <thead>
-          <tr>
-            <th className="text-right">{awayTeamStats.stats[0].splits[0].team.name}</th>
-            <th></th>
-            <th>{homeTeamStats.stats[0].splits[0].team.name}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <span>{awayStatsRankings.wins}</span> <span>{awayStats.wins}</span>
-            </td>
-            <td>Wins</td>
-            <td>
-              <span>{homeStats.wins}</span> <span>{homeStatsRankings.wins}</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>{awayStatsRankings.losses}</span> <span>{awayStats.losses}</span>
-            </td>
-            <td>Losses</td>
-            <td>
-              <span>{homeStats.losses}</span> <span>{homeStatsRankings.losses}</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>{awayStatsRankings.ot}</span> <span>{awayStats.ot}</span>
-            </td>
-            <td>OT</td>
-            <td>
-              <span>{homeStats.ot}</span> <span>{homeStatsRankings.ot}</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>{awayStatsRankings.pts}</span> <span>{awayStats.pts}</span>
-            </td>
-            <td>Points</td>
-            <td>
-              <span>{homeStats.pts}</span> <span>{homeStatsRankings.pts}</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>{awayStatsRankings.goalsPerGame}</span> <span>{awayStats.goalsPerGame}</span>
-            </td>
-            <td>Goals Per Game</td>
-            <td>
-              <span>{homeStats.goalsPerGame}</span> <span>{homeStatsRankings.goalsPerGame}</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>{awayStatsRankings.goalsAgainstPerGame}</span> <span>{awayStats.goalsAgainstPerGame}</span>
-            </td>
-            <td>Goals Against Per Game</td>
-            <td>
-              <span>{homeStats.goalsAgainstPerGame}</span> <span>{homeStatsRankings.goalsAgainstPerGame}</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>{awayStatsRankings.shotsPerGame}</span> <span>{awayStats.shotsPerGame}</span>
-            </td>
-            <td>Shots Per Game</td>
-            <td>
-              <span>{homeStats.shotsPerGame}</span> <span>{homeStatsRankings.shotsPerGame}</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>{awayStatsRankings.shotsAllowed}</span> <span>{awayStats.shotsAllowed}</span>
-            </td>
-            <td>Shots Allowed Per Game</td>
-            <td>
-              <span>{homeStats.shotsAllowed}</span> <span>{homeStatsRankings.shotsAllowed}</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>{awayStatsRankings.powerPlayPercentage}</span> <span>{awayStats.powerPlayPercentage}</span>
-            </td>
-            <td>Power Play %</td>
-            <td>
-              <span>{homeStats.powerPlayPercentage}</span> <span>{homeStatsRankings.powerPlayPercentage}</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>{awayStatsRankings.penaltyKillPercentage}</span> <span>{awayStats.penaltyKillPercentage}</span>
-            </td>
-            <td>Penalty Kill %</td>
-            <td>
-              <span>{homeStats.penaltyKillPercentage}</span> <span>{homeStatsRankings.penaltyKillPercentage}</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>{awayStatsRankings.faceOffWinPercentage}</span> <span>{awayStats.faceOffWinPercentage}</span>
-            </td>
-            <td>Face-Off Win %</td>
-            <td>
-              <span>{homeStats.faceOffWinPercentage}</span> <span>{homeStatsRankings.faceOffWinPercentage}</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <PastGames pastGames={pastGames} />
+      <h2 className="text-xl mb-4 font-bold">Head to Head</h2>
+      <div className="grid md:grid-cols-2">
+        <table className="w-full table-auto whitespace-normal mb-4">
+          <thead>
+            <tr>
+              <th className="text-right">{awayTeamStats.stats[0].splits[0].team.name}</th>
+              <th></th>
+              <th>{homeTeamStats.stats[0].splits[0].team.name}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {statsToShow.map(({stat, display}) => {
+              return (
+                <tr key={stat}>
+                  <td className="flex justify-between">
+                    <span>{awayStatsRankings[stat]}</span> <span>{awayStats[stat]}</span>
+                  </td>
+                  <td className="text-center">{display}</td>
+                  <td className="flex justify-between">
+                    <span>{homeStats[stat]}</span> <span>{homeStatsRankings[stat]}</span>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        <PastGames pastGames={pastGames} />
+      </div>
     </>
   );
 }
 
 function PastGames({ pastGames }) {
   return (
-    <div className="pastGames">
-      <h2>Previous Games</h2>
+    <div className="">
+      <h2 className="text-xl mb-4 font-bold">Previous Games</h2>
       {pastGames.dates
         .slice(-5)
         .sort((a, b) => (a.date < b.date ? 1 : -1))
         .map((date) =>
           date.games.map((game) => (
-            <Link key={game.gamePk} to={`/game/${game.gamePk}`} style={{ color: "#333" }}>
-              <div className="d-flex justify-content-between">
+            <Link key={game.gamePk} to={`/game/${game.gamePk}`} className="text-gray-700">
+              <div className="flex justify-between px-4 py-2 items-center">
                 <p>{date.date}</p>
                 <p>
                   {game.teams.away.team.abbreviation} {game.teams.away.score}
@@ -142,6 +70,15 @@ function PastGames({ pastGames }) {
                 <p>
                   {game.teams.home.score} {game.teams.home.team.abbreviation}
                 </p>
+                <span className="w-5">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path
+                      fillRule="evenodd"
+                      d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </span>
               </div>
             </Link>
           ))
