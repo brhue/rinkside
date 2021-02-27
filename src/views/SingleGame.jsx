@@ -5,8 +5,11 @@ import { formatISODate } from "../utils";
 import PlayerTable from "../components/PlayerTable";
 import HeadToHead from "../components/HeadToHead";
 
+import useGame from "../hooks/useGame";
+
 export default function SingleGame() {
   const { gameId } = useParams();
+  const { data, loading } = useGame(gameId);
   const [gameData, setGameData] = useState(null);
   const [awayTeamData, setAwayTeamData] = useState(null);
   const [homeTeamData, setHomeTeamData] = useState(null);
@@ -57,7 +60,7 @@ export default function SingleGame() {
     fetchGameData(gameId);
   }, [gameId]);
 
-  if (gameData === null || awayTeamData === null || homeTeamData === null || pastGames === null) {
+  if (loading || gameData === null || awayTeamData === null || homeTeamData === null || pastGames === null) {
     return <h1>Loading...</h1>;
   }
 
