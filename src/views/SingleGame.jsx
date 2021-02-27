@@ -216,16 +216,16 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
 
   return (
     <div className="sm:grid sm:grid-cols-2 sm:gap-4">
-      <div className="mb-4 shadow-md p-4 space-y-4 rounded">
+      <div className="mb-4 shadow-md p-4 space-y-4 rounded-lg">
         <p className="bg-gray-900 text-white py-2 px-4 text-sm rounded flex justify-between">
           <span>{new Date(gameData.datetime.dateTime).toLocaleDateString()}</span> <span>{gameData.venue.name}</span>
         </p>
         <div className="px-4">
           <div className="grid grid-cols-3 text-center text-sm text-white">
             <p>
-              {liveData.linescore.teams.away.powerPlay && <span className="px-3 py-1 bg-red-600 rounded-full">PP</span>}
+              {liveData.linescore.teams.away.powerPlay && <span className="px-3 py-1 bg-red-600 rounded-lg">PP</span>}
               {liveData.linescore.teams.away.goaliePulled && (
-                <span className="px-3 py-1 bg-red-600 rounded-xl">EN</span>
+                <span className="px-3 py-1 bg-red-600 rounded-lg">EN</span>
               )}
             </p>
             <p>
@@ -234,9 +234,9 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
               </span>
             </p>
             <p>
-              {liveData.linescore.teams.home.powerPlay && <span className="px-3 py-1 bg-red-600 rounded-full">PP</span>}
+              {liveData.linescore.teams.home.powerPlay && <span className="px-3 py-1 bg-red-600 rounded-lg">PP</span>}
               {liveData.linescore.teams.home.goaliePulled && (
-                <span className="px-3 py-1 bg-red-600 rounded-xl">EN</span>
+                <span className="px-3 py-1 bg-red-600 rounded-lg">EN</span>
               )}
             </p>
           </div>
@@ -306,10 +306,14 @@ function PenaltyPlays({ penalties, allPlays }) {
           play={allPlays[playId]}
           imgUrl={`https://cms.nhl.bamgrid.com/images/headshots/current/60x60/${allPlays[playId].players[0].player.id}@2x.jpg`}
         >
-          <p>{allPlays[playId].team.triCode}</p>
           <p>{allPlays[playId].result.description}</p>
           <p>
-            {allPlays[playId].about.periodTime} {allPlays[playId].about.ordinalNum}
+            <small>
+              <span className="mr-1">
+                {allPlays[playId].about.periodTime} - {allPlays[playId].about.ordinalNum}
+              </span>
+              <span className="text-white bg-gray-900 px-2 py-1 rounded-lg">{allPlays[playId].team.triCode}</span>
+            </small>
           </p>
         </PlayCard>
       ))}
@@ -339,7 +343,14 @@ function ScoringPlays({ goals, allPlays }) {
           imgUrl={`https://cms.nhl.bamgrid.com/images/headshots/current/60x60/${allPlays[playId].players[0].player.id}@2x.jpg`}
         >
           <p>
-            {allPlays[playId].players[0].player.fullName} ({allPlays[playId].players[0].seasonTotal})
+            <span className="mr-1">
+              {allPlays[playId].players[0].player.fullName} ({allPlays[playId].players[0].seasonTotal})
+            </span>
+            {allPlays[playId].result.strength.code !== "EVEN" && (
+              <span className="text-sm text-white bg-red-600 px-2 py-1 rounded-lg">
+                {allPlays[playId].result.strength.code}
+              </span>
+            )}
           </p>
           <p>
             {allPlays[playId].players
@@ -352,9 +363,13 @@ function ScoringPlays({ goals, allPlays }) {
           </p>
           <p>
             <small>
-              {allPlays[playId].about.periodTime} - {allPlays[playId].about.ordinalNum}
+              <span className="mr-1">
+                {allPlays[playId].about.periodTime} - {allPlays[playId].about.ordinalNum}
+              </span>
+              <span className="text-white bg-gray-900 px-2 py-1 rounded-lg">
+                {allPlays[playId].team.triCode}
+              </span>
             </small>
-            <small>{}</small>
           </p>
         </PlayCard>
       ))}
