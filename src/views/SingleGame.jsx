@@ -75,11 +75,6 @@ export default function SingleGame() {
   const homeTeamStats = gameData.liveData.boxscore.teams.home.teamStats.teamSkaterStats;
 
   const gameTeamStats = {
-    // goals: {
-    //   display: "Goals",
-    //   away: awayTeamStats.goals,
-    //   home: homeTeamStats.goals,
-    // },
     shots: {
       display: "Shots",
       away: awayTeamStats.shots,
@@ -129,9 +124,9 @@ export default function SingleGame() {
 
   return (
     <>
-      <div className="grid grid-cols-3 text-sm mb-4 sm:flex">
+      <div className="grid grid-cols-3 gap-2 text-xs mb-4 sm:flex">
         <button
-          className={`py-2 px-4 rounded-full sm:mr-2 ${
+          className={`py-2 px-3 rounded-full sm:mr-2 ${
             infoToShow === "game" ? "bg-gray-900 text-white" : "hover:bg-gray-400 hover:text-white"
           }`}
           onClick={() => setInfoToShow("game")}
@@ -171,7 +166,7 @@ export default function SingleGame() {
       )}
       {infoToShow === "roster" && (
         <div>
-          <div className="grid grid-cols-2 text-sm mb-4 sm:flex">
+          <div className="grid grid-cols-2 gap-2 text-xs mb-4 sm:flex">
             <button
               className={`py-2 px-4 rounded-full sm:mr-2 ${
                 showTeamStats === "away" ? "bg-gray-900 text-white" : "hover:bg-gray-400 hover:text-white"
@@ -221,53 +216,69 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
 
   return (
     <div className="sm:grid sm:grid-cols-2 sm:gap-4">
-      <div className="mb-4">
-        <p className="bg-gray-900 text-white py-2 px-4 text-sm rounded-tr rounded-tl flex justify-between">
+      <div className="mb-4 shadow-md p-4 space-y-4 rounded">
+        <p className="bg-gray-900 text-white py-2 px-4 text-sm rounded flex justify-between">
           <span>{new Date(gameData.datetime.dateTime).toLocaleDateString()}</span> <span>{gameData.venue.name}</span>
         </p>
         <div className="px-4">
-          <p className="text-center">
-            <span className="rounded-full bg-red-600 text-white px-4 py-2">
-              {liveData.linescore.currentPeriodTimeRemaining} {liveData.linescore.currentPeriodOrdinal}
-            </span>
-          </p>
-          <div className="text-center grid grid-cols-3 items-center justify-center">
+          <div className="grid grid-cols-3 text-center text-sm text-white">
             <p>
-              <img
-                width="75"
-                height="75"
-                src={`https://www-league.nhlstatic.com/images/logos/teams-20202021-light/${away.team.id}.svg`}
-                alt={away.team.name}
-              />
+              {liveData.linescore.teams.away.powerPlay && <span className="px-3 py-1 bg-red-600 rounded-full">PP</span>}
+              {liveData.linescore.teams.away.goaliePulled && (
+                <span className="px-3 py-1 bg-red-600 rounded-xl">EN</span>
+              )}
             </p>
             <p>
-              {away.goals} - {home.goals}
+              <span className="rounded-xl bg-red-600 px-4 py-2">
+                {liveData.linescore.currentPeriodTimeRemaining} {liveData.linescore.currentPeriodOrdinal}
+              </span>
             </p>
             <p>
-              <img
-                width="75"
-                height="75"
-                src={`https://www-league.nhlstatic.com/images/logos/teams-20202021-light/${home.team.id}.svg`}
-                alt={home.team.name}
-              />
+              {liveData.linescore.teams.home.powerPlay && <span className="px-3 py-1 bg-red-600 rounded-full">PP</span>}
+              {liveData.linescore.teams.home.goaliePulled && (
+                <span className="px-3 py-1 bg-red-600 rounded-xl">EN</span>
+              )}
             </p>
-            {/* <p>{away.shotsOnGoal}</p>
-            <p>Shots</p>
-            <p>{home.shotsOnGoal}</p> */}
           </div>
-          <table className="w-full text-center">
+          <table className="w-full text-center table-fixed">
             <thead>
               <tr>
-                <th>{liveData.boxscore.teams.away.team.triCode}</th>
-                <th></th>
-                <th>{liveData.boxscore.teams.home.team.triCode}</th>
+                <th>
+                  <p>
+                    <img
+                      className="mx-auto"
+                      width="75"
+                      height="75"
+                      src={`https://www-league.nhlstatic.com/images/logos/teams-20202021-light/${away.team.id}.svg`}
+                      alt={away.team.name}
+                    />
+                    {liveData.boxscore.teams.away.team.triCode}
+                  </p>
+                </th>
+                <th>
+                  <span className="bg-gray-200 px-4 py-2 rounded-xl">
+                    {away.goals} - {home.goals}
+                  </span>
+                </th>
+                <th>
+                  <p>
+                    <img
+                      className="mx-auto"
+                      width="75"
+                      height="75"
+                      src={`https://www-league.nhlstatic.com/images/logos/teams-20202021-light/${home.team.id}.svg`}
+                      alt={home.team.name}
+                    />
+                    {liveData.boxscore.teams.home.team.triCode}
+                  </p>
+                </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y">
               {Object.keys(gameTeamStats).map((category, i) => {
                 return (
                   <tr key={i}>
-                    <td>{gameTeamStats[category].away}</td>
+                    <td className="py-2">{gameTeamStats[category].away}</td>
                     <td>{gameTeamStats[category].display}</td>
                     <td>{gameTeamStats[category].home}</td>
                   </tr>
@@ -277,7 +288,7 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
           </table>
         </div>
       </div>
-      <div className="">
+      <div className="p-4 shadow-md space-y-4">
         <ScoringPlays goals={scoringPlays} allPlays={allPlays} />
         <PenaltyPlays penalties={penaltyPlays} allPlays={allPlays} />
       </div>
@@ -308,8 +319,8 @@ function PenaltyPlays({ penalties, allPlays }) {
 
 function PlayCard({ play, imgUrl, children }) {
   return (
-    <div key={play} className="flex mb-4 p-2 rounded-2xl bg-white border shadow-md items-center">
-      <div className="w-20 rounded-full overflow-hidden border bg-white flex-none">
+    <div key={play} className="flex mb-4 p-4 rounded-xl bg-gray-100 items-center">
+      <div className="rounded-full overflow-hidden bg-white flex-none">
         <img src={imgUrl} alt={play} width="75" height="75" />
       </div>
       <div className="ml-4">{children}</div>
@@ -334,7 +345,7 @@ function ScoringPlays({ goals, allPlays }) {
             {allPlays[playId].players
               .filter((player) => player.playerType === "Assist")
               .map((player) => (
-                <small key={player.player.id}>
+                <small key={player.player.id} className="mr-1">
                   {player.player.fullName} ({player.seasonTotal})
                 </small>
               ))}

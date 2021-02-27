@@ -20,32 +20,34 @@ export default function HeadToHead({ awayTeamStats, homeTeamStats, pastGames }) 
   const homeStatsRankings = homeTeamStats.stats[0].splits[1].stat;
   return (
     <>
-      <h2 className="text-xl mb-4 font-bold">Head to Head</h2>
-      <div className="grid md:grid-cols-2">
-        <table className="w-full table-auto whitespace-normal mb-4">
-          <thead>
-            <tr>
-              <th className="text-right">{awayTeamStats.stats[0].splits[0].team.name}</th>
-              <th></th>
-              <th>{homeTeamStats.stats[0].splits[0].team.name}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {statsToShow.map(({stat, display}) => {
-              return (
-                <tr key={stat}>
-                  <td className="flex justify-between">
-                    <span>{awayStatsRankings[stat]}</span> <span>{awayStats[stat]}</span>
-                  </td>
-                  <td className="text-center">{display}</td>
-                  <td className="flex justify-between">
-                    <span>{homeStats[stat]}</span> <span>{homeStatsRankings[stat]}</span>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className="grid md:grid-cols-2 space-y-4">
+        <div className="rounded shadow-lg p-4">
+          <h2 className="text-xl mb-4 font-bold">Head to Head</h2>
+          <table className="w-full table-auto whitespace-normal">
+            <thead>
+              <tr>
+                <th className="text-right">{awayTeamStats.stats[0].splits[0].team.name}</th>
+                <th></th>
+                <th>{homeTeamStats.stats[0].splits[0].team.name}</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y">
+              {statsToShow.map(({ stat, display }) => {
+                return (
+                  <tr key={stat} className="text-sm">
+                    <td className="flex justify-between py-2">
+                      <span>{awayStatsRankings[stat]}</span> <span>{awayStats[stat]}</span>
+                    </td>
+                    <td className="text-center">{display}</td>
+                    <td className="flex justify-between">
+                      <span>{homeStats[stat]}</span> <span>{homeStatsRankings[stat]}</span>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
         <PastGames pastGames={pastGames} />
       </div>
     </>
@@ -54,35 +56,39 @@ export default function HeadToHead({ awayTeamStats, homeTeamStats, pastGames }) 
 
 function PastGames({ pastGames }) {
   return (
-    <div className="">
+    <div className="shadow-lg rounded p-4">
       <h2 className="text-xl mb-4 font-bold">Previous Games</h2>
-      {pastGames.dates
-        .slice(-5)
-        .sort((a, b) => (a.date < b.date ? 1 : -1))
-        .map((date) =>
-          date.games.map((game) => (
-            <Link key={game.gamePk} to={`/game/${game.gamePk}`} className="text-gray-700">
-              <div className="flex justify-between px-4 py-2 items-center">
-                <p>{date.date}</p>
-                <p>
-                  {game.teams.away.team.abbreviation} {game.teams.away.score}
-                </p>
-                <p>
-                  {game.teams.home.score} {game.teams.home.team.abbreviation}
-                </p>
-                <span className="w-5">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path
-                      fillRule="evenodd"
-                      d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </span>
-              </div>
-            </Link>
-          ))
-        )}
+      <ul>
+        {pastGames.dates
+          .slice(-5)
+          .sort((a, b) => (a.date < b.date ? 1 : -1))
+          .map((date) =>
+            date.games.map((game) => (
+              <li key={game.gamePk} className="group">
+                <Link to={`/game/${game.gamePk}`} className="text-gray-500 hover:text-gray-900">
+                  <div className="flex justify-between px-4 py-2 items-center">
+                    <p className="flex-auto">{date.date}</p>
+                    <p className="flex-auto">
+                      {game.teams.away.team.abbreviation} {game.teams.away.score}
+                    </p>
+                    <p className="flex-auto">
+                      {game.teams.home.score} {game.teams.home.team.abbreviation}
+                    </p>
+                    <span className="block w-5 transform transition-transform group-hover:-translate-x-6">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path
+                          fillRule="evenodd"
+                          d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                </Link>
+              </li>
+            ))
+          )}
+      </ul>
     </div>
   );
 }
