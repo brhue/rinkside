@@ -19,9 +19,9 @@ function Schedule(props) {
   }, [searchDay]);
   return (
     <>
-      <div className="mb-4 flex justify-between items-center">
+      <div className="mb-4 flex justify-between items-center text-sm">
         <button
-          className="rounded-md border px-4 py-2 bg-gray-800"
+          className="rounded-lg border px-3 py-2 bg-white hover:bg-gray-50 hover:border-gray-400 transition-colors"
           onClick={() => {
             setSearchDay(new Date(searchDay.setDate(searchDay.getDate() - 1)));
           }}
@@ -30,7 +30,7 @@ function Schedule(props) {
         </button>
         <span>{searchDay.toDateString()}</span>
         <button
-          className="rounded-md border px-4 py-2 bg-gray-800"
+          className="rounded-lg border px-4 py-2 bg-white hover:bg-gray-50 hover:border-gray-400 transition-colors"
           onClick={() => {
             setSearchDay(new Date(searchDay.setDate(searchDay.getDate() + 1)));
           }}
@@ -39,6 +39,7 @@ function Schedule(props) {
         </button>
       </div>
       <div className="">
+        <h2 className="text-xl font-semibold mb-4">Today's Games</h2>
         {scheduleData.games.map((game) => {
           return <Game {...game} key={game.gamePk} />;
         })}
