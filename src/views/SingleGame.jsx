@@ -188,17 +188,17 @@ export default function SingleGame() {
               {gameData.liveData.linescore.teams.home.team.abbreviation}
             </button>
           </div>
-          <div style={{ overflowX: "scroll" }}>
+          <div className="rounded-lg shadow-md p-4 bg-white overflow-x-scroll">
             {showTeamStats === "away" && (
               <>
-                <h2>{gameData.liveData.linescore.teams.away.team.name}</h2>
+                <h2 className="text-lg font-semibold">{gameData.liveData.linescore.teams.away.team.name}</h2>
                 <PlayerTable skaters={awayTeamSkaters} allPlayers={awayTeamPlayers} />
                 <PlayerTable goalies={awayTeamGoalies} allPlayers={awayTeamPlayers} />
               </>
             )}
             {showTeamStats === "home" && (
               <>
-                <h2>{gameData.liveData.linescore.teams.home.team.name}</h2>
+                <h2 className="text-lg font-semibold">{gameData.liveData.linescore.teams.home.team.name}</h2>
                 <PlayerTable skaters={homeTeamSkaters} allPlayers={homeTeamPlayers} />
                 <PlayerTable goalies={homeTeamGoalies} allPlayers={homeTeamPlayers} />
               </>
@@ -220,7 +220,7 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
 
   return (
     <div className="sm:grid sm:grid-cols-2 sm:gap-4">
-      <div className="mb-4 shadow-md p-4 space-y-4 rounded-lg">
+      <div className="mb-4 shadow-md p-4 space-y-4 rounded-lg bg-white">
         <p className="bg-gray-900 text-white py-2 px-4 text-sm rounded flex justify-between">
           <span>{new Date(gameData.datetime.dateTime).toLocaleDateString()}</span> <span>{gameData.venue.name}</span>
         </p>
@@ -228,9 +228,7 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
           <div className="grid grid-cols-3 text-center text-sm text-white">
             <p>
               {liveData.linescore.teams.away.powerPlay && <StatusItem>PP</StatusItem>}
-              {liveData.linescore.teams.away.goaliePulled && (
-                <StatusItem>EN</StatusItem>
-              )}
+              {liveData.linescore.teams.away.goaliePulled && <StatusItem>EN</StatusItem>}
             </p>
             <p>
               <span className="rounded-xl bg-red-600 px-4 py-2">
@@ -239,9 +237,7 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
             </p>
             <p>
               {liveData.linescore.teams.home.powerPlay && <StatusItem>PP</StatusItem>}
-              {liveData.linescore.teams.home.goaliePulled && (
-                <StatusItem>EN</StatusItem>
-              )}
+              {liveData.linescore.teams.home.goaliePulled && <StatusItem>EN</StatusItem>}
             </p>
           </div>
           <table className="w-full text-center table-fixed">
@@ -292,7 +288,7 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
           </table>
         </div>
       </div>
-      <div className="p-4 shadow-md space-y-4">
+      <div className="p-4 rounded-lg shadow-md space-y-4 bg-white">
         <ScoringPlays goals={scoringPlays} allPlays={allPlays} />
         <PenaltyPlays penalties={penaltyPlays} allPlays={allPlays} />
       </div>
@@ -370,9 +366,7 @@ function ScoringPlays({ goals, allPlays }) {
               <span className="mr-1">
                 {allPlays[playId].about.periodTime} - {allPlays[playId].about.ordinalNum}
               </span>
-              <span className="text-white bg-gray-900 px-2 py-1 rounded-lg">
-                {allPlays[playId].team.triCode}
-              </span>
+              <span className="text-white bg-gray-900 px-2 py-1 rounded-lg">{allPlays[playId].team.triCode}</span>
             </small>
           </p>
         </PlayCard>
