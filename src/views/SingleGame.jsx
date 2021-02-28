@@ -4,6 +4,7 @@ import { formatISODate } from "../utils";
 
 import PlayerTable from "../components/PlayerTable";
 import HeadToHead from "../components/HeadToHead";
+import StatusItem from "../components/StatusItem";
 
 import useGame from "../hooks/useGame";
 
@@ -226,9 +227,9 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
         <div className="px-4">
           <div className="grid grid-cols-3 text-center text-sm text-white">
             <p>
-              {liveData.linescore.teams.away.powerPlay && <span className="px-3 py-1 bg-red-600 rounded-lg">PP</span>}
+              {liveData.linescore.teams.away.powerPlay && <StatusItem>PP</StatusItem>}
               {liveData.linescore.teams.away.goaliePulled && (
-                <span className="px-3 py-1 bg-red-600 rounded-lg">EN</span>
+                <StatusItem>EN</StatusItem>
               )}
             </p>
             <p>
@@ -237,9 +238,9 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
               </span>
             </p>
             <p>
-              {liveData.linescore.teams.home.powerPlay && <span className="px-3 py-1 bg-red-600 rounded-lg">PP</span>}
+              {liveData.linescore.teams.home.powerPlay && <StatusItem>PP</StatusItem>}
               {liveData.linescore.teams.home.goaliePulled && (
-                <span className="px-3 py-1 bg-red-600 rounded-lg">EN</span>
+                <StatusItem>EN</StatusItem>
               )}
             </p>
           </div>
