@@ -219,8 +219,8 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
   // const homeGoals = liveData.plays.scoringPlays.filter((play) => allPlays[play].team.id === home.team.id);
 
   return (
-    <div className="sm:grid sm:grid-cols-2 sm:gap-4">
-      <div className="mb-4 shadow-md p-4 space-y-4 rounded-lg bg-white">
+    <div className="md:grid md:grid-cols-2 md:gap-4">
+      <div className="mb-4 shadow-md p-4 space-y-4 rounded-lg bg-white md:self-start">
         <p className="bg-gray-900 text-white py-2 px-4 text-sm rounded flex justify-between">
           <span>{new Date(gameData.datetime.dateTime).toLocaleDateString()}</span> <span>{gameData.venue.name}</span>
         </p>

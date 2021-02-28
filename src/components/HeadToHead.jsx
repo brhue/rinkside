@@ -20,7 +20,7 @@ export default function HeadToHead({ awayTeamStats, homeTeamStats, pastGames }) 
   const homeStatsRankings = homeTeamStats.stats[0].splits[1].stat;
   return (
     <>
-      <div className="grid md:grid-cols-2 space-y-4">
+      <div className="grid gap-4 md:grid-cols-2">
         <div className="rounded-lg shadow-md p-4 bg-white">
           <h2 className="text-xl mb-4 font-bold">Head to Head</h2>
           <table className="w-full table-auto whitespace-normal">
@@ -56,7 +56,7 @@ export default function HeadToHead({ awayTeamStats, homeTeamStats, pastGames }) 
 
 function PastGames({ pastGames }) {
   return (
-    <div className="shadow-md rounded-lg p-4 bg-white">
+    <div className="shadow-md rounded-lg p-4 bg-white md:self-start">
       <h2 className="text-xl mb-4 font-bold">Previous Games</h2>
       <ul>
         {pastGames.dates

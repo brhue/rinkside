@@ -2,12 +2,12 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Schedule from "./views/Schedule";
 import Standings from "./views/Standings";
 import SingleGame from "./views/SingleGame";
-import Home from "./views/Home";
+// import Home from "./views/Home";
 
 function App() {
   return (
     <Router>
-      <header className="p-4 border-b mb-4">
+      <header className="p-4 border-b mb-4 bg-white">
         <nav className="container mx-auto flex items-center justify-between">
           <h1 className="font-bold text-3xl">
             <Link to="/">Rinkside</Link>
