@@ -9,8 +9,8 @@ import useGame from "../hooks/useGame";
 
 export default function SingleGame() {
   const { gameId } = useParams();
-  const { data, loading } = useGame(gameId);
-  const [gameData, setGameData] = useState(null);
+  const { gameData } = useGame(gameId);
+  // const [gameData, setGameData] = useState(null);
   const [awayTeamData, setAwayTeamData] = useState(null);
   const [homeTeamData, setHomeTeamData] = useState(null);
   const [showTeamStats, setShowTeamStats] = useState("away");
@@ -38,7 +38,7 @@ export default function SingleGame() {
       const pastGamesData = await getPastGames(away, home);
 
       console.log(data);
-      setGameData(data);
+      //setGameData(data);
       setAwayTeamData(awayData);
       setHomeTeamData(homeData);
       setPastGames(pastGamesData);
@@ -60,7 +60,7 @@ export default function SingleGame() {
     fetchGameData(gameId);
   }, [gameId]);
 
-  if (loading || gameData === null || awayTeamData === null || homeTeamData === null || pastGames === null) {
+  if (gameData === null || awayTeamData === null || homeTeamData === null || pastGames === null) {
     return <h1>Loading...</h1>;
   }
 
