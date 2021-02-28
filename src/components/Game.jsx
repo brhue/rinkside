@@ -27,7 +27,7 @@ export default function Game(props) {
         <span></span>
         <span>{`${home.leagueRecord.wins}-${home.leagueRecord.losses}-${home.leagueRecord.ot}`}</span>
         <div className="grid col-span-3 grid-cols-3 w-full justify-items-center">
-          <p className="status-items">
+          <p className="text-white">
             {props.linescore.teams.away.powerPlay && <StatusItem>PP</StatusItem>}
             {props.linescore.teams.away.goaliePulled && <StatusItem>EN</StatusItem>}
           </p>
@@ -38,7 +38,7 @@ export default function Game(props) {
               {currentPeriodTimeRemaining} {currentPeriodOrdinal}
             </p>
           )}
-          <p className="status-items">
+          <p className="text-white">
             {props.linescore.teams.home.powerPlay && <StatusItem>PP</StatusItem>}
             {props.linescore.teams.home.goaliePulled && <StatusItem>EN</StatusItem>}
           </p>
