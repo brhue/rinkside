@@ -10,14 +10,14 @@ function App() {
       <header className="p-4 border-b mb-4">
         <nav className="container mx-auto flex items-center justify-between">
           <h1 className="font-bold text-3xl">
-            <Link to="/">Hockey Info</Link>
+            <Link to="/">Rinkside</Link>
           </h1>
           <ul>
             {/* <li>
                   <Link to="/games">Games</Link>
                 </li> */}
             <li>
-              <Link className="hover:bg-gray-400" to="/standings">Standings</Link>
+              <Link className="" to="/standings">Standings</Link>
             </li>
           </ul>
         </nav>
