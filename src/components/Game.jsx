@@ -8,24 +8,30 @@ export default function Game(props) {
   return (
     <Link className="block mb-4" to={`/game/${props.gamePk}`}>
       <div className="grid grid-cols-3 items-center justify-items-center bg-white shadow-sm rounded-lg p-4 hover:shadow-md transition-shadow">
-        <img
-          width="50"
-          height="50"
-          src={`https://www-league.nhlstatic.com/images/logos/teams-20202021-light/${props.teams.away.team.id}.svg`}
-          alt={props.teams.away.team.name}
-        />
+        <div className="text-center">
+          <img
+            width="50"
+            height="50"
+            src={`https://www-league.nhlstatic.com/images/logos/teams-20202021-light/${props.teams.away.team.id}.svg`}
+            alt={props.teams.away.team.name}
+          />
+            <p className="font-semibold">{props.teams.away.team.abbreviation}</p>
+        </div>
         <span className="bg-gray-200 px-3 py-1 rounded-xl">
           {props.teams.away.score} - {props.teams.home.score}
         </span>
-        <img
-          width="50"
-          height="50"
-          src={`https://www-league.nhlstatic.com/images/logos/teams-20202021-light/${props.teams.home.team.id}.svg`}
-          alt={props.teams.home.team.name}
-        />
-        <span>{`${away.leagueRecord.wins}-${away.leagueRecord.losses}-${away.leagueRecord.ot}`}</span>
+        <div className="text-center">
+          <img
+            width="50"
+            height="50"
+            src={`https://www-league.nhlstatic.com/images/logos/teams-20202021-light/${props.teams.home.team.id}.svg`}
+            alt={props.teams.home.team.name}
+          />
+          <p className="font-semibold">{props.teams.home.team.abbreviation}</p>
+        </div>
+        <span className="text-sm text-gray-600">{`${away.leagueRecord.wins}-${away.leagueRecord.losses}-${away.leagueRecord.ot}`}</span>
         <span></span>
-        <span>{`${home.leagueRecord.wins}-${home.leagueRecord.losses}-${home.leagueRecord.ot}`}</span>
+        <span className="text-sm text-gray-600">{`${home.leagueRecord.wins}-${home.leagueRecord.losses}-${home.leagueRecord.ot}`}</span>
         <div className="grid col-span-3 grid-cols-3 w-full justify-items-center">
           <p className="text-white">
             {props.linescore.teams.away.powerPlay && <StatusItem>PP</StatusItem>}

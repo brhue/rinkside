@@ -9,7 +9,7 @@ function Schedule(props) {
   React.useEffect(() => {
     async function fetchGameData(day) {
       const baseUrl = "https://statsapi.web.nhl.com/api/v1/";
-      const scheduleUrl = `${baseUrl}schedule?expand=schedule.linescore`;
+      const scheduleUrl = `${baseUrl}schedule?expand=schedule.linescore,schedule.teams`;
       const response = await fetch(scheduleUrl + `&date=${day}`);
       const data = await response.json();
       setScheduleData(data.dates[0]);
