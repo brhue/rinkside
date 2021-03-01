@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+// TODO: Properly type this?
+type PlayerData = {
+  copyright: String,
+  people: any[],
+}
+
 export default function PlayerView() {
-  const { playerId } = useParams();
-  const [playerData, setPlayerData] = useState(null);
+  const { playerId } = useParams<{ playerId: string }>();
+  const [playerData, setPlayerData] = useState<PlayerData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
@@ -22,8 +28,8 @@ export default function PlayerView() {
     getPlayer();
   }, [playerId]);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>There was an error fetching the data.</p>
+  if (isLoading || playerData === null) return <p>Loading...</p>;
+  if (isError) return <p>There was an error fetching the data.</p>;
 
   const player = playerData.people[0];
 
