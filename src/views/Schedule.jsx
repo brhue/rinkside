@@ -2,6 +2,7 @@ import React from "react";
 import { formatISODate } from "../utils";
 
 import Game from "../components/Game";
+import Button from "../components/Button";
 
 function Schedule(props) {
   const [scheduleData, setScheduleData] = React.useState({ games: [] });
@@ -20,23 +21,21 @@ function Schedule(props) {
   return (
     <>
       <div className="mb-4 flex justify-between items-center text-sm">
-        <button
-          className="rounded-lg border px-3 py-2 bg-white hover:bg-gray-50 hover:border-gray-400 transition-colors"
+        <Button
           onClick={() => {
             setSearchDay(new Date(searchDay.setDate(searchDay.getDate() - 1)));
           }}
         >
           Previous Day
-        </button>
+        </Button>
         <span>{searchDay.toDateString()}</span>
-        <button
-          className="rounded-lg border px-4 py-2 bg-white hover:bg-gray-50 hover:border-gray-400 transition-colors"
+        <Button
           onClick={() => {
             setSearchDay(new Date(searchDay.setDate(searchDay.getDate() + 1)));
           }}
         >
           Next Day
-        </button>
+        </Button>
       </div>
       <div className="">
         <h2 className="text-xl font-semibold mb-4">Today's Games</h2>
