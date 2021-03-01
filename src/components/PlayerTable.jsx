@@ -69,7 +69,7 @@ export default function PlayerTable({ skaters, allPlayers, goalies }) {
           <tbody>
             {skaters.map((skater) => {
               return (
-                <tr key={skater} className="hover:bg-gray-100 transition-colors">
+                <tr key={skater} className="hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                   <td className="p-1">{allPlayers[`ID${skater}`].person.fullName}</td>
                   {skaterStats.map((stat) => (
                     <td key={stat.key} className="p-1">
@@ -100,7 +100,7 @@ export default function PlayerTable({ skaters, allPlayers, goalies }) {
               const savePercentage =
                 allPlayers[`ID${goalie}`].stats.goalieStats.saves / allPlayers[`ID${goalie}`].stats.goalieStats.shots;
               return (
-                <tr key={goalie} className="hover:bg-gray-100 transition-colors">
+                <tr key={goalie} className="hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                   <td className="p-1">{allPlayers[`ID${goalie}`].person.fullName}</td>
                   {goalieStats.map((stat) => {
                     if (stat.key === "savePercentage") {

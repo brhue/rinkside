@@ -131,7 +131,7 @@ export default function SingleGame() {
       <div className="grid grid-cols-3 gap-2 text-xs mb-4 sm:flex">
         <button
           className={`py-2 px-3 rounded-full sm:mr-2 ${
-            infoToShow === "game" ? "bg-gray-900 text-white" : "hover:bg-gray-400 hover:text-white"
+            infoToShow === "game" ? "bg-gray-900 dark:bg-gray-700 text-white" : "hover:bg-gray-400 dark:hover:bg-gray-700 hover:text-white"
           }`}
           onClick={() => setInfoToShow("game")}
         >
@@ -139,7 +139,7 @@ export default function SingleGame() {
         </button>
         <button
           className={`py-2 px-4 rounded-full sm:mr-2 ${
-            infoToShow === "head" ? "bg-gray-900 text-white" : "hover:bg-gray-400 hover:text-white"
+            infoToShow === "head" ? "bg-gray-900 dark:bg-gray-700 text-white" : "hover:bg-gray-400 dark:hover:bg-gray-700 hover:text-white"
           }`}
           onClick={() => setInfoToShow("head")}
         >
@@ -147,7 +147,7 @@ export default function SingleGame() {
         </button>
         <button
           className={`py-2 px-4 rounded-full sm:mr-2 ${
-            infoToShow === "roster" ? "bg-gray-900 text-white" : "hover:bg-gray-400 hover:text-white"
+            infoToShow === "roster" ? "bg-gray-900 dark:bg-gray-700 text-white" : "hover:bg-gray-400 dark:hover:bg-gray-700 hover:text-white"
           }`}
           onClick={() => setInfoToShow("roster")}
         >
@@ -173,7 +173,7 @@ export default function SingleGame() {
           <div className="grid grid-cols-2 gap-2 text-xs mb-4 sm:flex">
             <button
               className={`py-2 px-4 rounded-full sm:mr-2 ${
-                showTeamStats === "away" ? "bg-gray-900 text-white" : "hover:bg-gray-400 hover:text-white"
+                showTeamStats === "away" ? "bg-gray-900 dark:bg-gray-700 text-white" : "hover:bg-gray-400 dark:hover:bg-gray-700 hover:text-white"
               }`}
               onClick={() => setShowTeamStats("away")}
             >
@@ -181,14 +181,14 @@ export default function SingleGame() {
             </button>
             <button
               className={`py-2 px-4 rounded-full sm:mr-2 ${
-                showTeamStats === "home" ? "bg-gray-900 text-white" : "hover:bg-gray-400 hover:text-white"
+                showTeamStats === "home" ? "bg-gray-900 dark:bg-gray-700 text-white" : "hover:bg-gray-400 dark:hover:bg-gray-700 hover:text-white"
               }`}
               onClick={() => setShowTeamStats("home")}
             >
               {gameData.liveData.linescore.teams.home.team.abbreviation}
             </button>
           </div>
-          <div className="rounded-lg shadow-md p-4 bg-white overflow-x-scroll">
+          <div className="rounded-lg shadow-md p-4 bg-white dark:bg-gray-800 overflow-x-scroll">
             {showTeamStats === "away" && (
               <>
                 <h2 className="text-lg font-semibold">{gameData.liveData.linescore.teams.away.team.name}</h2>
@@ -220,8 +220,8 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
 
   return (
     <div className="md:grid md:grid-cols-2 md:gap-4">
-      <div className="mb-4 shadow-md p-4 space-y-4 rounded-lg bg-white md:self-start">
-        <p className="bg-gray-900 text-white py-2 px-4 text-sm rounded flex justify-between">
+      <div className="mb-4 shadow-md p-4 space-y-4 rounded-lg bg-white dark:bg-gray-800 md:self-start">
+        <p className="bg-gray-900 dark:bg-gray-700 text-white py-2 px-4 text-sm rounded flex justify-between">
           <span>{new Date(gameData.datetime.dateTime).toLocaleDateString()}</span> <span>{gameData.venue.name}</span>
         </p>
         <div className="px-4">
@@ -256,7 +256,7 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
                   </p>
                 </th>
                 <th>
-                  <span className="bg-gray-200 px-4 py-2 rounded-xl">
+                  <span className="bg-gray-200 dark:bg-gray-700 px-4 py-2 rounded-xl">
                     {away.goals} - {home.goals}
                   </span>
                 </th>
@@ -288,7 +288,7 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
           </table>
         </div>
       </div>
-      <div className="p-4 rounded-lg shadow-md space-y-4 bg-white">
+      <div className="p-4 rounded-lg shadow-md space-y-4 bg-white dark:bg-gray-800">
         <ScoringPlays goals={scoringPlays} allPlays={allPlays} />
         <PenaltyPlays penalties={penaltyPlays} allPlays={allPlays} />
       </div>
@@ -323,7 +323,7 @@ function PenaltyPlays({ penalties, allPlays }) {
 
 function PlayCard({ play, imgUrl, children }) {
   return (
-    <div key={play} className="flex mb-4 p-4 rounded-xl bg-gray-100 items-center">
+    <div key={play} className="flex mb-4 p-4 rounded-xl bg-gray-100 dark:bg-gray-700 items-center">
       <div className="rounded-full overflow-hidden bg-white flex-none">
         <img src={imgUrl} alt={play} width="75" height="75" />
       </div>

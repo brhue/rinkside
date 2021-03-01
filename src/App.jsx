@@ -7,7 +7,7 @@ import SingleGame from "./views/SingleGame";
 function App() {
   return (
     <Router>
-      <header className="p-4 border-b mb-4 bg-white">
+      <header className="p-4 border-b mb-4 bg-white dark:bg-gray-800 dark:text-gray-50 dark:border-black">
         <nav className="container mx-auto flex items-center justify-between">
           <h1 className="font-bold text-3xl">
             <Link to="/">Rinkside</Link>

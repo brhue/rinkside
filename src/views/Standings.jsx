@@ -52,7 +52,7 @@ export default function Standings(props) {
   }
 
   return (
-    <div className="p-4 rounded-lg shadow-md bg-white overflow-x-scroll">
+    <div className="p-4 rounded-lg shadow-md bg-white dark:bg-gray-800 overflow-x-scroll">
       <table className="table-auto w-full whitespace-nowrap">
         <thead className="text-left border-b">
           <tr>

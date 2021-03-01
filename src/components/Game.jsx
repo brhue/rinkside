@@ -7,7 +7,7 @@ export default function Game(props) {
 
   return (
     <Link className="block mb-4" to={`/game/${props.gamePk}`}>
-      <div className="grid grid-cols-3 items-center justify-items-center bg-white shadow-sm rounded-lg p-4 hover:shadow-md transition-shadow">
+      <div className="grid grid-cols-3 items-center justify-items-center bg-white dark:bg-gray-800 shadow-sm rounded-lg p-4 hover:shadow-md transition-shadow">
         <div className="text-center">
           <img
             width="50"
@@ -17,7 +17,7 @@ export default function Game(props) {
           />
             <p className="font-semibold">{props.teams.away.team.abbreviation}</p>
         </div>
-        <span className="bg-gray-200 px-3 py-1 rounded-xl">
+        <span className="bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-xl">
           {props.teams.away.score} - {props.teams.home.score}
         </span>
         <div className="text-center">
