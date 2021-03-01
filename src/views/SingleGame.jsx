@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { formatISODate } from "../utils";
 
 import PlayerTable from "../components/PlayerTable";
@@ -344,7 +344,9 @@ function ScoringPlays({ goals, allPlays }) {
         >
           <p>
             <span className="mr-1">
-              {allPlays[playId].players[0].player.fullName} ({allPlays[playId].players[0].seasonTotal})
+              <Link to={`/players/${allPlays[playId].players[0].player.id}`}>
+                {allPlays[playId].players[0].player.fullName} ({allPlays[playId].players[0].seasonTotal})
+              </Link>
             </span>
             {allPlays[playId].result.strength.code !== "EVEN" && (
               <span className="text-sm text-white bg-red-600 px-2 py-1 rounded-lg">

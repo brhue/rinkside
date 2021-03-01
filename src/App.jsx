@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Schedule from "./views/Schedule";
 import Standings from "./views/Standings";
 import SingleGame from "./views/SingleGame";
+import PlayerView from "./views/PlayerView.tsx";
 // import Home from "./views/Home";
 
 function App() {
@@ -17,7 +18,9 @@ function App() {
                   <Link to="/games">Games</Link>
                 </li> */}
             <li>
-              <Link className="" to="/standings">Standings</Link>
+              <Link className="" to="/standings">
+                Standings
+              </Link>
             </li>
           </ul>
         </nav>
@@ -25,6 +28,9 @@ function App() {
       <main className="px-4">
         <div className="container mx-auto">
           <Switch>
+            <Route path="/players/:playerId">
+              <PlayerView />
+            </Route>
             <Route path="/game/:gameId">
               <SingleGame />
             </Route>
