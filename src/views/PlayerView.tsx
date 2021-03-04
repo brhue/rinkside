@@ -72,7 +72,6 @@ export default function PlayerView() {
   };
 
   const lastFiveGames: Array<{ [key: string]: any }> = gameLogStats.splits.slice(0, 5);
-  console.log(lastFiveGames);
   const lastFiveSums = lastFiveGames.reduce(
     (sum: { goals: number; points: number; assists: number }, game) => {
       sum.goals += game.stat.goals;
@@ -85,19 +84,34 @@ export default function PlayerView() {
 
   return (
     <>
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
-        <img
-          src={`https://cms.nhl.bamgrid.com/images/headshots/current/168x168/${playerId}@2x.jpg`}
-          alt={`Headshot of ${player.fullName}`}
-        />
-        <h2>{player.fullName}</h2>
-        <p>Number: {player.primaryNumber}</p>
-
-        <p>Born {new Date(player.birthDate).toLocaleDateString()}</p>
-        <p>Age {player.currentAge}</p>
-        <p>
-          From {player.birthCity}, {player.birthStateProvince || player.birthCountry}
-        </p>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 space-y-4">
+        <div className="space-y-4">
+          <div className="text-center">
+            <div className="relative inline-block">
+              <img
+                className="rounded-2xl"
+                src={`https://cms.nhl.bamgrid.com/images/headshots/current/168x168/${playerId}@2x.jpg`}
+                alt={`Headshot of ${player.fullName}`}
+              />
+              <span className="absolute top-2 left-2 bg-gray-900 p-2 rounded-lg">{"#" + player.primaryNumber}</span>
+              <span className="absolute top-2 right-2 bg-gray-900 p-2 rounded-lg">
+                {player.primaryPosition.abbreviation}
+              </span>
+            </div>
+          </div>
+          <h2 className="text-2xl text-center tracking-wide uppercase">{player.fullName}</h2>
+          <div className="flex space-x-4 justify-center">
+            <p className="grid p-2 rounded-lg bg-gradient-to-b from-gray-600 to-gray-700 shadow-md">
+              <span>Born</span> <span>{new Date(player.birthDate).toLocaleDateString()}</span>
+            </p>
+            <p className="grid p-2 rounded-lg bg-gradient-to-b from-gray-600 to-gray-700 shadow-md">
+              <span>Age</span> <span>{player.currentAge}</span>
+            </p>
+            <p className="grid p-2 rounded-lg bg-gradient-to-b from-gray-600 to-gray-700 shadow-md">
+              <span>Nationality</span> <span>{player.nationality}</span>
+            </p>
+          </div>
+        </div>
         <div className="grid grid-rows-3 sm:grid-rows-none sm:grid-cols-3 text-center gap-4 animate-fade">
           <p className="flex flex-col p-2 rounded-xl bg-gradient-to-b from-gray-600 to-gray-700 shadow-md">
             <span className="text-xl font-bold">Goals</span>
@@ -119,7 +133,7 @@ export default function PlayerView() {
           </p>
         </div>
         <div className="overflow-x-scroll">
-          <table className="w-full text-center">
+          <table className="w-full text-center whitespace-nowrap">
             <thead>
               <tr>
                 <th>Season</th>
@@ -142,7 +156,7 @@ export default function PlayerView() {
         </div>
         <div className="overflow-x-scroll">
           <h2>Last 5 Games</h2>
-          <table className="w-full text-center">
+          <table className="w-full text-center whitespace-nowrap">
             <thead>
               <tr>
                 <th>Opponent</th>
