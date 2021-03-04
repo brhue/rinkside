@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function PlayerTable({ skaters, allPlayers, goalies }) {
   // TODO: Is there a better way to do this?
   const skaterStats = [
@@ -70,7 +72,11 @@ export default function PlayerTable({ skaters, allPlayers, goalies }) {
             {skaters.map((skater) => {
               return (
                 <tr key={skater} className="hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                  <td className="p-1">{allPlayers[`ID${skater}`].person.fullName}</td>
+                  <td className="p-1">
+                    <Link to={`/players/${allPlayers[`ID${skater}`].person.id}`}>
+                      {allPlayers[`ID${skater}`].person.fullName}
+                    </Link>
+                  </td>
                   {skaterStats.map((stat) => (
                     <td key={stat.key} className="p-1">
                       {allPlayers[`ID${skater}`].stats.skaterStats[stat.key]}
@@ -101,7 +107,11 @@ export default function PlayerTable({ skaters, allPlayers, goalies }) {
                 allPlayers[`ID${goalie}`].stats.goalieStats.saves / allPlayers[`ID${goalie}`].stats.goalieStats.shots;
               return (
                 <tr key={goalie} className="hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                  <td className="p-1">{allPlayers[`ID${goalie}`].person.fullName}</td>
+                  <td className="p-1">
+                    <Link to={`/players/${allPlayers[`ID${goalie}`].person.id}`}>
+                      {allPlayers[`ID${goalie}`].person.fullName}
+                    </Link>
+                  </td>
                   {goalieStats.map((stat) => {
                     if (stat.key === "savePercentage") {
                       return (
