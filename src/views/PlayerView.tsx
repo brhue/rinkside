@@ -98,21 +98,26 @@ export default function PlayerView() {
         <p>
           From {player.birthCity}, {player.birthStateProvince || player.birthCountry}
         </p>
-        <p className="flex flex-col">
-          <span>Goals {currentSeasonStats.goals}</span>
-          <span>Season Avg: {(currentSeasonStats.goals / currentSeasonStats.games).toFixed(2)}</span>
-          <span>Last 5 Avg: {(lastFiveSums.goals / 5).toFixed(2)}</span>
-        </p>
-        <p className="flex flex-col">
-          <span>Assists {currentSeasonStats.assists}</span>
-          <span>Season Avg: {(currentSeasonStats.assists / currentSeasonStats.games).toFixed(2)}</span>
-          <span>Last 5 Avg: {(lastFiveSums.assists / 5).toFixed(2)}</span>
-        </p>
-        <p className="flex flex-col">
-          <span>Points {currentSeasonStats.points}</span>
-          <span>Season Avg: {(currentSeasonStats.points / currentSeasonStats.games).toFixed(2)}</span>
-          <span>Last 5 Avg: {(lastFiveSums.points / 5).toFixed(2)}</span>
-        </p>
+        <div className="grid grid-rows-3 sm:grid-rows-none sm:grid-cols-3 text-center gap-4 animate-fade">
+          <p className="flex flex-col p-2 rounded-xl bg-gradient-to-b from-gray-600 to-gray-700 shadow-md">
+            <span className="text-xl font-bold">Goals</span>
+            <span>{currentSeasonStats.goals}</span>
+            <span>Season Avg: {(currentSeasonStats.goals / currentSeasonStats.games).toFixed(2)}</span>
+            <span>Last 5 Avg: {(lastFiveSums.goals / 5).toFixed(2)}</span>
+          </p>
+          <p className="flex flex-col p-2 bg-gray-700 rounded-xl bg-gradient-to-b from-gray-600 to-gray-700 shadow-md">
+            <span className="text-xl font-bold">Assists</span>
+            <span>{currentSeasonStats.assists}</span>
+            <span>Season Avg: {(currentSeasonStats.assists / currentSeasonStats.games).toFixed(2)}</span>
+            <span>Last 5 Avg: {(lastFiveSums.assists / 5).toFixed(2)}</span>
+          </p>
+          <p className="flex flex-col p-2 bg-gray-700 rounded-xl bg-gradient-to-b from-gray-600 to-gray-700 shadow-md">
+            <span className="text-xl font-bold">Points</span>
+            <span>{currentSeasonStats.points}</span>
+            <span>Season Avg: {`${(currentSeasonStats.points / currentSeasonStats.games).toFixed(2)}`}</span>
+            <span>Last 5 Avg: {`${(lastFiveSums.points / 5).toFixed(2)}`}</span>
+          </p>
+        </div>
         <div className="overflow-x-scroll">
           <table className="w-full text-center">
             <thead>
