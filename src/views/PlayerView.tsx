@@ -90,6 +90,8 @@ export default function PlayerView() {
             <div className="relative inline-block">
               <img
                 className="rounded-2xl"
+                width="336"
+                height="336"
                 src={`https://cms.nhl.bamgrid.com/images/headshots/current/168x168/${playerId}@2x.jpg`}
                 alt={`Headshot of ${player.fullName}`}
               />
