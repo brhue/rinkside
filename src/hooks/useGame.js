@@ -12,17 +12,24 @@ export default function useGame(gameId) {
       return data;
     }
 
+    let cancelled = false;
+
     getGame(gameId).then((data) => {
-      setGameData(data);
+      if (!cancelled) {
+        setGameData(data);
+      }
     });
 
     const id = setInterval(() => {
       getGame(gameId).then((data) => {
-        setGameData(data);
+        if (!cancelled) {
+          setGameData(data);
+        }
       });
     }, 10000);
 
     return () => {
+      cancelled = true;
       clearInterval(id);
     };
   }, [gameId]);
