@@ -37,22 +37,6 @@ export default function PlayerView() {
   const { stats } = player;
   const [yearByYearStats, gameLogStats] = stats;
   const { stat: currentSeasonStats, season } = yearByYearStats.splits[yearByYearStats.splits.length - 1];
-  const statsToShow: { [key: string]: { title: string; val: number } } = {
-    gp: { title: "Games Played", val: currentSeasonStats.games },
-    g: { title: "Goals", val: currentSeasonStats.goals },
-    a: { title: "Assists", val: currentSeasonStats.assists },
-    p: { title: "Points", val: currentSeasonStats.points },
-    "+/-": { title: "Plus Minus", val: currentSeasonStats.plusMinus },
-    pim: { title: "Penalty Minutes", val: currentSeasonStats.pim },
-    ppg: { title: "Power Play Goals", val: currentSeasonStats.powerPlayGoals },
-    ppp: { title: "Power Play Points", val: currentSeasonStats.powerPlayPoints },
-    shg: { title: "Shorthanded Goals", val: currentSeasonStats.shortHandedGoals },
-    shp: { title: "Shorthanded Points", val: currentSeasonStats.shortHandedPoints },
-    gwg: { title: "Game Winning Goals", val: currentSeasonStats.gameWinningGoals },
-    otg: { title: "Overtime Goals", val: currentSeasonStats.overTimeGoals },
-    s: { title: "Shots", val: currentSeasonStats.shots },
-    "s%": { title: "Shot Percentage", val: currentSeasonStats.shotPct },
-  };
 
   const tableStats: { [key: string]: { title: string; abbr: string } } = {
     games: { title: "Games Played", abbr: "gp" },
@@ -141,9 +125,9 @@ export default function PlayerView() {
             <thead>
               <tr>
                 <th className="p-2">Season</th>
-                {Object.keys(statsToShow).map((key) => (
+                {Object.keys(tableStats).map((key) => (
                   <th key={key} className="p-2">
-                    <abbr title={statsToShow[key].title}>{key.toUpperCase()}</abbr>
+                    <abbr title={tableStats[key].title}>{tableStats[key].abbr.toUpperCase()}</abbr>
                   </th>
                 ))}
               </tr>
@@ -151,9 +135,9 @@ export default function PlayerView() {
             <tbody>
               <tr>
                 <td className="p-2">{season}</td>
-                {Object.values(statsToShow).map((val, i) => (
+                {Object.keys(tableStats).map((key, i) => (
                   <td key={i} className="p-2">
-                    {val.val}
+                    {currentSeasonStats[key]}
                   </td>
                 ))}
               </tr>
