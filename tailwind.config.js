@@ -16,6 +16,8 @@ module.exports = {
   },
   variants: {
     extend: {
+      backgroundColor: ["even"],
+      backgroundImage: ["dark"],
       translate: ["group-hover"],
     },
   },

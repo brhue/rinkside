@@ -95,39 +95,41 @@ export default function PlayerView() {
                 src={`https://cms.nhl.bamgrid.com/images/headshots/current/168x168/${playerId}@2x.jpg`}
                 alt={`Headshot of ${player.fullName}`}
               />
-              <span className="absolute top-2 left-2 bg-gray-900 p-2 rounded-lg">{"#" + player.primaryNumber}</span>
-              <span className="absolute top-2 right-2 bg-gray-900 p-2 rounded-lg">
+              <span className="absolute top-2 left-2 bg-gray-100 dark:bg-gray-900 p-2 rounded-lg">
+                {"#" + player.primaryNumber}
+              </span>
+              <span className="absolute top-2 right-2 bg-gray-100 dark:bg-gray-900 p-2 rounded-lg">
                 {player.primaryPosition.abbreviation}
               </span>
             </div>
           </div>
           <h2 className="text-2xl text-center tracking-wide uppercase">{player.fullName}</h2>
           <div className="flex space-x-4 justify-center">
-            <p className="grid p-2 rounded-lg bg-gradient-to-b from-gray-600 to-gray-700 shadow-md">
+            <p className="grid p-2 rounded-lg bg-gray-100 bg-gradient-to-b dark:from-gray-600 dark:to-gray-700 shadow-md">
               <span>Born</span> <span>{new Date(player.birthDate).toLocaleDateString()}</span>
             </p>
-            <p className="grid p-2 rounded-lg bg-gradient-to-b from-gray-600 to-gray-700 shadow-md">
+            <p className="grid p-2 rounded-lg bg-gray-100 bg-gradient-to-b dark:from-gray-600 dark:to-gray-700 shadow-md">
               <span>Age</span> <span>{player.currentAge}</span>
             </p>
-            <p className="grid p-2 rounded-lg bg-gradient-to-b from-gray-600 to-gray-700 shadow-md">
+            <p className="grid p-2 rounded-lg bg-gray-100 bg-gradient-to-b dark:from-gray-600 dark:to-gray-700 shadow-md">
               <span>Nationality</span> <span>{player.nationality}</span>
             </p>
           </div>
         </div>
         <div className="grid grid-rows-3 sm:grid-rows-none sm:grid-cols-3 text-center gap-4 animate-fade">
-          <p className="flex flex-col p-2 rounded-xl bg-gradient-to-b from-gray-600 to-gray-700 shadow-md">
+          <p className="flex flex-col p-2 rounded-xl bg-gradient-to-b dark:from-gray-600 dark:to-gray-700 shadow-md">
             <span className="text-xl font-bold">Goals</span>
             <span>{currentSeasonStats.goals}</span>
             <span>Season Avg: {(currentSeasonStats.goals / currentSeasonStats.games).toFixed(2)}</span>
             <span>Last 5 Avg: {(lastFiveSums.goals / 5).toFixed(2)}</span>
           </p>
-          <p className="flex flex-col p-2 bg-gray-700 rounded-xl bg-gradient-to-b from-gray-600 to-gray-700 shadow-md">
+          <p className="flex flex-col p-2 rounded-xl bg-gradient-to-b dark:from-gray-600 dark:to-gray-700 shadow-md">
             <span className="text-xl font-bold">Assists</span>
             <span>{currentSeasonStats.assists}</span>
             <span>Season Avg: {(currentSeasonStats.assists / currentSeasonStats.games).toFixed(2)}</span>
             <span>Last 5 Avg: {(lastFiveSums.assists / 5).toFixed(2)}</span>
           </p>
-          <p className="flex flex-col p-2 bg-gray-700 rounded-xl bg-gradient-to-b from-gray-600 to-gray-700 shadow-md">
+          <p className="flex flex-col p-2 rounded-xl bg-gradient-to-b dark:from-gray-600 dark:to-gray-700 shadow-md">
             <span className="text-xl font-bold">Points</span>
             <span>{currentSeasonStats.points}</span>
             <span>Season Avg: {`${(currentSeasonStats.points / currentSeasonStats.games).toFixed(2)}`}</span>
@@ -138,9 +140,9 @@ export default function PlayerView() {
           <table className="w-full text-center whitespace-nowrap">
             <thead>
               <tr>
-                <th>Season</th>
+                <th className="p-2">Season</th>
                 {Object.keys(statsToShow).map((key) => (
-                  <th key={key}>
+                  <th key={key} className="p-2">
                     <abbr title={statsToShow[key].title}>{key.toUpperCase()}</abbr>
                   </th>
                 ))}
@@ -148,23 +150,25 @@ export default function PlayerView() {
             </thead>
             <tbody>
               <tr>
-                <td>{season}</td>
+                <td className="p-2">{season}</td>
                 {Object.values(statsToShow).map((val, i) => (
-                  <td key={i}>{val.val}</td>
+                  <td key={i} className="p-2">
+                    {val.val}
+                  </td>
                 ))}
               </tr>
             </tbody>
           </table>
         </div>
         <div className="overflow-x-scroll">
-          <h2>Last 5 Games</h2>
+          <h2 className="text-xl text-center">Last 5 Games</h2>
           <table className="w-full text-center whitespace-nowrap">
             <thead>
               <tr>
-                <th>Opponent</th>
-                <th>Date</th>
+                <th className="p-2">Opponent</th>
+                <th className="p-2">Date</th>
                 {Object.keys(tableStats).map((key) => (
-                  <th key={key}>
+                  <th key={key} className="p-2">
                     <abbr title={tableStats[key].title}>{tableStats[key].abbr.toUpperCase()}</abbr>
                   </th>
                 ))}
@@ -172,12 +176,17 @@ export default function PlayerView() {
             </thead>
             <tbody>
               {lastFiveGames.map((game: { [key: string]: any }) => (
-                <tr key={game.game.gamePk}>
-                  <td>{game.opponent.abbreviation}</td>
-                  <td>{game.date}</td>
+                <tr
+                  key={game.game.gamePk}
+                  className="even:bg-gray-200 hover:bg-gray-300 dark:even:bg-gray-700 dark:hover:bg-gray-600 transition-colors"
+                >
+                  <td className="p-2">{game.opponent.abbreviation}</td>
+                  <td className="p-2">{game.date}</td>
                   {/** stat values */}
                   {Object.keys(tableStats).map((key) => (
-                    <td key={key}>{game.stat[key]}</td>
+                    <td key={key} className="p-2">
+                      {game.stat[key]}
+                    </td>
                   ))}
                 </tr>
               ))}
