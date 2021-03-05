@@ -6,7 +6,7 @@ export default function Game(props) {
   const { away, home } = props.teams;
 
   return (
-    <Link className="block mb-4" to={`/game/${props.gamePk}`}>
+    <Link className="block" to={`/game/${props.gamePk}`}>
       <div className="grid grid-cols-3 items-center justify-items-center bg-white dark:bg-gray-800 shadow-sm rounded-lg p-4 hover:shadow-md transition-shadow">
         <div className="text-center">
           <img
@@ -15,7 +15,7 @@ export default function Game(props) {
             src={`https://www-league.nhlstatic.com/images/logos/teams-20202021-light/${props.teams.away.team.id}.svg`}
             alt={props.teams.away.team.name}
           />
-            <p className="font-semibold">{props.teams.away.team.abbreviation}</p>
+          <p className="font-semibold">{props.teams.away.team.abbreviation}</p>
         </div>
         <span className="bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-xl">
           {props.teams.away.score} - {props.teams.home.score}

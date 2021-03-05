@@ -39,9 +39,11 @@ function Schedule(props) {
       </div>
       <div className="">
         <h2 className="text-xl font-semibold mb-4">Today's Games</h2>
-        {scheduleData.games.map((game) => {
-          return <Game {...game} key={game.gamePk} />;
-        })}
+        <div className="grid gap-4 sm:grid-cols-2">
+          {scheduleData.games.map((game) => {
+            return <Game {...game} key={game.gamePk} />;
+          })}
+        </div>
       </div>
     </>
   );
