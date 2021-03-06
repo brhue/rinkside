@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import TeamLogo from "../components/TeamLogo";
+
 // TODO: Properly type this?
 type PlayerData = {
   copyright: String;
@@ -37,8 +39,7 @@ export default function PlayerView() {
   const { stats } = player;
   const [yearByYearStats, gameLogStats] = stats;
   const { stat: currentSeasonStats, season } = yearByYearStats.splits[yearByYearStats.splits.length - 1];
-
-  const tableStats: { [key: string]: { title: string; abbr: string } } = {
+  const tableStats: Record<string, { title: string; abbr: string }> = {
     games: { title: "Games Played", abbr: "gp" },
     goals: { title: "Goals", abbr: "g" },
     assists: { title: "Assists", abbr: "a" },
@@ -69,6 +70,16 @@ export default function PlayerView() {
   return (
     <>
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 space-y-4">
+        <h2 className="flex text-2xl tracking-wide items-center justify-between">
+          <div className="flex items-center">
+            <span className="text-6xl mr-2">{player.primaryNumber}</span>
+            <div className="grid">
+              <span>{player.firstName}</span>
+              <span>{player.lastName}</span>
+            </div>
+          </div>
+          <TeamLogo teamId={player.currentTeam.id} teamName={player.currentTeam.name} size={"large"} />
+        </h2>
         <div className="space-y-4">
           <div className="text-center">
             <div className="relative inline-block">
@@ -87,7 +98,6 @@ export default function PlayerView() {
               </span>
             </div>
           </div>
-          <h2 className="text-2xl text-center tracking-wide uppercase">{player.fullName}</h2>
           <div className="flex space-x-4 justify-center">
             <p className="grid p-2 rounded-lg bg-gray-100 bg-gradient-to-b dark:from-gray-600 dark:to-gray-700 shadow-md">
               <span>Born</span> <span>{new Date(player.birthDate).toLocaleDateString()}</span>

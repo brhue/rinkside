@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import StatusItem from "./StatusItem";
+import TeamLogo from "./TeamLogo";
 
 export default function Game(props) {
   const { currentPeriodOrdinal, currentPeriodTimeRemaining } = props.linescore;
@@ -9,24 +10,14 @@ export default function Game(props) {
     <Link className="block" to={`/game/${props.gamePk}`}>
       <div className="grid grid-cols-3 items-center justify-items-center bg-white dark:bg-gray-800 shadow-sm rounded-lg p-4 hover:shadow-md transition-shadow">
         <div className="text-center">
-          <img
-            width="50"
-            height="50"
-            src={`https://www-league.nhlstatic.com/images/logos/teams-20202021-light/${props.teams.away.team.id}.svg`}
-            alt={props.teams.away.team.name}
-          />
+          <TeamLogo size="medium" teamId={props.teams.away.team.id} teamName={props.teams.away.team.name} />
           <p className="font-semibold">{props.teams.away.team.abbreviation}</p>
         </div>
         <span className="bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-xl">
           {props.teams.away.score} - {props.teams.home.score}
         </span>
         <div className="text-center">
-          <img
-            width="50"
-            height="50"
-            src={`https://www-league.nhlstatic.com/images/logos/teams-20202021-light/${props.teams.home.team.id}.svg`}
-            alt={props.teams.home.team.name}
-          />
+          <TeamLogo size="medium" teamId={props.teams.home.team.id} teamName={props.teams.home.team.name} />
           <p className="font-semibold">{props.teams.home.team.abbreviation}</p>
         </div>
         <span className="text-sm text-gray-600">{`${away.leagueRecord.wins}-${away.leagueRecord.losses}-${away.leagueRecord.ot}`}</span>

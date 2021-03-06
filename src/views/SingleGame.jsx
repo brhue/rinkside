@@ -5,6 +5,7 @@ import { formatISODate } from "../utils";
 import PlayerTable from "../components/PlayerTable";
 import HeadToHead from "../components/HeadToHead";
 import StatusItem from "../components/StatusItem";
+import TeamLogo from "../components/TeamLogo";
 
 import useGame from "../hooks/useGame";
 
@@ -131,7 +132,9 @@ export default function SingleGame() {
       <div className="grid grid-cols-3 gap-2 text-xs mb-4 sm:flex">
         <button
           className={`py-2 px-3 rounded-full sm:mr-2 ${
-            infoToShow === "game" ? "bg-gray-900 dark:bg-gray-700 text-white" : "hover:bg-gray-400 dark:hover:bg-gray-700 hover:text-white"
+            infoToShow === "game"
+              ? "bg-gray-900 dark:bg-gray-700 text-white"
+              : "hover:bg-gray-400 dark:hover:bg-gray-700 hover:text-white"
           }`}
           onClick={() => setInfoToShow("game")}
         >
@@ -139,7 +142,9 @@ export default function SingleGame() {
         </button>
         <button
           className={`py-2 px-4 rounded-full sm:mr-2 ${
-            infoToShow === "head" ? "bg-gray-900 dark:bg-gray-700 text-white" : "hover:bg-gray-400 dark:hover:bg-gray-700 hover:text-white"
+            infoToShow === "head"
+              ? "bg-gray-900 dark:bg-gray-700 text-white"
+              : "hover:bg-gray-400 dark:hover:bg-gray-700 hover:text-white"
           }`}
           onClick={() => setInfoToShow("head")}
         >
@@ -147,7 +152,9 @@ export default function SingleGame() {
         </button>
         <button
           className={`py-2 px-4 rounded-full sm:mr-2 ${
-            infoToShow === "roster" ? "bg-gray-900 dark:bg-gray-700 text-white" : "hover:bg-gray-400 dark:hover:bg-gray-700 hover:text-white"
+            infoToShow === "roster"
+              ? "bg-gray-900 dark:bg-gray-700 text-white"
+              : "hover:bg-gray-400 dark:hover:bg-gray-700 hover:text-white"
           }`}
           onClick={() => setInfoToShow("roster")}
         >
@@ -173,7 +180,9 @@ export default function SingleGame() {
           <div className="grid grid-cols-2 gap-2 text-xs mb-4 sm:flex">
             <button
               className={`py-2 px-4 rounded-full sm:mr-2 ${
-                showTeamStats === "away" ? "bg-gray-900 dark:bg-gray-700 text-white" : "hover:bg-gray-400 dark:hover:bg-gray-700 hover:text-white"
+                showTeamStats === "away"
+                  ? "bg-gray-900 dark:bg-gray-700 text-white"
+                  : "hover:bg-gray-400 dark:hover:bg-gray-700 hover:text-white"
               }`}
               onClick={() => setShowTeamStats("away")}
             >
@@ -181,7 +190,9 @@ export default function SingleGame() {
             </button>
             <button
               className={`py-2 px-4 rounded-full sm:mr-2 ${
-                showTeamStats === "home" ? "bg-gray-900 dark:bg-gray-700 text-white" : "hover:bg-gray-400 dark:hover:bg-gray-700 hover:text-white"
+                showTeamStats === "home"
+                  ? "bg-gray-900 dark:bg-gray-700 text-white"
+                  : "hover:bg-gray-400 dark:hover:bg-gray-700 hover:text-white"
               }`}
               onClick={() => setShowTeamStats("home")}
             >
@@ -245,13 +256,7 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
               <tr>
                 <th>
                   <p>
-                    <img
-                      className="mx-auto"
-                      width="75"
-                      height="75"
-                      src={`https://www-league.nhlstatic.com/images/logos/teams-20202021-light/${away.team.id}.svg`}
-                      alt={away.team.name}
-                    />
+                    <TeamLogo className="mx-auto" size="medium" teamId={away.team.id} teamName={away.team.name} />
                     {liveData.boxscore.teams.away.team.triCode}
                   </p>
                 </th>
@@ -262,13 +267,7 @@ function LiveStats({ liveData, gameData, gameTeamStats }) {
                 </th>
                 <th>
                   <p>
-                    <img
-                      className="mx-auto"
-                      width="75"
-                      height="75"
-                      src={`https://www-league.nhlstatic.com/images/logos/teams-20202021-light/${home.team.id}.svg`}
-                      alt={home.team.name}
-                    />
+                    <TeamLogo className="mx-auto" size="medium" teamId={home.team.id} teamName={home.team.name} />
                     {liveData.boxscore.teams.home.team.triCode}
                   </p>
                 </th>
