@@ -69,17 +69,17 @@ export default function PlayerView() {
 
   return (
     <>
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 space-y-4">
-        <h2 className="flex text-2xl tracking-wide items-center justify-between">
+      <section className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 space-y-4">
+        <header className="flex text-2xl tracking-wide items-center justify-between sm:justify-start">
           <div className="flex items-center">
             <span className="text-6xl mr-2">{player.primaryNumber}</span>
-            <div className="grid">
+            <h2 className="grid">
               <span>{player.firstName}</span>
-              <span>{player.lastName}</span>
-            </div>
+              <span className="-mt-2">{player.lastName}</span>
+            </h2>
           </div>
           <TeamLogo teamId={player.currentTeam.id} teamName={player.currentTeam.name} size={"large"} />
-        </h2>
+        </header>
         <div className="space-y-4">
           <div className="text-center">
             <div className="relative inline-block">
@@ -187,7 +187,7 @@ export default function PlayerView() {
             </tbody>
           </table>
         </div>
-      </div>
+      </section>
     </>
   );
 }
