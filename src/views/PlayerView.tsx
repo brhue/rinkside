@@ -40,7 +40,7 @@ export default function PlayerView() {
   const { stats } = player;
   const [yearByYearStats, gameLogStats, careerRegularSeasonStats] = stats;
   const { stat: currentSeasonStats, season } = yearByYearStats.splits[yearByYearStats.splits.length - 1];
-  const tableStats: Record<string, { title: string; abbr: string }> = {
+  const skaterTableStats: Record<string, { title: string; abbr: string }> = {
     games: { title: "Games Played", abbr: "gp" },
     goals: { title: "Goals", abbr: "g" },
     assists: { title: "Assists", abbr: "a" },
@@ -56,6 +56,24 @@ export default function PlayerView() {
     shots: { title: "Shots", abbr: "s" },
     shotPct: { title: "Shot Percentage", abbr: "s%" },
   };
+
+  const goalieTableStats: Record<string, { title: string; abbr: string }> = {
+    games: { title: "Games Played", abbr: "gp" },
+    gamesStarted: { title: "Games Started", abbr: "gs" },
+    wins: { title: "Wins", abbr: "w" },
+    losses: { title: "Losses", abbr: "l" },
+    ties: { title: "Ties", abbr: "t" },
+    ot: { title: "Overtime Losses", abbr: "ot" },
+    shotsAgainst: { title: "Shots Against", abbr: "sa" },
+    goalsAgainst: { title: "Goals Against", abbr: "ga" },
+    goalAgainstAverage: { title: "Goals Against Average", abbr: "gaa" },
+    saves: { title: "Saves", abbr: "s" },
+    savePercentage: { title: "Save Percentage", abbr: "s%" },
+    shutouts: { title: "Shutouts", abbr: "SO" },
+    timeOnIce: { title: "Minutes", abbr: "MIN" },
+  };
+
+  const tableStats = player.primaryPosition.type === "Goalie" ? goalieTableStats : skaterTableStats;
 
   const lastFiveGames: Array<{ [key: string]: any }> = gameLogStats.splits.slice(0, 5);
   const lastFiveSums = lastFiveGames.reduce(
