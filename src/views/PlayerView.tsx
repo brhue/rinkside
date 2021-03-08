@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import TeamLogo from "../components/TeamLogo";
+import CareerStats from "../components/CareerStats";
 
 // TODO: Properly type this?
 type PlayerData = {
@@ -20,7 +21,7 @@ export default function PlayerView() {
       setIsLoading(true);
       try {
         const response = await fetch(
-          `https://statsapi.web.nhl.com/api/v1/people/${playerId}?expand=person.stats,stats.team&stats=yearByYear,gameLog`
+          `https://statsapi.web.nhl.com/api/v1/people/${playerId}?expand=person.stats,stats.team&stats=yearByYear,gameLog,careerRegularSeason`
         );
         const data = await response.json();
         setIsLoading(false);
@@ -37,7 +38,7 @@ export default function PlayerView() {
 
   const player = playerData.people[0];
   const { stats } = player;
-  const [yearByYearStats, gameLogStats] = stats;
+  const [yearByYearStats, gameLogStats, careerRegularSeasonStats] = stats;
   const { stat: currentSeasonStats, season } = yearByYearStats.splits[yearByYearStats.splits.length - 1];
   const tableStats: Record<string, { title: string; abbr: string }> = {
     games: { title: "Games Played", abbr: "gp" },
@@ -187,6 +188,7 @@ export default function PlayerView() {
             </tbody>
           </table>
         </div>
+        <CareerStats splits={yearByYearStats.splits} tableStats={tableStats} />
       </section>
     </>
   );
