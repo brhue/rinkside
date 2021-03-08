@@ -50,7 +50,7 @@ export default function CareerStats({ splits, tableStats }: CareerStatsProps) {
         </thead>
         <tbody>
           {splitsToShow.map((split: any) => (
-            <tr key={split.season} className="dark:even:bg-gray-700">
+            <tr key={split.season + "-" + split.sequenceNumber} className="dark:even:bg-gray-700">
               <td className="p-2">{split.season}</td>
               {Object.keys(tableStats).map((key, i) => (
                 <td key={i} className="p-2">
