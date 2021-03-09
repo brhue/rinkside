@@ -54,7 +54,7 @@ export default function CareerStats({ splits, tableStats }: CareerStatsProps) {
               <td className="p-2">{split.season}</td>
               {Object.keys(tableStats).map((key, i) => (
                 <td key={i} className="p-2">
-                  {split.stat[key]}
+                  {split.stat[key] ?? "--"}
                 </td>
               ))}
             </tr>
