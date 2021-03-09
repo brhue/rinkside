@@ -10,6 +10,10 @@ type PlayerData = {
   people: any[];
 };
 
+function calculateGAA(goalsAgainst: number, timeOnIce: number) {
+  return (goalsAgainst * 60 * 60) / timeOnIce;
+}
+
 export default function PlayerView() {
   const { playerId } = useParams<{ playerId: string }>();
   const [playerData, setPlayerData] = useState<PlayerData | null>(null);
@@ -37,6 +41,7 @@ export default function PlayerView() {
   if (isError) return <p>There was an error fetching the data.</p>;
 
   const player = playerData.people[0];
+  const playerType = player.primaryPosition.type;
   const { stats } = player;
   const [yearByYearStats, gameLogStats, careerRegularSeasonStats] = stats;
   const { stat: currentSeasonStats, season } = yearByYearStats.splits[yearByYearStats.splits.length - 1];
@@ -69,13 +74,22 @@ export default function PlayerView() {
     goalAgainstAverage: { title: "Goals Against Average", abbr: "gaa" },
     saves: { title: "Saves", abbr: "s" },
     savePercentage: { title: "Save Percentage", abbr: "s%" },
-    shutouts: { title: "Shutouts", abbr: "SO" },
-    timeOnIce: { title: "Minutes", abbr: "MIN" },
+    shutouts: { title: "Shutouts", abbr: "so" },
+    timeOnIce: { title: "Minutes", abbr: "min" },
   };
 
-  const tableStats = player.primaryPosition.type === "Goalie" ? goalieTableStats : skaterTableStats;
+  const tableStats = playerType === "Goalie" ? goalieTableStats : skaterTableStats;
 
-  const lastFiveGames: Array<{ [key: string]: any }> = gameLogStats.splits.slice(0, 5);
+  const lastFiveGames: Array<{ [key: string]: any }> = gameLogStats.splits
+    .slice(0, 5)
+    .map((game: { [key: string]: any }) => {
+      if (game.isWin) {
+        game.stat.wins = 1;
+      } else {
+        game.stat.losses = 1;
+      }
+      return game;
+    });
   const lastFiveSums = lastFiveGames.reduce(
     (sum: { goals: number; points: number; assists: number }, game) => {
       sum.goals += game.stat.goals;
@@ -84,6 +98,21 @@ export default function PlayerView() {
       return sum;
     },
     { goals: 0, points: 0, assists: 0 }
+  );
+
+  const goalieFeatured = lastFiveGames.reduce(
+    (sum, game) => {
+      let [minutes, seconds] = game.stat.timeOnIce.split(":");
+      minutes = parseInt(minutes, 10);
+      seconds = parseInt(seconds, 10);
+      const timeOnIceSeconds = minutes * 60 + seconds;
+      sum.timeOnIce += timeOnIceSeconds;
+      sum.goalsAgainst += game.stat.goalsAgainst;
+      sum.savePercentage += game.stat.savePercentage;
+      sum.shutouts += game.stat.shutouts;
+      return sum;
+    },
+    { timeOnIce: 0, goalsAgainst: 0, savePercentage: 0, shutouts: 0 }
   );
 
   return (
@@ -129,26 +158,48 @@ export default function PlayerView() {
             </p>
           </div>
         </div>
-        <div className="grid grid-rows-3 sm:grid-rows-none sm:grid-cols-3 text-center gap-4 animate-fade">
-          <p className="flex flex-col p-2 rounded-xl bg-gradient-to-b dark:from-gray-600 dark:to-gray-700 shadow-md">
-            <span className="text-xl font-bold">Goals</span>
-            <span>{currentSeasonStats.goals}</span>
-            <span>Season Avg: {(currentSeasonStats.goals / currentSeasonStats.games).toFixed(2)}</span>
-            <span>Last 5 Avg: {(lastFiveSums.goals / 5).toFixed(2)}</span>
-          </p>
-          <p className="flex flex-col p-2 rounded-xl bg-gradient-to-b dark:from-gray-600 dark:to-gray-700 shadow-md">
-            <span className="text-xl font-bold">Assists</span>
-            <span>{currentSeasonStats.assists}</span>
-            <span>Season Avg: {(currentSeasonStats.assists / currentSeasonStats.games).toFixed(2)}</span>
-            <span>Last 5 Avg: {(lastFiveSums.assists / 5).toFixed(2)}</span>
-          </p>
-          <p className="flex flex-col p-2 rounded-xl bg-gradient-to-b dark:from-gray-600 dark:to-gray-700 shadow-md">
-            <span className="text-xl font-bold">Points</span>
-            <span>{currentSeasonStats.points}</span>
-            <span>Season Avg: {`${(currentSeasonStats.points / currentSeasonStats.games).toFixed(2)}`}</span>
-            <span>Last 5 Avg: {`${(lastFiveSums.points / 5).toFixed(2)}`}</span>
-          </p>
-        </div>
+        {playerType === "Goalie" ? (
+          <div className="grid grid-rows-3 sm:grid-rows-none sm:grid-cols-3 text-center gap-4 animate-fade">
+            <p className="flex flex-col p-2 rounded-xl bg-gradient-to-b dark:from-gray-600 dark:to-gray-700 shadow-md">
+              <span className="text-xl font-bold">Goals Against</span>
+              <span>{currentSeasonStats.goalsAgainst}</span>
+              <span>Season Avg: {currentSeasonStats.goalAgainstAverage.toFixed(2)}</span>
+              <span>Last 5 Avg: {calculateGAA(goalieFeatured.goalsAgainst, goalieFeatured.timeOnIce).toFixed(2)}</span>
+            </p>
+            <p className="flex flex-col p-2 rounded-xl bg-gradient-to-b dark:from-gray-600 dark:to-gray-700 shadow-md">
+              <span className="text-xl font-bold">Save Percentage</span>
+              <span>{currentSeasonStats.savePercentage}</span>
+              <span>Last 5 Avg: {(goalieFeatured.savePercentage / 5).toFixed(2)}</span>
+            </p>
+            <p className="flex flex-col p-2 rounded-xl bg-gradient-to-b dark:from-gray-600 dark:to-gray-700 shadow-md">
+              <span className="text-xl font-bold">Shutouts</span>
+              <span>{currentSeasonStats.shutouts}</span>
+              <span>Season Avg: {(currentSeasonStats.shutouts / currentSeasonStats.games).toFixed(2)}</span>
+              <span>Last 5 Avg: {(goalieFeatured.shutouts / 5).toFixed(2)}</span>
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-rows-3 sm:grid-rows-none sm:grid-cols-3 text-center gap-4 animate-fade">
+            <p className="flex flex-col p-2 rounded-xl bg-gradient-to-b dark:from-gray-600 dark:to-gray-700 shadow-md">
+              <span className="text-xl font-bold">Goals</span>
+              <span>{currentSeasonStats.goals}</span>
+              <span>Season Avg: {(currentSeasonStats.goals / currentSeasonStats.games).toFixed(2)}</span>
+              <span>Last 5 Avg: {(lastFiveSums.goals / 5).toFixed(2)}</span>
+            </p>
+            <p className="flex flex-col p-2 rounded-xl bg-gradient-to-b dark:from-gray-600 dark:to-gray-700 shadow-md">
+              <span className="text-xl font-bold">Assists</span>
+              <span>{currentSeasonStats.assists}</span>
+              <span>Season Avg: {(currentSeasonStats.assists / currentSeasonStats.games).toFixed(2)}</span>
+              <span>Last 5 Avg: {(lastFiveSums.assists / 5).toFixed(2)}</span>
+            </p>
+            <p className="flex flex-col p-2 rounded-xl bg-gradient-to-b dark:from-gray-600 dark:to-gray-700 shadow-md">
+              <span className="text-xl font-bold">Points</span>
+              <span>{currentSeasonStats.points}</span>
+              <span>Season Avg: {`${(currentSeasonStats.points / currentSeasonStats.games).toFixed(2)}`}</span>
+              <span>Last 5 Avg: {`${(lastFiveSums.points / 5).toFixed(2)}`}</span>
+            </p>
+          </div>
+        )}
         <div className="overflow-x-scroll">
           <table className="w-full text-center whitespace-nowrap">
             <thead>
@@ -193,12 +244,20 @@ export default function PlayerView() {
                   key={game.game.gamePk}
                   className="even:bg-gray-200 hover:bg-gray-300 dark:even:bg-gray-700 dark:hover:bg-gray-600 transition-colors"
                 >
-                  <td className="p-2">{game.opponent.abbreviation}</td>
+                  <td className="p-2">
+                    <TeamLogo
+                      className="inline-block"
+                      teamId={game.opponent.id}
+                      teamName={game.opponent.name}
+                      size={"small"}
+                    />{" "}
+                    {game.opponent.abbreviation}
+                  </td>
                   <td className="p-2">{game.date}</td>
                   {/** stat values */}
                   {Object.keys(tableStats).map((key) => (
                     <td key={key} className="p-2">
-                      {game.stat[key]}
+                      {game.stat[key] ?? "--"}
                     </td>
                   ))}
                 </tr>
