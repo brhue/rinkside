@@ -10,6 +10,7 @@ type TeamLogoProps = {
   teamId: number;
   teamName: string;
   size: keyof typeof sizes;
+  className?: string;
 };
 
 export default function TeamLogo({ teamId, teamName, size, ...props }: TeamLogoProps) {
