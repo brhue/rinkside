@@ -126,7 +126,7 @@ export default function PlayerView() {
               <span className="-mt-2">{player.lastName}</span>
             </h2>
           </div>
-          <TeamLogo teamId={player.currentTeam.id} teamName={player.currentTeam.name} size={"large"} />
+          <TeamLogo teamId={player.currentTeam?.id} teamName={player.currentTeam?.name} size={"large"} />
         </header>
         <div className="space-y-4">
           <div className="text-center">
