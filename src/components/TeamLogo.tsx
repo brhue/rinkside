@@ -14,6 +14,7 @@ type TeamLogoProps = {
 };
 
 export default function TeamLogo({ teamId, teamName, size, ...props }: TeamLogoProps) {
+  if (!teamId) return null;
   return (
     <img
       width={sizes[size]}
