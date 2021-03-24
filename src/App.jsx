@@ -3,6 +3,7 @@ import Schedule from "./views/Schedule";
 import Standings from "./views/Standings";
 import SingleGame from "./views/SingleGame";
 import PlayerView from "./views/PlayerView.tsx";
+import Stats from "./views/Stats";
 // import Home from "./views/Home";
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
           <h1 className="font-bold text-3xl">
             <Link to="/">Rinkside</Link>
           </h1>
-          <ul>
+          <ul className="flex space-x-4">
             {/* <li>
                   <Link to="/games">Games</Link>
                 </li> */}
@@ -21,6 +22,9 @@ function App() {
               <Link className="" to="/standings">
                 Standings
               </Link>
+            </li>
+            <li>
+              <Link to="/stats">Stats</Link>
             </li>
           </ul>
         </nav>
@@ -36,6 +40,9 @@ function App() {
             </Route>
             <Route path="/standings">
               <Standings />
+            </Route>
+            <Route path="/stats">
+              <Stats />
             </Route>
             {/* <Route path="/games">
                 <Schedule />
