@@ -4,6 +4,10 @@ import Container from "../components/Container";
 import PlayerPortrait from "../components/PlayerPortrait";
 import TeamLogo from "../components/TeamLogo";
 
+/**
+ * TODO: Properly type things, handle errors better, clean up.
+ */
+
 type StatsData = any[];
 export default function Stats() {
   const [leaderData, setLeaderData] = useState<null | StatsData>(null);
