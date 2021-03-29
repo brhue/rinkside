@@ -50,19 +50,19 @@ export default function Stats() {
 
     const _leaderData: { [key: string]: any }[] = [
       {
-        title: "forwards",
+        title: "Forwards",
         data: skaterMetrics("season=20202021 and gameType=2"),
       },
       {
-        title: "goalies",
+        title: "Goalies",
         data: goalieMetrics("season=20202021 and gameType=2 and gamesPlayed>=4"),
       },
       {
-        title: "defensemen",
+        title: "Defensemen",
         data: skaterMetrics('season=20202021 and gameType=2 and player.positionCode="D"'),
       },
       {
-        title: "rookies",
+        title: "Rookies",
         data: skaterMetrics('season=20202021 and gameType=2 and isRookie="Y"'),
       },
     ];
@@ -111,9 +111,8 @@ function LeaderSection({ title, metrics }: { title: string; metrics: any }) {
   const metricToShow = (metric: any) => {
     let { leaders } = metrics.find((m: any) => m.metric === activeMetric);
     return leaders.map((leader: any, index: number) => {
-      if (metric === "sv%") {
-        metric = "savePctg";
-      }
+      const key = metric === "sv%" ? "savePctg" : metric;
+      const stat = metric === "sv%" || metric === "gaa" ? leader[key].toPrecision(3) : leader[key];
       return (
         <p
           className={"flex justify-between" + (activeLeader === index ? " font-bold" : "")}
@@ -122,7 +121,8 @@ function LeaderSection({ title, metrics }: { title: string; metrics: any }) {
             setActiveLeader(index);
           }}
         >
-          <span>{leader.player.fullName}</span> <span>{leader[metric]}</span>
+          <span>{leader.player.fullName}</span>
+          <span>{stat}</span>
         </p>
       );
     });
@@ -135,7 +135,7 @@ function LeaderSection({ title, metrics }: { title: string; metrics: any }) {
   };
 
   return (
-    <div>
+    <div className="dark:bg-gray-700 p-4 rounded-lg">
       <header>
         <h3>{title}</h3>
         <div className="space-x-3">
@@ -143,20 +143,20 @@ function LeaderSection({ title, metrics }: { title: string; metrics: any }) {
             return (
               <button
                 key={metric.metric}
-                className={metric.metric === activeMetric ? "underline" : ""}
+                className={`hover:underline ${metric.metric === activeMetric ? "underline" : ""}`}
                 onClick={() => {
                   setActiveMetric(metric.metric);
                   setActiveLeader(0);
                 }}
               >
-                {metric.metric}
+                {metric.metric.toUpperCase()}
               </button>
             );
           })}
         </div>
       </header>
-      <div className="grid grid-cols-2">
-        <div>{leaderToShow(activeLeader)}</div>
+      <div className="grid md:grid-cols-2">
+        <div className="flex items-center justify-center">{leaderToShow(activeLeader)}</div>
         <div>{metricToShow(activeMetric)}</div>
       </div>
     </div>
@@ -170,11 +170,12 @@ type LeaderDetailProps = {
 
 function LeaderDetail({ player, activeMetric }: LeaderDetailProps) {
   const key = activeMetric === "sv%" ? "savePctg" : activeMetric;
+  const stat = activeMetric === "sv%" || activeMetric === "gaa" ? player[key].toPrecision(3) : player[key];
   return (
     <>
       <Link to={`/players/${player.player.id}`}>
-        <div className="flex flex-col items-center">
-          <div className="flex">
+        <div className="flex flex-col items-center space-y-3">
+          <div className="flex items-center">
             <div className="flex items-center">
               <span className="text-4xl mr-2">#{player.player.sweaterNumber}</span>
               <h2 className="grid">
@@ -184,9 +185,16 @@ function LeaderDetail({ player, activeMetric }: LeaderDetailProps) {
             </div>
             <TeamLogo teamId={player.team?.id} teamName={player.team?.fullName} size="medium" />
           </div>
-          <PlayerPortrait size="large" playerId={player.player.id} playerName={player.player.fullName} />
-          <p className="text-xs">{activeMetric.toUpperCase()}</p>
-          <p className="text-xl">{player[key]}</p>
+          <PlayerPortrait
+            className="rounded-full"
+            size="large"
+            playerId={player.player.id}
+            playerName={player.player.fullName}
+          />
+          <div className="text-center">
+            <p className="text-xs">{activeMetric.toUpperCase()}</p>
+            <p className="text-xl">{stat}</p>
+          </div>
         </div>
       </Link>
     </>
