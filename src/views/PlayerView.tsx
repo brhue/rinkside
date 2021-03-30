@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useFavorites } from "../context/favorites-context";
 
 import TeamLogo from "../components/TeamLogo";
 import CareerStats from "../components/CareerStats";
+import Button from "../components/Button";
 
 // TODO: Properly type this?
 type PlayerData = {
@@ -19,6 +21,7 @@ export default function PlayerView() {
   const [playerData, setPlayerData] = useState<PlayerData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const { favorites, addFavorite, removeFavorite } = useFavorites();
 
   useEffect(() => {
     async function getPlayer() {
@@ -115,6 +118,8 @@ export default function PlayerView() {
     { timeOnIce: 0, goalsAgainst: 0, savePercentage: 0, shutouts: 0 }
   );
 
+  const isFavorite = favorites.players.findIndex((item) => item.id === Number(playerId)) !== -1;
+
   return (
     <>
       <section className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 space-y-4">
@@ -127,6 +132,14 @@ export default function PlayerView() {
             </h2>
           </div>
           <TeamLogo teamId={player.currentTeam?.id} teamName={player.currentTeam?.name} size={"large"} />
+          <Button
+            onClick={() => {
+              const id = Number(playerId);
+              isFavorite ? removeFavorite(id, "player") : addFavorite({ id, name: player.fullName }, "player");
+            }}
+          >
+            {isFavorite ? "Unfavorite" : "Favorite"}
+          </Button>
         </header>
         <div className="space-y-4">
           <div className="text-center">
