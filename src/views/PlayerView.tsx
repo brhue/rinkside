@@ -125,7 +125,7 @@ export default function PlayerView() {
       <section className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 space-y-4">
         <header className="flex text-2xl tracking-wide items-center justify-between sm:justify-start">
           <div className="flex items-center">
-            <span className="text-6xl mr-2">{player.primaryNumber}</span>
+            <span className="text-4xl sm:text-6xl mr-2">{player.primaryNumber}</span>
             <h2 className="grid">
               <span>{player.firstName}</span>
               <span className="-mt-2">{player.lastName}</span>

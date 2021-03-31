@@ -26,9 +26,17 @@ export default function HeadToHead({ awayTeamStats, homeTeamStats, pastGames }) 
           <table className="w-full table-auto whitespace-normal">
             <thead>
               <tr>
-                <th className="text-right">{awayTeamStats.stats[0].splits[0].team.name}</th>
+                <th className="text-right">
+                  <Link to={`/teams/${awayTeamStats.stats[0].splits[0].team.id}`}>
+                    {awayTeamStats.stats[0].splits[0].team.name}
+                  </Link>
+                </th>
                 <th></th>
-                <th>{homeTeamStats.stats[0].splits[0].team.name}</th>
+                <th>
+                  <Link to={`/teams/${homeTeamStats.stats[0].splits[0].team.id}`}>
+                    {homeTeamStats.stats[0].splits[0].team.name}
+                  </Link>
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y">

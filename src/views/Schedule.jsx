@@ -3,10 +3,12 @@ import { formatISODate } from "../utils";
 
 import Game from "../components/Game";
 import Button from "../components/Button";
+import { useFavorites } from "../context/favorites-context";
 
 function Schedule(props) {
   const [scheduleData, setScheduleData] = React.useState({ games: [] });
   const [searchDay, setSearchDay] = React.useState(new Date());
+  const { favorites } = useFavorites();
   React.useEffect(() => {
     async function fetchGameData(day) {
       const baseUrl = "https://statsapi.web.nhl.com/api/v1/";
@@ -18,6 +20,7 @@ function Schedule(props) {
     }
     fetchGameData(formatISODate(searchDay));
   }, [searchDay]);
+  const favoriteTeams = favorites.teams;
   return (
     <>
       <div className="mb-4 flex justify-between items-center text-sm">
@@ -41,7 +44,24 @@ function Schedule(props) {
         <h2 className="text-xl font-semibold mb-4">Today's Games</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {scheduleData.games.map((game) => {
-            return <Game {...game} key={game.gamePk} />;
+            let hasFavorite = false;
+            favoriteTeams.forEach((team) => {
+              if (game.teams.away.team.id === team.id || game.teams.home.team.id === team.id) {
+                hasFavorite = true;
+              }
+            });
+            return (
+              <div key={game.gamePk} className="relative">
+                {hasFavorite && (
+                  <div className={`h-6 w-6 absolute top-2 left-2 text-yellow-400`}>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  </div>
+                )}
+                <Game {...game} key={game.gamePk} />
+              </div>
+            );
           })}
         </div>
       </div>
