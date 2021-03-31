@@ -3,6 +3,7 @@ import Schedule from "./views/Schedule";
 import Standings from "./views/Standings";
 import SingleGame from "./views/SingleGame";
 import PlayerView from "./views/PlayerView.tsx";
+import Team from "./views/Team";
 import Stats from "./views/Stats";
 // import Home from "./views/Home";
 
@@ -32,6 +33,9 @@ function App() {
       <main className="px-4">
         <div className="container mx-auto">
           <Switch>
+            <Route path="/teams/:teamId">
+              <Team />
+            </Route>
             <Route path="/players/:playerId">
               <PlayerView />
             </Route>
