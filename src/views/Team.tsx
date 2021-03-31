@@ -5,6 +5,8 @@ import Game from "../components/Game";
 import Container from "../components/Container";
 import TeamLogo from "../components/TeamLogo";
 import PlayerPortrait from "../components/PlayerPortrait";
+import Button from "../components/Button";
+import { useFavorites } from "../context/favorites-context";
 
 type TeamData = {
   copyright: string;
@@ -13,6 +15,7 @@ type TeamData = {
 export default function Team() {
   const [teamData, setTeamData] = useState<TeamData | null>(null);
   const { teamId } = useParams<{ teamId: string }>();
+  const { favorites, addFavorite, removeFavorite } = useFavorites();
 
   useEffect(() => {
     async function getTeamData() {
@@ -31,11 +34,22 @@ export default function Team() {
   const seasonStats = team.teamStats[0].splits[0].stat;
   const seasonStatsRankings = team.teamStats[0].splits[1].stat;
   const { teamLeaders } = team;
+
+  const isFavorite = favorites.teams.findIndex((item) => item.id === Number(teamId)) !== -1;
   return (
     <Container>
       <header className="flex items-center">
-        <TeamLogo size="large" teamName={team.name} teamId={team.id} />
+        <TeamLogo size="large" teamName={team.name} teamId={Number(teamId)} />
         <h1 className="text-xl">{team.name}</h1>
+        <Button
+          className="ml-auto"
+          onClick={() => {
+            const id = Number(teamId);
+            isFavorite ? removeFavorite(id, "team") : addFavorite({ id, name: team.name }, "team");
+          }}
+        >
+          {isFavorite ? "Unfavorite" : "Favorite"}
+        </Button>
       </header>
       <div className="sm:grid grid-cols-2 dark:bg-gray-700 p-4 rounded-lg gap-4">
         <div className="text-center">
