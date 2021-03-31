@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function Standings(props) {
   const [standingsData, setStandingsData] = useState([]);
@@ -35,7 +36,7 @@ export default function Standings(props) {
 
   const tableData = standingsData.map((team) => {
     return {
-      team: team.team.name,
+      team: { ...team.team },
       gp: team.gamesPlayed,
       w: team.leagueRecord.wins,
       l: team.leagueRecord.losses,
@@ -76,8 +77,15 @@ export default function Standings(props) {
         </thead>
         <tbody>
           {tableData.map((team) => (
-            <tr key={team.team}>
+            <tr key={team.name}>
               {Object.values(team).map((val, i) => {
+                if (i === 0) {
+                  return (
+                    <td key={i}>
+                      <Link to={`/teams/${val.id}`}>{val.name}</Link>
+                    </td>
+                  );
+                }
                 return (
                   <td key={i} className="p-1">
                     {val}
