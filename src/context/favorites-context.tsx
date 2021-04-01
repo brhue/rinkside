@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 type FavoritesItem = {
   id: number;
@@ -16,31 +16,22 @@ type FavContextValue = {
   removeFavorite: (itemId: number, which: "player" | "team") => void;
 };
 
-const FavoritesContext = createContext<FavContextValue>({
-  favorites: {
-    players: [],
-    teams: [],
-  },
-  addFavorite: () => {},
-  removeFavorite: () => {},
-});
-
-function FavoritesProvider(props: any) {
-  const [favorites, setFavorites] = useState<Favorites>({
-    players: [],
-    teams: [],
+const FavoritesContext = createContext<FavContextValue | undefined>(undefined);
+type FavoritesProviderProps = {
+  children: React.ReactNode;
+};
+function FavoritesProvider({ children }: FavoritesProviderProps) {
+  const [favorites, setFavorites] = useState<Favorites>(() => {
+    const defaultState = { players: [], teams: [] };
+    try {
+      const localState = window.localStorage.getItem("favorites");
+      return localState ? JSON.parse(localState) : defaultState;
+    } catch (e) {
+      return defaultState;
+    }
   });
 
   useEffect(() => {
-    const favs = window.localStorage.getItem("favorites");
-    if (favs) {
-      const parsed = JSON.parse(favs);
-      setFavorites(parsed);
-    }
-  }, []);
-
-  useEffect(() => {
-    console.log("...persist");
     window.localStorage.setItem("favorites", JSON.stringify(favorites));
   }, [favorites]);
 
@@ -75,8 +66,8 @@ function FavoritesProvider(props: any) {
       }
     });
   }
-
-  return <FavoritesContext.Provider value={{ favorites, addFavorite, removeFavorite }} {...props} />;
+  const value = { favorites, addFavorite, removeFavorite };
+  return <FavoritesContext.Provider value={value}>{children}</FavoritesContext.Provider>;
 }
 
 function useFavorites() {
