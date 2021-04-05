@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.drop-down {
+  @apply sm:absolute;
+  @apply right-0;
+  /* @apply sm:p-4; */
+  @apply bg-white;
+  @apply dark:bg-gray-800;
+  @apply sm:shadow-md;
+  @apply sm:rounded-lg;
+  @apply z-10;
+}

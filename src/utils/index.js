@@ -38,3 +38,138 @@ export const teamMap = {
   53: { name: "Arizona Coyotes", primaryColor: "#8c2633", secondaryColor: "#E2D6B5" },
   54: { name: "Vegas Golden Knights", primaryColor: "#b4975a", secondaryColor: "#333F42" },
 };
+
+export const teams = {
+  "MassMutual East": [
+    {
+      id: 6,
+      shortName: "Boston",
+    },
+    {
+      id: 7,
+      shortName: "Buffalo",
+    },
+    {
+      id: 2,
+      shortName: "NY Islanders",
+    },
+    {
+      id: 3,
+      shortName: "NY Rangers",
+    },
+    {
+      id: 1,
+      shortName: "New Jersey",
+    },
+    {
+      id: 4,
+      shortName: "Philadelphia",
+    },
+    {
+      id: 5,
+      shortName: "Pittsburgh",
+    },
+    {
+      id: 15,
+      shortName: "Washington",
+    },
+  ],
+  "Discover Central": [
+    {
+      id: 12,
+      shortName: "Carolina",
+    },
+    {
+      id: 16,
+      shortName: "Chicago",
+    },
+    {
+      id: 29,
+      shortName: "Columbus",
+    },
+    {
+      id: 25,
+      shortName: "Dallas",
+    },
+    {
+      id: 17,
+      shortName: "Detroit",
+    },
+    {
+      id: 13,
+      shortName: "Florida",
+    },
+    {
+      id: 18,
+      shortName: "Nashville",
+    },
+    {
+      id: 14,
+      shortName: "Tampa Bay",
+    },
+  ],
+  "Honda West": [
+    {
+      id: 24,
+      shortName: "Anaheim",
+    },
+    {
+      id: 53,
+      shortName: "Arizona",
+    },
+    {
+      id: 21,
+      shortName: "Colorado",
+    },
+    {
+      id: 26,
+      shortName: "Los Angeles",
+    },
+    {
+      id: 30,
+      shortName: "Minnesota",
+    },
+    {
+      id: 28,
+      shortName: "San Jose",
+    },
+    {
+      id: 19,
+      shortName: "St Louis",
+    },
+    {
+      id: 54,
+      shortName: "Vegas",
+    },
+  ],
+  "Scotia North": [
+    {
+      id: 20,
+      shortName: "Calgary",
+    },
+    {
+      id: 22,
+      shortName: "Edmonton",
+    },
+    {
+      id: 8,
+      shortName: "Montréal",
+    },
+    {
+      id: 9,
+      shortName: "Ottawa",
+    },
+    {
+      id: 10,
+      shortName: "Toronto",
+    },
+    {
+      id: 23,
+      shortName: "Vancouver",
+    },
+    {
+      id: 52,
+      shortName: "Winnipeg",
+    },
+  ],
+};

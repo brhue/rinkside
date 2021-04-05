@@ -5,6 +5,7 @@ import SingleGame from "./views/SingleGame";
 import PlayerView from "./views/PlayerView.tsx";
 import Team from "./views/Team";
 import Stats from "./views/Stats";
+import NavBar from "./components/NavBar";
 import { FavoritesProvider } from "./context/favorites-context";
 // import Home from "./views/Home";
 
@@ -13,24 +14,7 @@ function App() {
     <FavoritesProvider>
       <Router>
         <header className="p-4 border-b mb-4 bg-white dark:bg-gray-800 dark:text-gray-50 dark:border-black">
-          <nav className="container mx-auto flex items-center justify-between">
-            <h1 className="font-bold text-3xl">
-              <Link to="/">Rinkside</Link>
-            </h1>
-            <ul className="flex space-x-4">
-              {/* <li>
-                  <Link to="/games">Games</Link>
-                </li> */}
-              <li>
-                <Link className="" to="/standings">
-                  Standings
-                </Link>
-              </li>
-              <li>
-                <Link to="/stats">Stats</Link>
-              </li>
-            </ul>
-          </nav>
+          <NavBar />
         </header>
         <main className="px-4">
           <div className="container mx-auto">
