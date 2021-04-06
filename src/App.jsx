@@ -1,11 +1,11 @@
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Schedule from "./views/Schedule";
 import Standings from "./views/Standings";
 import SingleGame from "./views/SingleGame";
 import PlayerView from "./views/PlayerView.tsx";
 import Team from "./views/Team";
 import Stats from "./views/Stats";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/NavBar/NavBar";
 import { FavoritesProvider } from "./context/favorites-context";
 // import Home from "./views/Home";
 
