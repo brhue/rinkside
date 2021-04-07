@@ -2,6 +2,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 
 import TeamsMenu from "./components/TeamsMenu";
+import FavoritesMenu from "./components/FavoritesMenu";
 
 export default function NavBar() {
   const [showMenu, setShowMenu] = React.useState(false);
@@ -34,6 +35,9 @@ export default function NavBar() {
           showMenu ? "absolute top-16 left-0 h-auto w-full dark:bg-gray-800 z-10" : "hidden sm:flex"
         }`}
       >
+        <li className="relative">
+          <FavoritesMenu onItemClick={() => setShowMenu(false)} />
+        </li>
         <li className="relative">
           <TeamsMenu onItemClick={() => setShowMenu(false)} />
         </li>
