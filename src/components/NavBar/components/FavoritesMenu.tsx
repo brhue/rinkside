@@ -15,7 +15,7 @@ export default function FavoritesMenu({ onItemClick }: FavoritesMenuProps) {
     <Menu>
       {({ isOpen, setIsOpen }) => (
         <>
-          <MenuButton className="w-full p-4 sm:p-2 text-left dark:hover:bg-gray-700">
+          <MenuButton className="w-full px-3 py-2 text-left rounded-md hover:bg-gray-200 dark:hover:bg-gray-700">
             Favorites
             <span className="inline-block h-5 w-5 align-middle">
               <svg

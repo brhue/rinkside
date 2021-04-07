@@ -32,22 +32,30 @@ export default function NavBar() {
       </button>
       <ul
         className={`flex flex-col sm:flex-row sm:space-x-4 ${
-          showMenu ? "absolute top-16 left-0 h-auto w-full dark:bg-gray-800 z-10" : "hidden sm:flex"
+          showMenu ? "absolute top-16 left-0 h-auto w-full bg-white dark:bg-gray-800 z-10" : "hidden sm:flex"
         }`}
       >
-        <li className="relative">
+        <li className="relative p-2 sm:p-0">
           <FavoritesMenu onItemClick={() => setShowMenu(false)} />
         </li>
-        <li className="relative">
+        <li className="relative p-2 sm:p-0">
           <TeamsMenu onItemClick={() => setShowMenu(false)} />
         </li>
-        <li>
-          <Link className="block p-4 sm:p-2 dark:hover:bg-gray-700" to="/standings" onClick={() => setShowMenu(false)}>
+        <li className="p-2 sm:p-0">
+          <Link
+            className="block px-3 py-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
+            to="/standings"
+            onClick={() => setShowMenu(false)}
+          >
             Standings
           </Link>
         </li>
-        <li>
-          <Link className="block p-4 sm:p-2 dark:hover:bg-gray-700" to="/stats" onClick={() => setShowMenu(false)}>
+        <li className="p-2 sm:p-0">
+          <Link
+            className="block px-3 py-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
+            to="/stats"
+            onClick={() => setShowMenu(false)}
+          >
             Stats
           </Link>
         </li>
