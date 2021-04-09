@@ -133,6 +133,7 @@ export default function PlayerView() {
           </div>
           <TeamLogo teamId={player.currentTeam?.id} teamName={player.currentTeam?.name} size={"large"} />
           <Button
+            className="ml-auto"
             onClick={() => {
               const id = Number(playerId);
               isFavorite ? removeFavorite(id, "player") : addFavorite({ id, name: player.fullName }, "player");
