@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
 
-export default function HeadToHead({ awayTeamStats, homeTeamStats, pastGames }) {
+type HeadToHeadProps = {
+  awayTeamStats: any;
+  homeTeamStats: any;
+  pastGames: any;
+};
+
+export default function HeadToHead({ awayTeamStats, homeTeamStats, pastGames }: HeadToHeadProps) {
   const statsToShow = [
     { stat: "wins", display: "Wins" },
     { stat: "losses", display: "Losses" },
@@ -62,7 +68,19 @@ export default function HeadToHead({ awayTeamStats, homeTeamStats, pastGames }) 
   );
 }
 
-function PastGames({ pastGames }) {
+type PastGamesProps = {
+  pastGames: {
+    dates: {
+      date: string;
+      games: {
+        gamePk: number;
+        teams: any;
+      }[];
+    }[];
+  };
+};
+
+function PastGames({ pastGames }: PastGamesProps) {
   return (
     <div className="shadow-md rounded-lg p-4 bg-white dark:bg-gray-800 md:self-start">
       <h2 className="text-xl mb-4 font-bold">Previous Games</h2>

@@ -2,7 +2,14 @@ import { Link } from "react-router-dom";
 import StatusItem from "./StatusItem";
 import TeamLogo from "./TeamLogo";
 
-export default function Game(props) {
+type GameProps = {
+  linescore: any;
+  teams: any;
+  gamePk: number;
+  gameDate: string;
+};
+
+export default function Game(props: GameProps) {
   const { currentPeriodOrdinal, currentPeriodTimeRemaining } = props.linescore;
   const { away, home } = props.teams;
 
@@ -45,7 +52,7 @@ export default function Game(props) {
   );
 }
 
-function formatDate(date) {
+function formatDate(date: Date) {
   // This is necessary until safari supports timeStyle and dateStyle options.
   const timeString = date.toLocaleTimeString();
   const [time, abbrev] = timeString.split(" ");

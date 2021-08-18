@@ -1,4 +1,6 @@
-export default function Button({ children, ...props }) {
+import * as React from "react";
+
+export default function Button({ children, ...props }: React.ComponentPropsWithoutRef<"button">) {
   return (
     <button
       {...props}
