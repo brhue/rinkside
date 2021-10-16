@@ -39,137 +39,141 @@ export const teamMap = {
   54: { name: "Vegas Golden Knights", primaryColor: "#b4975a", secondaryColor: "#333F42" },
 };
 
-export const teams = {
-  "MassMutual East": [
+export const teamsByDivision = {
+  Atlantic: [
     {
-      id: 6,
       shortName: "Boston",
+      id: 6,
     },
     {
-      id: 7,
       shortName: "Buffalo",
+      id: 7,
     },
     {
-      id: 2,
-      shortName: "NY Islanders",
-    },
-    {
-      id: 3,
-      shortName: "NY Rangers",
-    },
-    {
-      id: 1,
-      shortName: "New Jersey",
-    },
-    {
-      id: 4,
-      shortName: "Philadelphia",
-    },
-    {
-      id: 5,
-      shortName: "Pittsburgh",
-    },
-    {
-      id: 15,
-      shortName: "Washington",
-    },
-  ],
-  "Discover Central": [
-    {
-      id: 12,
-      shortName: "Carolina",
-    },
-    {
-      id: 16,
-      shortName: "Chicago",
-    },
-    {
-      id: 29,
-      shortName: "Columbus",
-    },
-    {
-      id: 25,
-      shortName: "Dallas",
-    },
-    {
-      id: 17,
       shortName: "Detroit",
+      id: 17,
     },
     {
-      id: 13,
       shortName: "Florida",
+      id: 13,
     },
     {
-      id: 18,
-      shortName: "Nashville",
-    },
-    {
-      id: 14,
-      shortName: "Tampa Bay",
-    },
-  ],
-  "Honda West": [
-    {
-      id: 24,
-      shortName: "Anaheim",
-    },
-    {
-      id: 53,
-      shortName: "Arizona",
-    },
-    {
-      id: 21,
-      shortName: "Colorado",
-    },
-    {
-      id: 26,
-      shortName: "Los Angeles",
-    },
-    {
-      id: 30,
-      shortName: "Minnesota",
-    },
-    {
-      id: 28,
-      shortName: "San Jose",
-    },
-    {
-      id: 19,
-      shortName: "St Louis",
-    },
-    {
-      id: 54,
-      shortName: "Vegas",
-    },
-  ],
-  "Scotia North": [
-    {
-      id: 20,
-      shortName: "Calgary",
-    },
-    {
-      id: 22,
-      shortName: "Edmonton",
-    },
-    {
-      id: 8,
       shortName: "Montréal",
+      id: 8,
     },
     {
-      id: 9,
       shortName: "Ottawa",
+      id: 9,
     },
     {
-      id: 10,
+      shortName: "Tampa Bay",
+      id: 14,
+    },
+    {
       shortName: "Toronto",
+      id: 10,
+    },
+  ],
+  Central: [
+    {
+      shortName: "Arizona",
+      id: 53,
     },
     {
-      id: 23,
-      shortName: "Vancouver",
+      shortName: "Chicago",
+      id: 16,
     },
     {
-      id: 52,
+      shortName: "Colorado",
+      id: 21,
+    },
+    {
+      shortName: "Dallas",
+      id: 25,
+    },
+    {
+      shortName: "Minnesota",
+      id: 30,
+    },
+    {
+      shortName: "Nashville",
+      id: 18,
+    },
+    {
+      shortName: "St Louis",
+      id: 19,
+    },
+    {
       shortName: "Winnipeg",
+      id: 52,
+    },
+  ],
+  Metropolitan: [
+    {
+      shortName: "Carolina",
+      id: 12,
+    },
+    {
+      shortName: "Columbus",
+      id: 29,
+    },
+    {
+      shortName: "NY Islanders",
+      id: 2,
+    },
+    {
+      shortName: "NY Rangers",
+      id: 3,
+    },
+    {
+      shortName: "New Jersey",
+      id: 1,
+    },
+    {
+      shortName: "Philadelphia",
+      id: 4,
+    },
+    {
+      shortName: "Pittsburgh",
+      id: 5,
+    },
+    {
+      shortName: "Washington",
+      id: 15,
+    },
+  ],
+  Pacific: [
+    {
+      shortName: "Anaheim",
+      id: 24,
+    },
+    {
+      shortName: "Calgary",
+      id: 20,
+    },
+    {
+      shortName: "Edmonton",
+      id: 22,
+    },
+    {
+      shortName: "Los Angeles",
+      id: 26,
+    },
+    {
+      shortName: "San Jose",
+      id: 28,
+    },
+    {
+      shortName: "Seattle",
+      id: 55,
+    },
+    {
+      shortName: "Vancouver",
+      id: 23,
+    },
+    {
+      shortName: "Vegas",
+      id: 54,
     },
   ],
 };

@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 
 import { Menu, MenuButton, MenuItems } from "../../Menu";
-import { teams } from "../../../utils";
+import { teamsByDivision } from "../../../utils";
 import TeamLogo from "../../TeamLogo";
 
-type Divisions = keyof typeof teams;
+type Divisions = keyof typeof teamsByDivision;
 type TeamsMenuProps = {
   onItemClick: () => void;
 };
@@ -37,12 +37,12 @@ export default function TeamsMenu({ onItemClick }: TeamsMenuProps) {
                 isOpen ? "h-auto visible" : "invisible h-0 hidden"
               }`}
             >
-              {Object.keys(teams).map((division) => {
+              {Object.keys(teamsByDivision).map((division) => {
                 return (
                   <div key={division} className="p-4 whitespace-nowrap flex-shrink-0">
                     <h3>{division}</h3>
                     <ul>
-                      {teams[division as Divisions].map((team) => {
+                      {teamsByDivision[division as Divisions].map((team) => {
                         return (
                           <li key={team.id}>
                             <Link
