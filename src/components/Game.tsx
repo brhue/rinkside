@@ -7,6 +7,15 @@ type GameProps = {
   teams: any;
   gamePk: number;
   gameDate: string;
+  status: GameStatus;
+};
+
+type GameStatus = {
+  abstractGameStatus: string;
+  codedGameStatus: string;
+  detailedState: string;
+  statusCode: string;
+  startTimeTBD: boolean;
 };
 
 export default function Game(props: GameProps) {
@@ -35,7 +44,10 @@ export default function Game(props: GameProps) {
             {props.linescore.teams.away.powerPlay && <StatusItem>PP</StatusItem>}
             {props.linescore.teams.away.goaliePulled && <StatusItem>EN</StatusItem>}
           </p>
-          {props.linescore.currentPeriod === 0 ? (
+          {/* TODO: Should I abstract this out to handle all possible game status states?
+           * Can all be found here: https://statsapi.web.nhl.com/api/v1/gameStatus
+           */}
+          {props.status.statusCode === "1" || props.status.statusCode === "2" ? (
             <p>{formatDate(new Date(props.gameDate))}</p>
           ) : (
             <p>
