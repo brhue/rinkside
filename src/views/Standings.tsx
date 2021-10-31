@@ -47,7 +47,7 @@ type StandingsRecord = {
   teamRecords: TeamRecord[];
 };
 
-type StandingsType = "byLeague" | "byConference" | "byDivision";
+type StandingsType = "byLeague" | "byConference" | "byDivision" | "wildCard";
 
 export default function Standings() {
   const [standingsData, setStandingsData] = useState<StandingsRecord[]>([]);
@@ -74,11 +74,16 @@ export default function Standings() {
         <Link to="/standings/byLeague">League</Link>
         <Link to="/standings/byConference">Conference</Link>
         <Link to="/standings/byDivision">Division</Link>
+        <Link to="/standings/wildCard">Wildcard</Link>
       </div>
       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-0">
         {standingsData.map((record) => {
           return (
-            <React.Fragment key={record.division?.name || record.conference?.name || record.league?.name}>
+            // We add the standings type to conference name to create a unique key when looking at
+            // wildcard standings versus conference.
+            <React.Fragment
+              key={record.division?.name || record.conference?.name + record.standingsType || record.league?.name}
+            >
               <h2>{record.division?.name || record.conference?.name || record.league?.name}</h2>
               <StandingsTable records={record.teamRecords} />
             </React.Fragment>
