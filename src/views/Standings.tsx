@@ -76,12 +76,12 @@ export default function Standings() {
         <Link to="/standings/byDivision">Division</Link>
       </div>
       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-0">
-        {standingsData.map((record, i) => {
+        {standingsData.map((record) => {
           return (
-            <>
+            <React.Fragment key={record.division?.name || record.conference?.name || record.league?.name}>
               <h2>{record.division?.name || record.conference?.name || record.league?.name}</h2>
-              <StandingsTable key={i} records={record.teamRecords} />
-            </>
+              <StandingsTable records={record.teamRecords} />
+            </React.Fragment>
           );
         })}
       </div>
@@ -95,11 +95,6 @@ type StandingsTableProps = {
 
 function StandingsTable({ records }: StandingsTableProps & React.ComponentPropsWithoutRef<"div">) {
   const [standingsData, setStandingsData] = useState(records);
-
-  // Necessary so table updates properly when switching standings type
-  useEffect(() => {
-    setStandingsData(records);
-  }, [records]);
 
   function handleSort(sortKey: string, direction: number) {
     const sortedArray = [...standingsData];
