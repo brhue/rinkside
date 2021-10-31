@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import Schedule from "./views/Schedule";
 import Standings from "./views/Standings";
 import SingleGame from "./views/SingleGame";
@@ -28,8 +28,11 @@ function App() {
               <Route path="/game/:gameId">
                 <SingleGame />
               </Route>
-              <Route path="/standings">
+              <Route path="/standings/:type">
                 <Standings />
+              </Route>
+              <Route path="/standings">
+                <Redirect to="/standings/byLeague" />
               </Route>
               <Route path="/stats">
                 <Stats />
