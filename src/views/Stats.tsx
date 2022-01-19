@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Container from "../components/Container";
 import PlayerPortrait from "../components/PlayerPortrait";
 import TeamLogo from "../components/TeamLogo";
+import { seasons } from "../utils";
 
 /**
  * TODO: Properly type things, handle errors better, clean up.
@@ -11,6 +12,7 @@ import TeamLogo from "../components/TeamLogo";
 type StatsData = any[];
 export default function Stats() {
   const [leaderData, setLeaderData] = useState<null | StatsData>(null);
+  const [season, setSeason] = useState("20212022");
 
   useEffect(() => {
     async function getLeagueLeaders(url: string) {
@@ -55,19 +57,19 @@ export default function Stats() {
     const _leaderData: { [key: string]: any }[] = [
       {
         title: "Forwards",
-        data: skaterMetrics("season=20202021 and gameType=2"),
+        data: skaterMetrics(`season=${season} and gameType=2`),
       },
       {
         title: "Goalies",
-        data: goalieMetrics("season=20202021 and gameType=2 and gamesPlayed>=4"),
+        data: goalieMetrics(`season=${season} and gameType=2 and gamesPlayed>=4`),
       },
       {
         title: "Defensemen",
-        data: skaterMetrics('season=20202021 and gameType=2 and player.positionCode="D"'),
+        data: skaterMetrics(`season=${season} and gameType=2 and player.positionCode="D"`),
       },
       {
         title: "Rookies",
-        data: skaterMetrics('season=20202021 and gameType=2 and isRookie="Y"'),
+        data: skaterMetrics(`season=${season} and gameType=2 and isRookie="Y"`),
       },
     ];
 
@@ -86,7 +88,7 @@ export default function Stats() {
       });
       setLeaderData(_leaderData);
     });
-  }, []);
+  }, [season]);
 
   if (!leaderData) {
     return (
@@ -99,6 +101,24 @@ export default function Stats() {
   return (
     <Container>
       <h1 className="text-2xl">League Leaders</h1>
+      <div>
+        <label>
+          Season:{" "}
+          <select
+            className="text-black"
+            value={season}
+            onChange={(e) => {
+              setSeason(e.currentTarget.value);
+            }}
+          >
+            {seasons.map((season) => (
+              <option key={season.id} value={season.id}>
+                {season.formatted}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
       <div className="grid gap-4 md:grid-cols-2">
         {leaderData.map((group) => {
           return <LeaderSection key={group.title} title={group.title} metrics={group.data} />;

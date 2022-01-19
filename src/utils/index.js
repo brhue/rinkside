@@ -177,3 +177,26 @@ export const teamsByDivision = {
     },
   ],
 };
+
+// TODO: Not sure how i feel about the following...
+// Is it better to just compute the seasons array ahead of time and include it
+// directly or to generate it like this?
+function generateSeasons() {
+  let years = [];
+  for (let i = 1917; i < 2023; i++) {
+    years.push(i);
+  }
+
+  let seasons = [];
+  for (let i = 0; i < years.length - 1; i++) {
+    let id = `${years[i]}${years[i + 1]}`;
+    let formatted = `${id.slice(0, 4)}-${id.slice(6)}`;
+    seasons.push({
+      id,
+      formatted,
+    });
+  }
+
+  return seasons.filter((season) => season.id !== "20042005").reverse();
+}
+export const seasons = generateSeasons();
