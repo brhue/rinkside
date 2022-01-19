@@ -179,7 +179,7 @@ function LeaderSection({ title, metrics }: { title: string; metrics: any }) {
           })}
         </div>
       </header>
-      <div className="grid md:grid-cols-2">
+      <div className="grid lg:grid-cols-2">
         <div className="flex items-center justify-center">{leaderToShow(activeLeader)}</div>
         <div>{metricToShow(activeMetric)}</div>
       </div>
