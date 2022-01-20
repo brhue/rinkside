@@ -44,16 +44,12 @@ export default function Game(props: GameProps) {
             {props.linescore.teams.away.powerPlay && <StatusItem>PP</StatusItem>}
             {props.linescore.teams.away.goaliePulled && <StatusItem>EN</StatusItem>}
           </p>
-          {/* TODO: Should I abstract this out to handle all possible game status states?
-           * Can all be found here: https://statsapi.web.nhl.com/api/v1/gameStatus
-           */}
-          {props.status.statusCode === "1" || props.status.statusCode === "2" ? (
-            <p>{formatDate(new Date(props.gameDate))}</p>
-          ) : (
-            <p>
-              {currentPeriodTimeRemaining} {currentPeriodOrdinal}
-            </p>
-          )}
+          <GameInfo
+            status={props.status}
+            currentPeriodOrdinal={currentPeriodOrdinal}
+            currentPeriodTimeRemaining={currentPeriodTimeRemaining}
+            gameDate={props.gameDate}
+          />
           <p className="text-white">
             {props.linescore.teams.home.powerPlay && <StatusItem>PP</StatusItem>}
             {props.linescore.teams.home.goaliePulled && <StatusItem>EN</StatusItem>}
@@ -62,6 +58,27 @@ export default function Game(props: GameProps) {
       </div>
     </Link>
   );
+}
+
+type GameInfoProps = {
+  status: GameStatus;
+  currentPeriodOrdinal: string;
+  currentPeriodTimeRemaining: string;
+  gameDate: string;
+};
+function GameInfo({ status, currentPeriodOrdinal, currentPeriodTimeRemaining, gameDate }: GameInfoProps) {
+  if (status.statusCode === "9") {
+    return <StatusItem>PPD</StatusItem>;
+  }
+  if (status.statusCode === "1" || status.statusCode === "2" || status.statusCode === "8") {
+    return <p>{formatDate(new Date(gameDate))}</p>;
+  } else {
+    return (
+      <p>
+        {currentPeriodTimeRemaining} {currentPeriodOrdinal}
+      </p>
+    );
+  }
 }
 
 function formatDate(date: Date) {
