@@ -7,8 +7,21 @@ type GameProps = {
   teams: any;
   gamePk: number;
   gameDate: string;
+  gameType: string;
   status: GameStatus;
+  seriesSummary?: SeriesSummary;
 };
+
+interface SeriesSummary {
+  gamePk: number;
+  gameNumber: number;
+  gameLabel: string;
+  necessary: boolean;
+  gameCode: number;
+  gameTime: string;
+  seriesStatus: string;
+  seriesStatusShort: string;
+}
 
 type GameStatus = {
   abstractGameStatus: string;
@@ -24,7 +37,13 @@ export default function Game(props: GameProps) {
 
   return (
     <Link className="block" to={`/game/${props.gamePk}`}>
-      <div className="grid grid-cols-3 items-center justify-items-center bg-white dark:bg-gray-800 shadow-sm rounded-lg p-4 hover:shadow-md transition-shadow">
+      <div className="grid grid-cols-3 items-center justify-items-center bg-white dark:bg-gray-800 shadow-sm rounded-lg py-2 px-4 hover:shadow-md transition-shadow">
+        <div className="col-span-3 w-full mb-2 text-sm">
+          <p className="flex justify-around w-full mx-auto">
+            <span>{props.seriesSummary?.gameLabel}</span>
+            {props.seriesSummary?.seriesStatusShort ? <span>{props.seriesSummary?.seriesStatusShort}</span> : null}
+          </p>
+        </div>
         <div className="text-center">
           <TeamLogo size="medium" teamId={props.teams.away.team.id} teamName={props.teams.away.team.name} />
           <p className="font-semibold">{props.teams.away.team.abbreviation}</p>
@@ -36,9 +55,13 @@ export default function Game(props: GameProps) {
           <TeamLogo size="medium" teamId={props.teams.home.team.id} teamName={props.teams.home.team.name} />
           <p className="font-semibold">{props.teams.home.team.abbreviation}</p>
         </div>
-        <span className="text-sm text-gray-600">{`${away.leagueRecord.wins}-${away.leagueRecord.losses}-${away.leagueRecord.ot}`}</span>
+        {props.gameType !== "P" && (
+          <span className="text-sm text-gray-600">{`${away.leagueRecord.wins}-${away.leagueRecord.losses}-${away.leagueRecord.ot}`}</span>
+        )}
         <span></span>
-        <span className="text-sm text-gray-600">{`${home.leagueRecord.wins}-${home.leagueRecord.losses}-${home.leagueRecord.ot}`}</span>
+        {props.gameType !== "P" && (
+          <span className="text-sm text-gray-600">{`${home.leagueRecord.wins}-${home.leagueRecord.losses}-${home.leagueRecord.ot}`}</span>
+        )}
         <div className="grid col-span-3 grid-cols-3 w-full justify-items-center">
           <p className="text-white">
             {props.linescore.teams.away.powerPlay && <StatusItem>PP</StatusItem>}

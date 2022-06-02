@@ -4,22 +4,32 @@ import { formatISODate } from "../utils";
 import Game from "../components/Game";
 import Button from "../components/Button";
 import { useFavorites } from "../context/favorites-context";
+import { client } from "../utils/api-client";
 
 function Schedule(props) {
   const [scheduleData, setScheduleData] = React.useState({ dates: [] });
   const [searchDay, setSearchDay] = React.useState(new Date());
   const { favorites } = useFavorites();
+  const [error, setError] = React.useState(false);
   React.useEffect(() => {
-    async function fetchGameData(day) {
-      const baseUrl = "https://statsapi.web.nhl.com/api/v1/";
-      const scheduleUrl = `${baseUrl}schedule?expand=schedule.linescore,schedule.teams`;
-      const response = await fetch(scheduleUrl + `&date=${day}`);
-      const data = await response.json();
-      setScheduleData(data);
-    }
-    fetchGameData(formatISODate(searchDay));
+    setError(false);
+    client(
+      `schedule?expand=schedule.linescore,schedule.teams,schedule.game.seriesSummary&date=${formatISODate(searchDay)}`
+    )
+      .then((data) => {
+        setScheduleData(data);
+      })
+      .catch(() => {
+        // TODO: Improve error handling.
+        setError(true);
+      });
   }, [searchDay]);
   const favoriteTeams = favorites.teams;
+
+  if (error) {
+    return <p>There was an issue loading schedule information. Reload to try again.</p>;
+  }
+
   return (
     <>
       <div className="mb-4 flex justify-between items-center text-sm">
