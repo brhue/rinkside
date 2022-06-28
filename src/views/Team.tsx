@@ -7,6 +7,7 @@ import TeamLogo from "../components/TeamLogo";
 import PlayerPortrait from "../components/PlayerPortrait";
 import Button from "../components/Button";
 import { useFavorites } from "../context/favorites-context";
+import { client } from "../utils/api-client";
 
 type TeamData = {
   copyright: string;
@@ -18,14 +19,9 @@ export default function Team() {
   const { favorites, addFavorite, removeFavorite } = useFavorites();
 
   useEffect(() => {
-    async function getTeamData() {
-      const baseUrl = "https://statsapi.web.nhl.com/api/v1/";
-      const url = `${baseUrl}teams/${teamId}?expand=team.stats,team.schedule.next,team.schedule.previous,schedule.linescore,team.leaders&leaderCategories=points,goals,assists`;
-      const response = await fetch(url);
-      const data = await response.json();
-      return data;
-    }
-    getTeamData().then((data) => setTeamData(data));
+    client(
+      `teams/${teamId}?expand=team.stats,team.schedule.next,team.schedule.previous,schedule.linescore,team.leaders&leaderCategories=points,goals,assists`
+    ).then((data) => setTeamData(data));
   }, [teamId]);
 
   if (!teamData) return <h1>Loading...</h1>;
@@ -54,13 +50,21 @@ export default function Team() {
       <div className="sm:grid grid-cols-2 dark:bg-gray-700 p-4 rounded-lg gap-4">
         <div className="text-center">
           <p>Last Game</p>
-          <p>{team.previousGameSchedule.dates[0].date}</p>
-          <Game {...team.previousGameSchedule.dates[0].games[0]} />
+          {team.previousGameSchedule ? (
+            <>
+              <p>{team.previousGameSchedule.dates[0].date}</p>
+              <Game {...team.previousGameSchedule.dates[0].games[0]} />
+            </>
+          ) : null}
         </div>
         <div className="text-center">
           <p>Next Game</p>
-          <p>{team.nextGameSchedule.dates[0].date}</p>
-          <Game {...team.nextGameSchedule.dates[0].games[0]} />
+          {team.nextGameSchedule ? (
+            <>
+              <p>{team.nextGameSchedule.dates[0].date}</p>
+              <Game {...team.nextGameSchedule.dates[0].games[0]} />
+            </>
+          ) : null}
         </div>
       </div>
       <h2>Team Stats</h2>
